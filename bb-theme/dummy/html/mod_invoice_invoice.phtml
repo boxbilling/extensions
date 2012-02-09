@@ -217,7 +217,7 @@
     </div>
 </div>
 
-{# This is client specific TOS #}
+{# This is client specific TOS defined in invoice notes #}
 <div class="h-block" id="invoice-block">
     <div class="h-block-header">
         <div class="icon"><span class="big-light-icon i-invoice"></span></div>
@@ -230,14 +230,14 @@
     <div class="block">
 
 {% filter markdown %}
-    {{ client.client_get.custom_1 }}
+    {{ invoice.notes }}
 {% endfilter %}
     </div>
     </div>
     </div>
 </div>
 
-{# This is you custom TOS #}
+{# This is your custom TOS #}
 <div class="h-block" id="invoice-block">
     <div class="h-block-header">
         <div class="icon"><span class="big-light-icon i-invoice"></span></div>
