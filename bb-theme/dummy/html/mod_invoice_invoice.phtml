@@ -1,0 +1,341 @@
+{% extends request.ajax ? "layout_blank.phtml" : "layout_default.phtml" %}
+{% import "macro_functions.phtml" as mf %}
+{% block meta_title %}{% trans 'Proforma invoice' %}{% endblock %}
+
+{% block content_before %}
+{% if invoice.status == 'unpaid' %}
+    {% include "partial_steps.phtml" with {'selected': 4} %}
+{% endif%}
+{% endblock %}
+
+{% block content %}
+{% set nr = invoice.serie ~ "%05s"|format(invoice.nr) %}
+{% set seller = invoice.seller %}
+{% set buyer = invoice.buyer %}
+
+<div class="h-block" id="invoice-block">
+    <div class="h-block-header">
+        <div class="icon"><span class="big-light-icon i-invoice"></span></div>
+        {% if invoice.status == 'unpaid' %}
+        <h2>{% trans 'Proforma Invoice' %}</h2>
+        <p>{% trans 'Please choose payment type and pay for your chosen products.' %}</p>
+        {% else %}
+        <h2>{% trans 'Invoice' %} {{ nr }}</h2>
+        <p>{% trans 'Invoice is paid' %}</p>
+        {% endif %}
+    </div>
+    <div class="block">
+        <div id="invoice-header">
+
+        <div class="grid_6 alpha">
+            <div class="box">
+                <div class="block">
+                    <img src="{{ guest.system_company.logo_url }}" alt="Logo" style="max-height: 70px">
+                </div>
+            </div>
+        </div>
+
+        <div class="grid_6 omega">
+            <div class="box">
+                <div class="block" style="text-align: right;">
+                    <h2>{% trans 'Invoice' %} {{ nr }}</h2>
+                    <p>{{ invoice.created_at|date('l, d F Y') }}</p>
+
+                    <h2 class="invoice_{{invoice.status }}">{% if invoice.status == 'unpaid' %}{% trans 'Unpaid' %}{% else %}{% trans 'Paid' %}{% endif %}</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="clear"></div>
+
+        <div class="grid_6 alpha">
+            <table class="seller">
+                {% if seller.company %}
+                <tr>
+                    <td><b>{{ seller.company }}</b></td>
+                </tr>
+                {% endif %}
+
+                {% if seller.address %}
+                <tr>
+                    <td>{{ seller.address }}</td>
+                </tr>
+                {% endif %}
+
+                {% if seller.phone %}
+                <tr>
+                    <td>{{ seller.phone }}</td>
+                </tr>
+                {% endif %}
+
+                {% if seller.email %}
+                <tr>
+                    <td>{{ seller.email }}</td>
+                </tr>
+                {% endif %}
+            </table>
+        </div>
+
+        <div class="grid_6 omega">
+            <table class="buyer">
+                {% if buyer.company %}
+                <tr>
+                    <td><b>{{ buyer.company }}</b></td>
+                </tr>
+                {% endif %}
+
+                {% if buyer.first_name or buyer.last_name %}
+                <tr>
+                    <td><b>{{ buyer.first_name }} {{ buyer.last_name }}</b></td>
+                </tr>
+                {% endif %}
+
+                {% if buyer.email %}
+                <tr>
+                    <td>{{ buyer.email }}</td>
+                </tr>
+                {% endif %}
+
+                {% if buyer.address %}
+                <tr>
+                    <td>{{ buyer.address }} {{ buyer.city }} {{ buyer.state }} {{ buyer.postcode }} {{ buyer.country }}</td>
+                </tr>
+                {% endif %}
+                
+                {% if buyer.phone %}
+                <tr>
+                    <td>{{ buyer.phone }}</td>
+                </tr>
+                {% endif %}
+
+            </table>
+        </div>
+
+        <div class="clear"></div>
+        </div>
+
+        {#
+        <div class="grid_12 alpha omega" id="invoice_status">
+            <img src="{{theme.url}}images/invoice_status_{{invoice.status }}.png" alt="{{invoice.status }}"/>
+            <h2 class="{{invoice.status }}">{% if invoice.status == 'unpaid' %}{% trans 'Unpaid' %}{% else %}{% trans 'Paid' %}{% endif %}</h2>
+        </div>
+        #}
+        <table class="with-border">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>{% trans 'Title' %}</th>
+                    <th class="currency">{% trans 'Price' %}</th>
+                    <th class="currency">{% trans 'Total' %}</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for i, item in invoice.lines %}
+
+                <tr class="{{ cycle(['odd', 'even'], i) }}">
+                    <td>{{ i+1 }}.</td>
+                    <td>
+                        {% if item.order_id%}
+                        <a href="{{ '/service'|link }}/manage/{{item.order_id}}">{{ item.title }}</a>
+                        {% else %}
+                        {{ item.title }}
+                        {% endif %}
+                    </td>
+                    <td class="currency">
+                        {{ mf.currency_format( item.price, invoice.currency) }}
+                        {% if item.quantity > 1 %}
+                        x {{ item.quantity }} {# item.unit #}
+                        {% endif %}
+                    </td>
+                    <td class="currency">{{ mf.currency_format( item.total, invoice.currency) }}</td>
+                </tr>
+
+                {% endfor %}
+            </tbody>
+
+            <tfoot>
+            {% if invoice.tax > 0 %}
+                <tr>
+                    <th colspan="3">{{ invoice.taxname }} {{ invoice.taxrate }}%</th>
+                    <th class="currency">{{ mf.currency_format( invoice.tax, invoice.currency) }}</th>
+                </tr>
+            {% endif %}
+            
+            {% if invoice.discount > 0 %}
+                <tr>
+                    <th colspan="3">{% trans 'Discount' %}</th>
+                    <th class="currency">{{ mf.currency_format( invoice.discount, invoice.currency) }}</th>
+                </tr>
+            {% endif %}
+            {% if invoice.status == 'paid' %}
+                <tr class="total">
+                    <th colspan="3">{% trans 'Total' %}</th>
+                    <th class="currency">{{ mf.currency_format( invoice.total, invoice.currency) }}</th>
+                </tr>
+            </tfoot>
+            {% endif %}
+        </table>
+
+        {% if invoice.status == 'unpaid' %}
+        <div class="grid_8 alpha">
+            <div class="box">
+                <div class="block pricing">
+                    {# One time payments #}
+                    {% for gtw in guest.invoice_gateways %}
+                        {% if gtw.allow_single and invoice.currency in gtw.accepted_currencies %}
+                        <label class="gateway">
+                            <input type="radio" name="gateway" value="{{ '/banklink'|link }}/{{ invoice.hash }}/{{gtw.id}}" data-api-id="{{gtw.id}}" data-api-r="0"/>
+                            {% trans 'Pay by' %} {{gtw.title}}
+                        </label>
+                        {% endif %}
+
+                        {# Subscriptions #}
+                        {% if invoice.subscribable and gtw.allow_recurrent and invoice.currency in gtw.accepted_currencies %}
+                        <label class="gateway">
+                            <input type="radio" name="gateway" value="{{ '/banklink'|link }}/{{ invoice.hash }}/{{gtw.id}}?subscription=1" data-api-id="{{gtw.id}}" data-api-r="1"/>
+                            {% trans 'Subscribe with' %} {{gtw.title}}
+                        </label>
+                        {% endif %}
+                    {% endfor %}
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid_4 omega">
+            <div class="box">
+                <div class="block pricing">
+                    <p>{% trans 'Total:' %}</p>
+                    <div class="currency">{{ mf.currency_format( invoice.total, invoice.currency) }}</div>
+                    <button class="bb-button bb-button-submit bb-button-big" type="submit" id="pay-now-button">{% trans 'Pay now' %}</button>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        <div class="clear"></div>
+    </div>
+</div>
+
+{# This is client specific TOS #}
+<div class="h-block" id="invoice-block">
+    <div class="h-block-header">
+        <div class="icon"><span class="big-light-icon i-invoice"></span></div>
+        <h2>{% trans 'Client specific terms and conditions' %}</h2>
+        <p>{% trans 'You agree with these terms and conditions.' %}</p>
+    </div>
+    <div class="block">
+
+    <div class="box">
+    <div class="block">
+
+{% filter markdown %}
+    {{ client.client_get.custom_1 }}
+{% endfilter %}
+    </div>
+    </div>
+    </div>
+</div>
+
+{# This is you custom TOS #}
+<div class="h-block" id="invoice-block">
+    <div class="h-block-header">
+        <div class="icon"><span class="big-light-icon i-invoice"></span></div>
+        <h2>{% trans 'General Terms and conditions' %}</h2>
+        <p>{% trans 'You agree with these terms and conditions.' %}</p>
+    </div>
+    <div class="block">
+
+    <div class="box">
+    <div class="block">
+
+{% filter markdown %}
+
+Pid aliquam sociis! Et mus porta urna facilisis sagittis! Nisi ultricies vut elementum! Cursus magnis etiam lectus mattis arcu in. Hac adipiscing pellentesque? Natoque magna magna. A nisi egestas, augue. Amet pellentesque! Lorem tortor lundium! Integer porttitor sed sed, etiam velit proin nunc ultricies. Ultricies duis pellentesque? Vut. Natoque montes urna pid nisi, pulvinar turpis! Nunc in et et integer ultricies scelerisque proin magna, mus, in, ut augue turpis, eros in? Urna massa, elementum! Porta, sed ultrices habitasse pulvinar egestas, odio platea habitasse natoque? Augue porttitor in diam, purus magna et urna vel placerat sagittis! Adipiscing porta, scelerisque elementum platea auctor pulvinar lundium. Sagittis urna! Sed placerat! Lectus tempor elementum, dapibus cras et? Integer sit sed ut in penatibus.
+
+Mus ultrices magna placerat amet, aliquam in placerat. Nisi pulvinar natoque? Duis nunc cum augue urna nisi, placerat enim, et! Cum sit enim mus placerat rhoncus lundium aliquet nec, rhoncus elit, mid porttitor magnis vel purus etiam magna lectus, mattis auctor vut et cum a et et. Mus elementum. Vel in aliquam massa, quis ac a scelerisque sed urna ut? Arcu phasellus eu! Sed eu dis augue? Nascetur augue vut risus vel ultricies risus, cum, dapibus dis penatibus urna, dignissim urna natoque, dolor? Mid purus. Scelerisque montes ultricies montes? Vel velit vel ac ut aenean, mauris urna enim tristique facilisis ultrices in pid! Tincidunt! Turpis! Placerat aliquet, auctor enim, etiam, habitasse. Tincidunt velit platea ridiculus sed vut porta tincidunt.
+
+Odio facilisis nascetur sociis lundium etiam turpis hac eros turpis sociis, porta integer turpis arcu magna risus. Pulvinar sed diam in augue velit, dignissim, in. Ac? Et. Porttitor sed, pid, auctor purus vel sagittis amet, nunc hac magnis? Dignissim ultrices nascetur, sociis lectus massa, porttitor, dignissim ultricies, etiam vel amet platea ut mus, et! Ultricies. Mid placerat! Augue eu! Dignissim adipiscing ac ridiculus! Turpis. Elementum et pulvinar, duis odio vel nisi adipiscing nascetur. Quis nec et pid integer, porttitor, elit tincidunt nec pulvinar rhoncus augue. Urna penatibus, ac velit, mid vut tortor velit, phasellus! In! Dignissim pulvinar tincidunt etiam porta lacus vel a! Mid adipiscing elementum porta! Et penatibus turpis placerat a massa in, integer. Penatibus, urna elit turpis.
+
+Magnis integer. In rhoncus pulvinar turpis natoque mid! Tincidunt. Nisi aenean augue, magnis in, in ac diam vel phasellus a non purus tristique! Amet! Proin amet egestas nec ut, pulvinar proin! Adipiscing est vel, et. Proin. Sit a adipiscing? Adipiscing nisi. Nec diam a, augue pellentesque aliquam diam! In etiam, cum sed porttitor? Augue magna nec sociis hac lorem! Enim enim ultrices pid? Eu tincidunt amet a duis lacus, aliquam, sit purus turpis cras tincidunt! Enim. Proin a ac eros, platea platea turpis et odio mus! Rhoncus! Scelerisque augue. Dis. Lorem ridiculus magna aliquet et ultricies purus vel pellentesque velit et, rhoncus purus nec, vel risus natoque! Sed turpis hac, sagittis pid nisi! Rhoncus. In penatibus sociis? Placerat tempor.
+{% endfilter %}
+    </div>
+    </div>
+    </div>
+</div>
+
+<div id="gateway-html-container"></div>
+<div class="clear"></div>
+
+{% set transactions = client.invoice_transaction_get_list({"invoice_id":invoice.id,"per_page":100 }).list %}
+
+{% if transactions|length > 0 %}
+
+<div class="widget">
+    <div class="head">
+        <h2 class="dark-icon i-payment">{% trans 'Transactions' %}</h2>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>{% trans 'Transaction Date' %}</th>
+                <th>{% trans 'Transaction ID' %}</th>
+                <th>{% trans 'Gateway' %}</th>
+                <th>{% trans 'Amount' %}</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for i, tx in transactions %}
+            <tr class="{{ cycle(['odd', 'even'], i) }}">
+                <td>{{tx.created_at|date('l, d F Y')}}</td>
+                <td>{{tx.txn_id}}</td>
+                <td>{{tx.gateway|default('-')}}</td>
+                <td>{{ mf.currency_format( tx.amount, tx.currency) }}</td>
+            </tr>
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+</div>
+
+{% endif %}
+
+
+{% endblock %}
+
+{% block sidebar2 %}
+
+<div class="widget">
+    <div class="head">
+        <h2 class="dark-icon i-services">{% trans 'Actions' %}</h2>
+    </div>
+    <div class="block">
+        <button class="bb-button" type="button" onclick="window.print()"><span class="dark-icon i-print"></span> {% trans 'Print' %}</button>
+        {% if invoice.status == 'unpaid' %}
+        <a class="bb-button api" href="client/invoice/delete?hash={{invoice.hash}}" data-api-redirect="{{ 'invoice'|link }}"><span class="dark-icon i-bin"></span> {% trans 'Delete' %}</a>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block js %}
+{% autoescape true js %}
+<script type="text/javascript">
+$(function() {
+    $('input[name=gateway]:first').attr('checked', true);
+    $('#pay-now-button').click(function(){
+        var obj = $('input[name=gateway]:checked')
+        api.post('guest/invoice/payment', {hash:"{{ invoice.hash }}", gateway_id:obj.attr('data-api-id')}, function(result){
+            var link = obj.val();
+            $('#gateway-html-container').load(link);
+        });
+        return false;
+    });
+});
+</script>
+{% endautoescape %}
+{% endblock %}

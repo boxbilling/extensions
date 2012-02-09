@@ -1,0 +1,13 @@
+{
+    "name": "My Own BoxBilling theme",
+    "version": "1.0.1",
+    "description": "Shows BoxBilling theme extensions posibilities",
+    "icon": "screenshot.jpg",
+    "author": "BoxBilling",
+    "author_url": "http://extensions.boxbilling.com/",
+    "meta_title": "Billing and client management software",
+    "meta_description": "Billing and client management software",
+    "meta_keywords": "free billing software, billing software",
+
+    "extends": "boxbilling"
+}
