@@ -1,0 +1,347 @@
+{% extends request.ajax ? "layout_blank.phtml" : "layout_default.phtml" %}
+
+{% import "macro_functions.phtml" as mf %}
+
+{% block meta_title %}{%trans 'Order confirm' %}{% endblock %}
+
+{% block content_before %}
+{% include "partial_steps.phtml" with {'selected': 3} %}
+{% endblock %}
+
+{% set cart = guest.cart_get %}
+
+{% block content %}
+
+{% if cart.items|length > 0 %}
+<div id="shopping-cart">
+    <div class="h-block">
+        <div class="h-block-header">
+            <div class="icon"><span class="number">3</span></div>
+            <h2>{% trans 'Order confirmation' %}</h2>
+            <p>{% trans 'These are the products you have selected' %}</p>
+        </div>
+        <div class="block">
+            <table class="with-border">
+                <thead>
+                    <tr>
+                        <th>{% trans 'Product' %}</th>
+                        <th>{% trans 'Period' %}</th>
+                        <th class="currency">{% trans 'Price' %}</th>
+                    </tr>
+                 </thead>
+
+                 <tbody>
+                    {% for i, item in cart.items %}
+                    <tr class="{{ cycle(['odd', 'even'],i) }}">
+                        <td>
+                            {{ item.title }}
+                            {% if item.quantity > 1 %}
+                            x {{ item.quantity }}
+                            {% endif %}
+                        </td>
+                        <td>{{ mf.period_name(item.period) }}</td>
+                        <td class="currency">
+                            {% if item.discount %}
+                                <del>{{ mf.currency(item.price, cart.currency.code) }}</del>
+                                {{ mf.currency(item.price - item.discount, cart.currency.code) }}
+                            {% else %}
+                                {{ mf.currency(item.price, cart.currency.code) }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% if item.setup_price != 0 %}
+                    <tr>
+                        <td>{{ item.title }} {% trans 'setup' %}</td>
+                        <td>-</td>
+                        <td class="currency">{{ mf.currency(item.setup_price, cart.currency.code) }}</td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                 </tbody>
+
+                 <tfoot>
+                    {# if cart.discount%}
+                    <tr>
+                        <th colspan="2">{% trans 'Discount:' %}</th>
+                        <td class="currency">{{ mf.currency(cart.discount, cart.currency.code) }}</td>
+                    </tr>
+                    {% endif #}
+                </tfoot>
+            </table>
+
+            <div class="grid_6 suffix_2 alpha">
+                <div class="box">
+                    <div class="block">
+                        <form action="" method="post" id="apply-promo">
+                            <fieldset>
+                                <input type="text" name="promocode" value="{{ request.promocode|default(cart.promocode) }}" required="required" placeholder="{% trans 'Have a promo code?' %}">
+                                <input class="bb-button bb-button-submit" type="submit" value="{% trans 'Apply' %}">
+                                <button class="bb-button" type="button" id="remove-promo" {% if cart.promocode == NULL %}style="display:none;"{% endif %}>{% trans 'Reset' %}</button>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="grid_4 omega">
+                <div class="box">
+                    <div class="block pricing">
+                        <p>{% trans 'Total:' %}</p>
+                        <div class="currency">{{ mf.currency(cart.total, cart.currency.code) }}</div>
+                        <button class="bb-button bb-button-submit bb-button-big" type="button" id="checkout-button{% if client %}-logged-in{% endif %}">{% trans 'Checkout' %}</button>
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>
+<div style="display:none;" id="login-block">
+
+    <div class="h-block">
+        <div class="h-block-header">
+            <div class="icon"><span class="big-light-icon i-profile"></span></div>
+            <h2>{{ 'Sign In / Create new account' }}</h2>
+        </div>
+        <div class="block">
+            <div class="splitter">
+            <div class="grid_6 alpha">
+                <div class="box">
+                    <div class="block">
+                        <h2>{% trans 'Sign in' %}</h2>
+                        <form action="" method="post" id="client-login">
+                            <fieldset>
+                                <legend>{% trans 'Login to client area' %}</legend>
+                                <p>
+                                    <label>{% trans 'Email Address' %}: </label>
+                                    <input type="email" name="email" value="{{ request.email }}" required="required">
+                                </p>
+                                <p>
+                                    <label>{% trans 'Password' %}: </label>
+                                    <input type="password" name="password" value="" required="required">
+                                </p>
+                                <input class="bb-button bb-button-submit" type="submit" value="{% trans 'Login' %}">
+                                <a class="bb-button" href="{{ 'reset-password'|link }}">{% trans 'Reset password' %}</a>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid_6 omega">
+
+                {% if not request.register %}
+                <div class="box">
+                    <h2>{% trans 'Do not have an account yet?' %}</h2>
+                    <div class="block">
+                        <a class="bb-button bb-button-red bb-button-big" href="#" onclick="$(this).parents('.box').hide(); $('#register-new-account').fadeIn(); return false;" style="margin: 30px 0 0 50px;">{% trans 'Register' %}</a>
+                    </div>
+                </div>
+                {% endif %}
+
+                <div class="box" id="register-new-account" {% if not request.register %}style="display: none;"{% endif %} >
+                        <h2>{% trans 'Enter your details below' %}</h2>
+                        <div class="block">
+                            <form action="" method="post" id="create-profile">
+                            <fieldset>
+                                    <legend>{% trans 'Create new profile' %}</legend>
+                                    <p>
+                                        <label>{% trans 'Email Address' %}: </label>
+                                        <input type="email" name="email" value="{{ request.email }}" required="required" id="reg-email">
+                                    </p>
+                                    <p>
+                                        <label>{% trans 'Company' %}: </label>
+                                        <input type="text" name="company" value="{{ request.company }}" required="required">
+                                    </p>
+                                    <p>
+                                        <label>{% trans 'First Name' %}: </label>
+                                        <input type="text" name="first_name" value="{{ request.first_name }}" required="required">
+                                    </p>
+                                    <p>
+                                        <label>{% trans 'Last Name' %}: </label>
+                                        <input type="text" name="last_name" value="{{ request.last_name }}" required="required">
+                                    </p>
+
+                                    <p>
+                                        <label>{% trans 'Address' %}: </label>
+                                        <input type="text" name="address_1" value="{{ request.address_1 }}">
+                                    </p>
+                                    <p>
+                                        <label>{% trans 'Address 2' %}: </label>
+                                        <input type="text" name="address_2" value="{{ request.address_2 }}">
+                                    </p>
+                                    <p>
+                                        <label>{% trans 'City' %}: </label>
+                                        <input type="text" name="city" value="{{ request.city }}">
+                                    </p>
+                                    <p>
+                                        <label>{% trans 'Country' %}: </label>
+                                        {{ mf.selectbox('country', guest.system_countries, profile.country, 0, 'Select country') }}
+                                    </p>
+                                    <p>
+                                        <label>{% trans 'State' %}: </label>
+                                         {{ mf.selectbox('state', guest.system_states, profile.state, 0, 'Select state') }}
+                                    </p>
+                                    <p>
+                                        <label>{% trans 'Zip/Postal Code' %}: </label>
+                                        <input type="text" name="postcode" value="{{ profile.postcode }}">
+                                    </p>
+                                    
+                                    <p>
+                                        <label>{% trans 'Phone Country Code' %}: </label>
+                                        <input type="text" name="phone_cc" value="{{ request.phone_cc }}">
+                                    </p>
+                                    <p>
+                                        <label>{% trans 'Phone Number' %}: </label>
+                                        <input type="text" name="phone" value="{{ request.phone }}">
+                                    </p>
+
+                                    <p>
+                                        <label>{% trans 'Password' %}: </label>
+                                        <input type="password" name="password" value="" required="required" id="reg-password">
+                                    </p>
+                                    <p>
+                                        <label>{% trans 'Password confirm' %}: </label>
+                                        <input type="password" name="password_confirm" value="" required="required">
+                                    </p>
+
+                                    {% if guest.system_param({"key":"captcha_enabled"}) %}
+                                    {{ mf.recaptcha }}
+                                    {% endif %}
+
+                                    <input class="bb-button bb-button-red" type="submit" value="{% trans 'Register' %}">
+                                </fieldset>
+                            </form>
+                            </div>
+                        </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        </div>
+    </div>
+
+</div>
+
+{% else %}
+
+<div class="h-block">
+    <div class="h-block-header">
+        <div class="icon"><span class="number">3</span></div>
+        <h2>{% trans 'You have not selected any product' %}</h2>
+    </div>
+    <div class="block">
+
+        <div class="box">
+            <a class="bb-button bb-button-red" href="{{ 'order'|link }}">{% trans 'Order new service' %}</a>
+        </div>
+        
+    </div>
+</div>
+
+{% endif %}
+{% endblock %}
+
+{% block sidebar2 %}
+    {% include 'partial_currency.phtml' %}
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+$(function() {
+
+    $('#apply-promo').bind('submit', function(){
+        api.post(
+            'guest/cart/apply_promo',
+            $(this).serialize(),
+            function(result) {
+                bb.reload();
+            }
+        );
+        return false;
+    });
+
+    $('#checkout-button-logged-in').bind('click', function(){
+        api.post(
+            'client/cart/checkout',
+            $(this).serialize(),
+            function(result) {
+                if(result.invoice_hash) {
+                    bb.redirect('{{"invoice"|link}}' + '/' + result.invoice_hash );
+                } else {
+                    bb.redirect('{{"service/manage"|link}}' + '/' + result.order_id );
+                }
+            }
+        );
+        return false;
+    });
+
+    $('#checkout-button').bind('click', function(){
+        $('#shopping-cart').slideUp();
+        $('#login-block').fadeIn();
+        return false;
+    });
+
+    $('#remove-promo').bind('click', function(){
+        api.post(
+            'guest/cart/remove_promo',
+            $(this).serialize(),
+            function(result) {
+                bb.reload();
+            }
+        );
+        return false;
+    });
+
+    $(window).delegate('#client-login','submit',function(){
+        api.post(
+            'guest/client/login',
+            $(this).serialize(),
+            function(result) {
+                api.post(
+                    'client/cart/checkout',
+                    $(this).serialize(),
+                    function(result) {
+                        if(result.invoice_hash) {
+                            bb.redirect('{{"invoice"|link}}' + '/' + result.invoice_hash );
+                        } else {
+                            bb.redirect('{{"service/manage"|link}}' + '/' + result.order_id );
+                        }
+                    }
+                );
+            }
+        );
+        return false;
+    });
+
+    $(window).delegate('#create-profile', 'submit', function(){
+        api.post(
+            'guest/client/create',
+            $(this).serialize(),
+            function(result) {
+                var login_details = {
+                    email: $('#reg-email').val(),
+                    password: $('#reg-password').val(),
+                };
+                api.post(
+                    'guest/client/login',
+                    login_details,
+                    function(result) {
+                        api.post(
+                            'client/cart/checkout',
+                            $(this).serialize(),
+                            function(result) {
+                                if(result.invoice_hash) {
+                                    bb.redirect('{{"invoice"|link}}' + '/' + result.invoice_hash );
+                                } else {
+                                    bb.redirect('{{"service/manage"|link}}' + '/' + result.order_id );
+                                }
+                            }
+                        );
+                    }
+                );
+            }
+        );
+        return false;
+    });
+});
+</script>
+{% endblock %}
