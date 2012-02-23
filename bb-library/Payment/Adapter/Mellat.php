@@ -95,11 +95,10 @@ class Payment_Adapter_Mellat extends Payment_AdapterAbstract
             'localDate'     => date('Ynd'),
             'localTime'     => date('His'),
             'additionalData'=> $invoice->getTitle(),
-//            'callBackUrl'   => $this->getParam('notify_url'),
-            'callBackUrl'   => $this->getParam('return_url'),
+            'callBackUrl'   => $this->getParam('redirect_url'),
             'payerId'       => "0",
         );
-        
+
         $client = $this->_getSoapClient();
         $result = $client->bpPayRequest($parameters);
         $res = explode (',', $result->return);
@@ -133,6 +132,7 @@ class Payment_Adapter_Mellat extends Payment_AdapterAbstract
         $client = $this->_getSoapClient();
         
         $Pay_Status             = 'FAIL';
+        
         $terminalId             = $this->getParam('terminalId');
         $userName               = $this->getParam('userName');
         $userPassword           = $this->getParam('userPassword');
