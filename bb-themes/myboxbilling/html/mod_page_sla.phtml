@@ -1,0 +1,28 @@
+{% extends request.ajax ? "layout_blank.phtml" : "layout_default.phtml" %}
+{% block meta_title %}{% trans 'SLA' %}{% endblock %}
+
+{% block content %}
+
+<div class="h-block">
+    <div class="h-block-header">
+        <div class="icon"><span class="big-light-icon i-quote"></span></div>
+        <h2>{% trans 'Service License Agreement' %}</h2>
+    </div>
+    <div class="block">
+        <div class="box">
+{% filter markdown %}
+Pulvinar eu. Diam proin, tristique, odio dignissim enim, urna auctor porta nec facilisis tortor, est aenean tortor lundium, odio in a cursus. Porta! Augue cursus, dolor parturient rhoncus? Amet scelerisque odio non duis in porta, magna, dapibus magna cursus? Ut diam dignissim adipiscing augue nec elit, platea a, enim duis tristique duis, purus et a? Nunc eros vel, mauris vut.
+
+Habitasse scelerisque integer. Parturient cursus, augue sociis purus odio eu placerat, ultrices ultrices sociis? Rhoncus est, lorem. Sit egestas! Montes mid tempor elit? Sociis! Nunc nisi aliquam, amet cursus! Elit, adipiscing aliquam phasellus massa porttitor. Nunc scelerisque? Parturient sit dolor porttitor tortor, sociis? Nunc, dictumst et amet, nascetur nec, ac, auctor. Cursus vel integer porttitor porta, augue aliquet dapibus.
+
+Mus, nascetur. Augue aliquet vel. Ultricies placerat, et eros porttitor rhoncus pulvinar dignissim nunc penatibus pulvinar vel dictumst velit hac velit cursus montes. Phasellus habitasse rhoncus in! Penatibus et porttitor turpis et amet nisi habitasse! Porta a sociis cursus, pid aenean? Sit cursus turpis proin a nisi? Proin lorem cum aenean eros enim! Ut augue eu sit ac adipiscing.
+
+Ac, mus ut sit turpis, cras? Magna velit turpis arcu ac et nascetur placerat, adipiscing pulvinar et parturient cum, facilisis magna auctor rhoncus sit etiam adipiscing. Sed, adipiscing hac. Montes turpis ultrices vel sed mid! Cum adipiscing in risus, nunc lundium ac et, scelerisque, integer phasellus, nec dignissim pulvinar. Lacus! Nascetur, duis, turpis, auctor turpis elementum turpis, dignissim, purus.
+
+Odio arcu in platea magna ut, et elit pulvinar nisi integer? Tempor aliquet, aliquam dis, pellentesque et cras enim, enim scelerisque amet turpis! Placerat pid nisi tincidunt a et dapibus enim risus dignissim egestas a velit cras mauris et, a vut nunc? Dolor magna tristique hac magna, eros tristique, risus duis, purus nisi vel. Ac porta augue tincidunt mattis.
+{% endfilter %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
