@@ -1,0 +1,1049 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: BoxBilling RC 2.2.x\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2012-02-06 20:26+0100\n"
+"Last-Translator: \n"
+"Language-Team: Rhys\n"
+"Language: English\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-Language: Spanish\n"
+"X-Poedit-Country: SPAIN\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+msgid "Error"
+msgstr "Error"
+
+msgid "Client Area"
+msgstr "Área de Clientes"
+
+msgid "Tickets waiting your reply"
+msgstr "Tickets esperando su respuesta"
+
+msgid "Id"
+msgstr "Id"
+
+msgid "Subject"
+msgstr "Asunto"
+
+#, fuzzy
+msgid "Helpdesk"
+msgstr "Departamento"
+
+msgid "Status"
+msgstr "Estado"
+
+msgid "Submited"
+msgstr "Enviado"
+
+msgid "The list is empty"
+msgstr "La lista está vacía"
+
+msgid "Profile"
+msgstr "Perfil"
+
+msgid "ID"
+msgstr "ID"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Balance"
+msgstr "Balance"
+
+msgid "Manage profile"
+msgstr "Gestionar perfil"
+
+msgid "Invoices"
+msgstr "Facturas"
+
+msgid "Total"
+msgstr "Total"
+
+msgid "Paid"
+msgstr "Pagada"
+
+msgid "Unpaid"
+msgstr "Sin Pagar"
+
+msgid "All Invoices"
+msgstr "Todas las Facturas"
+
+msgid "Services"
+msgstr "Mis servicios"
+
+msgid "Active"
+msgstr "Activo"
+
+msgid "Soon expires"
+msgstr "Próximo a vencimiento"
+
+msgid "All services"
+msgstr "Todos los servicios"
+
+msgid "New order"
+msgstr "Nuevo pedido"
+
+msgid "Tickets"
+msgstr "Tickets"
+
+msgid "Open"
+msgstr "Abierto"
+
+msgid "On Hold"
+msgstr "En espera"
+
+msgid "All tickets"
+msgstr "Todos los tickets"
+
+msgid "New ticket"
+msgstr "Nuevo ticket"
+
+msgid "Recent orders"
+msgstr "Pedidos recientes"
+
+msgid "Recent emails"
+msgstr "Emails recientes"
+
+msgid "ago"
+msgstr "hace"
+
+msgid "Order"
+msgstr "Pedido"
+
+msgid "Anouncements"
+msgstr "Anuncios"
+
+msgid "Register"
+msgstr "Registrarme"
+
+msgid "Contact Us"
+msgstr "Contacto"
+
+msgid "Knowledge Base"
+msgstr "Centro de ayuda"
+
+msgid "Billing Software"
+msgstr "Software de Facturación"
+
+msgid "Dashboard"
+msgstr "Inicio"
+
+msgid "Shopping cart"
+msgstr "Carro de la compra"
+
+msgid "Sign out"
+msgstr "Salir"
+
+msgid "Login to client area"
+msgstr "Área de Clientes"
+
+msgid "Email Address"
+msgstr "Dirección de Email"
+
+msgid "Password"
+msgstr "Contraseña"
+
+msgid "Sign in"
+msgstr "Acceder"
+
+msgid "Popular articles"
+msgstr "Artículos populares"
+
+#, fuzzy
+msgid "Recent posts"
+msgstr "Publicaciones recientes"
+
+msgid "Forum topics"
+msgstr "Temas del Foro"
+
+msgid "Incorrect please try again"
+msgstr "Incorrecto, por favor vuelva a intentarlo"
+
+#, fuzzy
+msgid "Enter the words above"
+msgstr "Introduzca las palabras anteriores"
+
+msgid "Forum"
+msgstr "Foro"
+
+#, fuzzy
+msgid "Thread / Thread Starter"
+msgstr "Tema / Autor"
+
+msgid "Last post"
+msgstr "Último mensaje"
+
+msgid "Replies"
+msgstr "Respuestas"
+
+msgid "Views"
+msgstr "Vistas"
+
+msgid "by"
+msgstr "por"
+
+msgid "Forum list"
+msgstr "Lista de Foros"
+
+msgid "New topic"
+msgstr "Nuevo tema"
+
+msgid "Start new topic in"
+msgstr "Comenzar nuevo tema en"
+
+msgid "Start new topic"
+msgstr "Start new topic"
+
+msgid "Topic title"
+msgstr "Título del tema"
+
+msgid "Topic message"
+msgstr "Mensaje del tema"
+
+msgid "Create new topic"
+msgstr "Crear un nuevo tema"
+
+msgid "Welcome to our forums. If you wish to become a member and post, you have to be registered member."
+msgstr "Bienvenido a nuestros foros. Si desea convertirse en un miembro, tiene que estar registrado."
+
+msgid "Threads"
+msgstr "Temas"
+
+msgid "Posts"
+msgstr "Mensajes"
+
+msgid "Forums are closed"
+msgstr "Los Foros están cerrados"
+
+msgid "Topic information"
+msgstr "Información del Tema"
+
+msgid "Topic"
+msgstr "Tema"
+
+msgid "Started By"
+msgstr "Iniciado por"
+
+msgid "Messages"
+msgstr "Mensajes"
+
+msgid "Since"
+msgstr "Desde"
+
+msgid "Back to threads list"
+msgstr "Volver a la lista de temas"
+
+msgid "Reply"
+msgstr "Respuesta"
+
+msgid "Quote"
+msgstr "Cita"
+
+msgid "Post new message in forum"
+msgstr "Publicar un nuevo mensaje en el foro"
+
+#, fuzzy
+msgid "Post"
+msgstr "Publicar"
+
+msgid "No replies in this topic"
+msgstr "No hay respuestas en este tema"
+
+msgid "Processing payment ..."
+msgstr "Procesando pago ..."
+
+msgid "Payment"
+msgstr "Pago"
+
+msgid "Instructions to make payment"
+msgstr "Instrucciones para hacer el pago"
+
+msgid "Redirecting to payment gateway.."
+msgstr "Redirigiendo a la pasarela de pago ..."
+
+msgid "Please click here to continue if this page does not redirect automatically"
+msgstr "Haga clic aquí para continuar si esta página no le redirige automáticamente"
+
+msgid "Please wait ..."
+msgstr "Por favor, espere ..."
+
+msgid "List of invoices"
+msgstr "Listado de facturas"
+
+msgid "Invoice management"
+msgstr "Gestión de facturas"
+
+msgid "Title"
+msgstr "Título"
+
+msgid "Issue Date"
+msgstr "Fecha de emisión"
+
+msgid "Due Date"
+msgstr "Fecha de Vencimiento"
+
+msgid "Pay"
+msgstr "Pagar"
+
+msgid "Paid at"
+msgstr "Pagada el"
+
+msgid "Proforma invoice"
+msgstr "Factura Proforma"
+
+msgid "Proforma Invoice"
+msgstr "Factura Proforma"
+
+msgid "Please choose payment type and pay for your chosen products."
+msgstr "Por favor, elija el modo de pago para los productos solicitados"
+
+msgid "Invoice"
+msgstr "Factura Proforma"
+
+#, fuzzy
+msgid "Invoice is paid"
+msgstr "Factura pagada"
+
+msgid "Price"
+msgstr "Precio"
+
+msgid "Discount"
+msgstr "Descuento"
+
+msgid "Pay by"
+msgstr "Pagar con"
+
+msgid "Subscribe with"
+msgstr "Suscríbase con"
+
+msgid "Total:"
+msgstr "Total:"
+
+msgid "Pay now"
+msgstr "Pagar ahora"
+
+msgid "Transactions"
+msgstr "Transacciones"
+
+msgid "Transaction Date"
+msgstr "Fecha de la Transación"
+
+msgid "Transaction ID"
+msgstr "Transacción Nº"
+
+msgid "Gateway"
+msgstr "Pasarela"
+
+msgid "Amount"
+msgstr "Cantidad"
+
+msgid "Actions"
+msgstr "Acciones"
+
+msgid "Print"
+msgstr "Imprimir"
+
+msgid "Delete"
+msgstr "Borrar"
+
+msgid "Back to list"
+msgstr "Volver a la lista"
+
+msgid "Similiar articles"
+msgstr "Artículos similares"
+
+msgid "Knowledge base categories"
+msgstr "Categorías del Centro de Ayuda"
+
+msgid "Knowledge base"
+msgstr "Centro de Ayuda"
+
+msgid "What are you looking for?"
+msgstr "¿Qué está buscando?"
+
+msgid "Search"
+msgstr "Buscar"
+
+msgid "Try using other keyword. No matches not for keyword:"
+msgstr "No coincide con la palabra clave, inténtelo con otra diferente:"
+
+msgid "Blog"
+msgstr "Blog"
+
+msgid "News & Announcements"
+msgstr "Noticias & Anuncios"
+
+msgid "Track our latest posts"
+msgstr "Siga nuestras últimas publicaciones"
+
+msgid "Read more.."
+msgstr "Leer más..."
+
+msgid "by "
+msgstr "por "
+
+#, fuzzy
+msgid "Order confirm"
+msgstr "Orden de confirmar"
+
+msgid "Order confirmation"
+msgstr "Confirmación de la orden"
+
+msgid "These are the products you have selected"
+msgstr "Estos son los productos que ha seleccionado"
+
+msgid "Product"
+msgstr "Producto"
+
+msgid "Period"
+msgstr "Periodo"
+
+msgid "setup fee"
+msgstr "Precio Configuración"
+
+msgid "Discount:"
+msgstr "Descuento:"
+
+msgid "Have a promo code?"
+msgstr "¿Tiene un código promocional?"
+
+msgid "Apply"
+msgstr "Aplicar"
+
+msgid "Reset"
+msgstr "Reiniciar"
+
+msgid "Checkout"
+msgstr "Pagar"
+
+msgid "Login"
+msgstr "Identificarse"
+
+msgid "Reset password"
+msgstr "Restablecer contraseña"
+
+msgid "Do not have an account yet?"
+msgstr "¿No tiene una cuenta?"
+
+msgid "Enter your details below"
+msgstr "Indique sus datos a continuación"
+
+msgid "Create new profile"
+msgstr "Crear nuevo perfil"
+
+msgid "First Name"
+msgstr "Nombre"
+
+msgid "Last Name"
+msgstr "Apellidos"
+
+msgid "Password confirm"
+msgstr "Confirmar contraseña"
+
+msgid "You have not selected any product"
+msgstr "No ha seleccionado ningún producto"
+
+msgid "Order new service"
+msgstr "Solicitar nuevo servicio"
+
+msgid "Login / Sign up"
+msgstr "Identificarse / Registrarse"
+
+msgid "Company"
+msgstr "Empresa"
+
+msgid "Profile details"
+msgstr "Detalles del perfil"
+
+msgid "Keep your profile up to date"
+msgstr "Mantenga su perfil actualizado"
+
+msgid "Phone Country Code"
+msgstr "Código Telefónico de País"
+
+msgid "Phone Number"
+msgstr "Número de Teléfono"
+
+#, fuzzy
+msgid "Update profile"
+msgstr "Actualización del perfil"
+
+msgid "Enter new password"
+msgstr "Escriba la nueva contraseña"
+
+msgid "Change password"
+msgstr "Cambiar contraseña"
+
+msgid "Number test"
+msgstr "Número de prueba"
+
+msgid "Gravatar"
+msgstr "Gravatar"
+
+msgid "Change your avatar at"
+msgstr "Cambie su avatar en"
+
+msgid "Payments history"
+msgstr "Pagos"
+
+msgid "Here you can track your payments you have made and what you have been charged for"
+msgstr "Aquí puede consultar los pagos que ha realizado y los cargos que ha tenido"
+
+msgid "Description"
+msgstr "Descripción"
+
+msgid "Date"
+msgstr "Fecha"
+
+msgid "Add Funds"
+msgstr "Añadir Fondos"
+
+msgid "Add funds in advance"
+msgstr "Añadir fondos por adelantado"
+
+msgid "You can add funds to your account if you have active order."
+msgstr "Puede agregar fondos a su cuenta si tiene una orden activa."
+
+msgid "Add funds"
+msgstr "Añadir fondos"
+
+msgid "Back to emails"
+msgstr "Volver a emails"
+
+msgid "Details"
+msgstr "Detalles"
+
+msgid "From"
+msgstr "De"
+
+msgid "To"
+msgstr "Para"
+
+msgid "Sent"
+msgstr "Enviado"
+
+msgid "Resend"
+msgstr "Reenviar"
+
+msgid "Emails"
+msgstr "Emails"
+
+msgid "Emails we have sent you"
+msgstr "Emails que le hemos enviado"
+
+msgid "Here you can track emails we have sent you"
+msgstr "Aquí puede revisar los correos electrónicos que le hemos enviado"
+
+msgid "Email subject"
+msgstr "Asunto del Email "
+
+msgid "Date sent"
+msgstr "Fecha de envío"
+
+msgid "Change Password"
+msgstr "Cambiar Contraseña"
+
+msgid "Currency"
+msgstr "Moneda"
+
+msgid "Company Name"
+msgstr "Nombre de la Empresa"
+
+msgid "Address"
+msgstr "Dirección"
+
+msgid "Address 2"
+msgstr "Dirección 2"
+
+msgid "City"
+msgstr "Ciudad"
+
+msgid "Country"
+msgstr "País"
+
+msgid "State"
+msgstr "Estado"
+
+msgid "Zip/Postal Code"
+msgstr "Código Postal"
+
+msgid "Please register with"
+msgstr "Por favor, regístrese con"
+
+msgid "at "
+msgstr "en "
+
+msgid "to change your profile image. Gravatar image updates may not appear immediately."
+msgstr "para cambiar su imagen de perfil. Actualizaciones de la imagen de Gravatar puede no aparecer inmediatamente."
+
+msgid "Your profile currency is"
+msgstr "Su perfil de moneda es"
+
+msgid "Create new client profile if you want to manage your money in other currency"
+msgstr "Debe crear un perfil nuevo de cliente si desea administrar importes en otra moneda"
+
+msgid "Your profile currency will be defined after your first order. Once your currency is set, all your profile accounting will be managed in that currency and can not be changed."
+msgstr "Su perfil de moneda será definido después de su primer pedido. Una vez que su moneda se defina, su perfil de contabilidad se establecerá en esa moneda y no se podrá cambiar."
+
+msgid "Ticket details"
+msgstr "Detalles del Ticket"
+
+msgid "Author"
+msgstr "Autor"
+
+msgid "Time opened"
+msgstr "Tiempo abierto"
+
+msgid "Contact us"
+msgstr "Contacto"
+
+msgid "Name"
+msgstr "Nombre"
+
+msgid "Message"
+msgstr "Mensaje"
+
+msgid "Send"
+msgstr "Enviar"
+
+msgid "Ticket ID"
+msgstr "Ticket Nº"
+
+msgid "Related to"
+msgstr "En relación con"
+
+msgid "Service #"
+msgstr "Servicio #"
+
+msgid "Tickets list"
+msgstr "Listado de Tickets"
+
+msgid "Close ticket"
+msgstr "Ticket Cerrado"
+
+msgid "Support tickets"
+msgstr "Tickets de Soporte"
+
+msgid "Need an answer? We are here to help"
+msgstr "¿Tiene una pregunta? Estamos aquí para ayudarle"
+
+msgid "Submit new ticket"
+msgstr "Enviar nuevo ticket"
+
+msgid "Submit new support ticket"
+msgstr "Submit new support ticket"
+
+msgid "Submit"
+msgstr "Enviar"
+
+msgid "Addons & extras"
+msgstr "Addons & extras"
+
+msgid "Order now"
+msgstr "Contratar"
+
+msgid "Select currency"
+msgstr "Moneda"
+
+msgid "Home"
+msgstr "Inicio"
+
+msgid "Support"
+msgstr "Soporte"
+
+msgid "Payment history"
+msgstr "Historial de pagos"
+
+msgid "Total price:"
+msgstr "Total precio:"
+
+msgid "Quantity:"
+msgstr "Cantidad:"
+
+msgid "Setup Price"
+msgstr "Precio de configuración"
+
+msgid "Continue"
+msgstr "Continuar"
+
+msgid "Select product"
+msgstr "Seleccione producto"
+
+msgid "Configure"
+msgstr "Configurar"
+
+msgid "Confirm"
+msgstr "Confirmar"
+
+msgid "The product/service you have chosen has the following configuration options for you to choose from."
+msgstr "Si existen extras u opciones de configuración, se mostrarán en el siguiente paso"
+
+msgid "Domain management"
+msgstr "Administración de Dominio"
+
+msgid "Domain details"
+msgstr "Detalles de Dominio"
+
+msgid "Domain"
+msgstr "Dominio"
+
+msgid "Registration date"
+msgstr "Fecha de Registro"
+
+msgid "Expires at"
+msgstr "Caduca en"
+
+msgid "Domain Secret"
+msgstr "Dominio Secreto"
+
+msgid "All domain names (except a .EU, .UK domain name) have a Domain (Transfer) Secret Key/Authorization Code (EPP Code) associated with them. This would be required if you want to transfer service."
+msgstr "Todos los nombres de dominio (con excepción de .EU y .UK) tienen una Clave (de transferencia) Secreta / Código de autorización (EPP Code) asociados a ellos. Esto sería necesario si desease transferir el servicio."
+
+msgid "Send EPP code to email"
+msgstr "Enviar el Código EPP al email"
+
+msgid "Domain Protection"
+msgstr "Protección de Dominio"
+
+#, fuzzy
+msgid "Domain locking is a security enhancement to prevent unauthorized transfers of your domain to another registrar or web host by \"locking\" your domain name servers."
+msgstr "El Bloqueo de dominio es una mejora de seguridad para evitar transferencias no autorizadas de su dominio a otro registrador por \"bloqueo\" de sus servidores de nombres de dominio."
+
+msgid "Unlock"
+msgstr "Desbloquear"
+
+msgid "Lock"
+msgstr "Bloquear"
+
+msgid "Domain Privacy Settings"
+msgstr "Configuración de Privacidad del Dominio"
+
+msgid "If you would like to hide domain contact information which is shown on WHOIS you can enable privacy protection. Once domain privacy protection is enabled no one will know who registered this service. And once you decide to disable privacy protection, information that is listed above on \"Update Domain Contact Details\" section will be seen on domain WHOIS again."
+msgstr "Si desea ocultar la información de contacto del dominio que se muestra en la base de datos WHOIS, puede habilitar la protección de privacidad. Una vez que la protección de la privacidad de dominio está activada, nadie sabrá quien ha registrado este servicio. Y una vez que decida desactivar la protección de la privacidad, la información que aparece en la lista en la sección \"Detalles de la actualización del dominio de contacto\" se verá en el WHOIS del dominio de nuevo."
+
+msgid "Disable Privacy protection"
+msgstr "Desactivar protección de Privacidad"
+
+msgid "Enable Privacy protection"
+msgstr "Activar protección de Privacidad"
+
+msgid "Domain Nameservers"
+msgstr "Nombre de Servidores de Dominio"
+
+msgid "If you would like to host this domain with another company you can update nameservers."
+msgstr "Si desea alojar este dominio en otra empresa puede actualizar los servidores de nombres."
+
+msgid "Update nameservers"
+msgstr "Actualizar Nombre de Servidores"
+
+msgid "Nameserver 1"
+msgstr "Nombre de Servidor 1"
+
+msgid "Nameserver 2"
+msgstr "Nombre de Servidor 2"
+
+msgid "Nameserver 3"
+msgstr "Nombre de Servidor 3"
+
+msgid "Nameserver 4"
+msgstr "Nombre de Servidor 4"
+
+msgid "Update"
+msgstr "Actualizar"
+
+msgid "Domain Contact Details"
+msgstr "Detalles de Contacto del Dominio"
+
+msgid "Domain contact details will be displayed once someone will check WHOIS output (which is public) of your service. This will update Technical, Billing and Admin contacts for this service. You can enable domain privacy protection if you want to hide your public WHOIS information."
+msgstr "Los detalles de contacto del dominio se mostrarán una vez que alguien haga una consulta WHOIS (que es pública) de su servicio. Esto actualizará los contactos Técnico, de Facturación y de Administración para este servicio. Puede habilitar la protección de privacidad del dominio si desea ocultar su información pública en el WHOIS."
+
+msgid "Update domain contact details"
+msgstr "Actualizar la información de contacto del dominio"
+
+msgid "Address Line 1"
+msgstr "Dirección Línea 1"
+
+msgid "Address Line 2"
+msgstr "Dirección Línea 2"
+
+msgid "Zip"
+msgstr "Código Postal"
+
+msgid "Phone number"
+msgstr "Número de teléfono"
+
+msgid "Register new domain"
+msgstr "Registrar nuevo dominio"
+
+msgid "Transfer my domain"
+msgstr "Transferir mi dominio"
+
+msgid "Check domain availability"
+msgstr "Comprobar disponibilidad de dominio"
+
+msgid "Enter new domain name to register"
+msgstr "Indicar nuevo dominio a registrar"
+
+msgid "Check"
+msgstr "Comprobar"
+
+msgid "I want to use my nameservers"
+msgstr "Quiro usar mis nombres de servidores"
+
+msgid "Enter your domain name to transfer"
+msgstr "Indique el nombre de dominio a transferir"
+
+msgid "Transfer price"
+msgstr "Precio de Transferencia"
+
+msgid "Enter domain transfer code"
+msgstr "Indique el Código de transferencia del dominio"
+
+msgid "Download file"
+msgstr "Descargar archivo"
+
+msgid "Download"
+msgstr "Descargar"
+
+msgid "Manage hosting account"
+msgstr "Gestionar cuenta de hosting"
+
+msgid "Username"
+msgstr "Nombre de Usuario"
+
+msgid "Server IP"
+msgstr "Servidor IP"
+
+msgid "Server Hostname"
+msgstr "Servidor Hostname"
+
+#, fuzzy
+msgid "Hosting plan"
+msgstr "Hosting plan"
+
+msgid "Bandwidth"
+msgstr "Tráfico"
+
+msgid "per month"
+msgstr "por mes"
+
+msgid "Disk quota"
+msgstr "Espacio en disco"
+
+msgid "Manage domain"
+msgstr "Administrar dominio"
+
+msgid "Jump to cPanel"
+msgstr "Ir a cPanel"
+
+msgid "Reseller control panel"
+msgstr "Panel de Control de Distribuidor"
+
+msgid "Nameservers"
+msgstr "Nombres de Servidores"
+
+msgid "FTP details"
+msgstr "Detalles FTP"
+
+msgid "Use these details to connect to your FTP account."
+msgstr "Utilizar estos datos para conectarse a su cuenta FTP."
+
+msgid "FTP IP"
+msgstr "FTP IP"
+
+msgid "FTP Username"
+msgstr "FTP Usuario"
+
+msgid "FTP Password"
+msgstr "FTP Contraseña"
+
+msgid "Reset account"
+msgstr "Restablecer la cuenta"
+
+msgid "This function resets your account completely. All data on your account will be lost."
+msgstr "Esta función le permite restaurar su cuenta por completo. Todos los datos de su cuenta se perderán."
+
+msgid "I understand that my account data will be completely lost."
+msgstr "Entiendo que los datos de mi cuenta se perderán por completo."
+
+msgid "Change account password"
+msgstr "Cambiar la contraseña de la cuenta"
+
+msgid "Change your FTP cPanel SSH password."
+msgstr "Cambiar la contraseña de su FTP cPanel SSH."
+
+msgid "Password Confirm"
+msgstr "Confirmar Contraseña"
+
+msgid "Change username"
+msgstr "Cambiar nombre de Usuario"
+
+msgid "Change"
+msgstr "Cambiar"
+
+msgid "Change domain"
+msgstr "Cambiar dominio"
+
+msgid "Please configure domain for your hosting account"
+msgstr "Por favor, configure el dominio para su cuenta de hosting"
+
+#, fuzzy
+msgid "Use own"
+msgstr "Usar propio"
+
+msgid "Transfer"
+msgstr "Transferir"
+
+msgid "I will use my existing domain and update nameservers"
+msgstr "Voy a utilizar mi dominio existente y a actualizar los servidores de nombres"
+
+msgid "Enter your domain name"
+msgstr "Indique el nombre de su dominio"
+
+msgid "Register a new domain"
+msgstr "Registrar un nuevo dominio"
+
+#, fuzzy
+msgid "Transfer your domain from another registrar"
+msgstr "Transferir su dominio de otro registrador"
+
+msgid "My Products & Services"
+msgstr "Mis Productos & Servicios"
+
+msgid "Ordered Services"
+msgstr "Servicios y Productos Contratados"
+
+msgid "Product/Service"
+msgstr "Producto/Servicio"
+
+msgid "Next due date"
+msgstr "Fecha de vencimiento"
+
+msgid "License details"
+msgstr "Detalles de la licencia"
+
+msgid "Key"
+msgstr "Key"
+
+msgid "Valid IPs"
+msgstr "IPs Válidas"
+
+msgid "All ips"
+msgstr "Todas las IPs"
+
+msgid "Valid Domains"
+msgstr "Dominios válidos"
+
+msgid "All hosts"
+msgstr "Todos los hosts"
+
+msgid "Valid Versions"
+msgstr "Versiones Válidas"
+
+msgid "All versions"
+msgstr "Todas las versiones"
+
+msgid "Valid Install paths"
+msgstr "Ruta (path) válida para instalar"
+
+msgid "All paths"
+msgstr "Todas las rutas (paths)"
+
+msgid "Reset license"
+msgstr "Restablecer licencia"
+
+msgid "You can reset your license parameters if you have changed your server"
+msgstr "Puede restablecer su licencia si ha cambiado de servidor"
+
+msgid "Are you sure?"
+msgstr "¿Está seguro?"
+
+msgid "Service details"
+msgstr "Detalles del Servicio o Producto"
+
+msgid "All information about your service"
+msgstr "Toda la información sobre su servicio o producto"
+
+msgid "Product name"
+msgstr "Nombre del producto"
+
+msgid "Payment amount"
+msgstr "Importe del pago"
+
+msgid "Billing cycle"
+msgstr "Ciclo de facturación"
+
+msgid "Order status"
+msgstr "Estado de la solicitud"
+
+msgid "Order created"
+msgstr "Solicitud creada"
+
+#, fuzzy
+msgid "Activated at"
+msgstr "Activado el"
+
+msgid "Renewal date"
+msgstr "Fecha de renovación"
+
+msgid "Order notes"
+msgstr "Notas de la solicitud"
+
+msgid "Active support tickets"
+msgstr "Tickets de soporte activos"
+
+msgid "Request Cancellation"
+msgstr "Solicitud de Cancelación"
+
+msgid "I would like to cancel"
+msgstr "Quisiera cancelar"
+
+msgid "Reason"
+msgstr "Razón"
+
+#, fuzzy
+msgid "Open new support ticket reagarding this order"
+msgstr "Abrir nuevo ticket de soporte con respecto a esta solicitud"
+
+msgid "Submit new support ticket. Ticket will be visible in support section after submission"
+msgstr "Enviar nuevo ticket desoporte. El ticket estará visible en la sección soporte después de ser enviado"
+
+msgid "Addons you have ordered with this service"
+msgstr "Addons que ha solicitado con este servicio"
+
+msgid "Billing Cycle"
+msgstr "Ciclo de Facturación"
+
+msgid "Back to services"
+msgstr "Volver a servicios"
+
+msgid "Renew now"
+msgstr "Renovar ahora"
+
+msgid "Open ticket"
+msgstr "Abrir ticket"
+
+msgid "Cancel"
+msgstr "Cancelar"
+
+msgid "Select Product"
+msgstr "Seleccione producto"
+
+msgid "Choose products we offer for selling"
+msgstr "Elija productos de los disponibles a la venta"
+
+msgid "Starting from:"
+msgstr "Desde:"
+
+msgid "View products"
+msgstr "Ver productos"
+
+msgid "en_US"
+msgstr "Inglés"
+
