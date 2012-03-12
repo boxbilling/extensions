@@ -59,7 +59,7 @@ class Payment_Adapter_AmazonSimplePay extends Payment_AdapterAbstract
      */
 	public function singlePayment(Payment_Invoice $invoice)
     {
-        throw new Exception('Not implemented yet');
+        throw new Exception('Amazon Payment gateway is under development.');
         
 		ob_start();
 		ButtonGenerator::GenerateForm(
@@ -86,19 +86,16 @@ class Payment_Adapter_AmazonSimplePay extends Payment_AdapterAbstract
 	public function recurrentPayment(Payment_Invoice $invoice)
     {
         $recurrenceInfo = $invoice->getSubscription();
-
-
-        $amount = $invoice->getCurrency() . ' '. $invoice->getTotal();
+        $amount = $invoice->getCurrency() . ' '. $invoice->getTotalWithTax();
         $description = $invoice->getTitle();
 
-        $recurringFrequency = '';
-        
         $promotionAmount = 0;
         $processImmediate = true;
         $immediateReturn = true;
         $referenceId = $invoice->getId();
-        $recurringStartDate = "1 month";
-        $subscriptionPeriod = '12 months';
+        $recurringStartDate = "";
+        $recurringFrequency = $this->_getRecurringFrequency($recurrenceInfo); // '1 month'
+        $subscriptionPeriod = ""; //'12 months';
 
         $formHiddenInputs['accessKey']          = $this->getParam('AWSAccessKeyId');
         $formHiddenInputs['amount']             = $amount;
@@ -192,6 +189,33 @@ class Payment_Adapter_AmazonSimplePay extends Payment_AdapterAbstract
             ),
         );
 	}
+
+    private function _getRecurringFrequency(Payment_Invoice_Subscription $recurrenceInfo)
+    {
+        switch ($recurrenceInfo->getCycle()) {
+            case 'D':
+                $t = 'days';
+                break;
+
+            case 'W':
+                $t = 'week';
+                break;
+
+            case 'M':
+                $t = 'month';
+                break;
+
+            case 'Y':
+                $t = 'year';
+                break;
+
+            default:
+                $t = 'month';
+                break;
+        }
+        
+        return $recurrenceInfo->getCycle() . ' ' . $t;
+    }
 
     private function _getSignature($stringToSign)
     {
