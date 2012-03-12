@@ -136,7 +136,8 @@ class Payment_Adapter_Mellat extends Payment_AdapterAbstract
         $terminalId             = $this->getParam('terminalId');
         $userName               = $this->getParam('userName');
         $userPassword           = $this->getParam('userPassword');
-        $resId                  = $ipn['ResCode'];
+        $refId                  = $ipn['RefId'];
+        $resCode                = $ipn['ResCode'];
         $orderId                = $ipn['SaleOrderId'];
         $verifySaleOrderId      = $ipn['SaleOrderId'];
         $verifySaleReferenceId  = $ipn['SaleReferenceId'];
@@ -147,74 +148,54 @@ class Payment_Adapter_Mellat extends Payment_AdapterAbstract
 			'userPassword'      => $userPassword,
 			'orderId'           => $orderId,
 			'saleOrderId'       => $verifySaleOrderId,
-			'saleReferenceId'   => $verifySaleReferenceId);
-
+			'saleReferenceId'   => $verifySaleReferenceId
+        );
+        
+        error_log('Parameters: '.print_r($parameters, 1));
+        
 		$result = $client->bpVerifyRequest($parameters);
-        $VerifyAnswer = $result;
-
+        $VerifyAnswer = $result->return;
+        error_log('Verify answer:' . $VerifyAnswer);
+        
         if($VerifyAnswer == '0'){
-            $parameters = array(
-                'terminalId' => $terminalId,
-                'userName' => $userName,
-                'userPassword' => $userPassword,
-                'orderId' => $orderId,
-                'saleOrderId' => $verifySaleOrderId,
-                'saleReferenceId' => $verifySaleReferenceId);
-
             // Call the SOAP method
             $result = $client->bpSettleRequest($parameters);
             $SetlleAnswer = $result->return;
+            error_log('Settle answer:' . $SetlleAnswer);
+            
             if ($SetlleAnswer == '0'){
                 $Pay_Status = 'OK'; 
             }
         }
 
         if ($VerifyAnswer <> '0' AND $VerifyAnswer != '' ) {
-            $parameters = array(
-                'terminalId' => $terminalId,
-                'userName' => $userName,
-                'userPassword' => $userPassword,
-                'orderId' => $orderId,
-                'saleOrderId' => $verifySaleOrderId,
-                'saleReferenceId' => $verifySaleReferenceId
-            );
-
             $result = $client->bpInquiryRequest($parameters);
             $InquiryAnswer = $result->return;
+            error_log('Inquiry Answer:' . $InquiryAnswer);
+            
             if ($InquiryAnswer == '0'){
-
-                    $parameters = array(
-                        'terminalId' => $terminalId,
-                        'userName' => $userName,
-                        'userPassword' => $userPassword,
-                        'orderId' => $orderId,
-                        'saleOrderId' => $verifySaleOrderId,
-                        'saleReferenceId' => $verifySaleReferenceId);
-
                     // Call the SOAP method
                     $result = $client->bpSettleRequest($parameters);
                     $SetlleAnswer = $result->return;
+                    error_log('Second Settle Answer:' . $InquiryAnswer);
+                    if ($SetlleAnswer == '0'){
+                        $Pay_Status = 'OK'; 
+                    }
             } else {
-                $parameters = array(
-                    'terminalId' => $terminalId,
-                    'userName' => $userName,
-                    'userPassword' => $userPassword,
-                    'orderId' => $orderId,
-                    'saleOrderId' => $verifySaleOrderId,
-                    'saleReferenceId' => $verifySaleReferenceId);
-
                 // Call the SOAP method
                 $result = $client->bpReversalRequest($parameters);
+                $ReversalAnswer = $result->return;
+                error_log('Reversal request Answer:' . $ReversalAnswer);
             }
         }
 
         if ($Pay_Status != 'OK' ){
-            throw new Payment_Exception('Sale verification failed');
+            throw new Payment_Exception('Sale verification failed: '.$VerifyAnswer);
         }
         
         $response = new Payment_Transaction();
         $response->setType(Payment_Transaction::TXTYPE_PAYMENT);
-        $response->setId($verifySaleReferenceId);
+        $response->setId($refId);
         $response->setAmount($invoice->getTotalWithTax());
         $response->setCurrency($invoice->getCurrency());
         $response->setStatus(Payment_Transaction::STATUS_COMPLETE);
