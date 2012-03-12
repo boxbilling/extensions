@@ -20,7 +20,6 @@ class Payment_Adapter_AmazonSimplePay extends Payment_AdapterAbstract
 {
 	public function init()
     {
-		
 		if (!extension_loaded('curl')) {
             throw new Payment_Exception('cURL extension is not enabled');
         }
@@ -36,18 +35,11 @@ class Payment_Adapter_AmazonSimplePay extends Payment_AdapterAbstract
 		if (!$this->getParam('AWSSecretKey')) {
 			throw new Payment_Exception('Payment gateway "Amazon Simple Pay" is not configured properly. Please update configuration parameter "AWS Secret Key" at "Configuration -> Payments".');
 		}
-		
-		//including Amazon library
-		@include_once('Amazon/ButtonGenerationWithSignature/src/ButtonGenerator.php');
-		@include_once('Amazon/IPNAndReturnURLValidation/src/SignatureUtilsForOutbound.php');
-		if (!class_exists('ButtonGenerator') || !class_exists('SignatureUtilsForOutbound')) {
-			throw new Payment_Exception('Amazon ASPStandar-PHP files are missing');
-		}
 	}
 	
 	public function getType()
     {
-		return Payment_Adapter_Abstract::TYPE_FORM;
+		return Payment_AdapterAbstract::TYPE_FORM;
 	}
 	
 	public function getServiceUrl()
@@ -59,8 +51,16 @@ class Payment_Adapter_AmazonSimplePay extends Payment_AdapterAbstract
 		return 'https://authorize.payments.amazon.com/pba/paypipeline';
 	}
 
+    /**
+     * @todo not finished
+     * 
+     * @param Payment_Invoice $invoice
+     * @return <type>
+     */
 	public function singlePayment(Payment_Invoice $invoice)
-    {		
+    {
+        throw new Exception('Not implemented yet');
+        
 		ob_start();
 		ButtonGenerator::GenerateForm(
 			$this->getParam('AWSAccessKeyId'), 
@@ -85,7 +85,45 @@ class Payment_Adapter_AmazonSimplePay extends Payment_AdapterAbstract
 
 	public function recurrentPayment(Payment_Invoice $invoice)
     {
-		throw new Payment_Exception('Not implemented');	
+        $recurrenceInfo = $invoice->getSubscription();
+
+
+        $amount = $invoice->getCurrency() . ' '. $invoice->getTotal();
+        $description = $invoice->getTitle();
+
+        $recurringFrequency = '';
+        
+        $promotionAmount = 0;
+        $processImmediate = true;
+        $immediateReturn = true;
+        $referenceId = $invoice->getId();
+        $recurringStartDate = "1 month";
+        $subscriptionPeriod = '12 months';
+
+        $formHiddenInputs['accessKey']          = $this->getParam('AWSAccessKeyId');
+        $formHiddenInputs['amount']             = $amount;
+        $formHiddenInputs['description']        = $description;
+        $formHiddenInputs['recurringFrequency'] = $recurringFrequency;
+        $formHiddenInputs['subscriptionPeriod'] = $subscriptionPeriod;
+        $formHiddenInputs['recurringStartDate'] = $recurringStartDate;
+        $formHiddenInputs['promotionAmount']    = $promotionAmount;
+        $formHiddenInputs['referenceId']        = $referenceId;
+        $formHiddenInputs['immediateReturn']    = true;
+        $formHiddenInputs['ipnUrl']             = $this->getParam('notify_url');
+        $formHiddenInputs['returnUrl']          = $this->getParam('return_url');
+        $formHiddenInputs['abandonUrl']         = $this->getParam('cancel_url');
+        $formHiddenInputs['processImmediate']   = $processImmediate;
+
+        uksort($formHiddenInputs, "strnatcasecmp");
+        
+        $stringToSign = "";
+        foreach ($formHiddenInputs as $formHiddenInputName => $formHiddenInputValue) {
+            $stringToSign = $stringToSign . $formHiddenInputName . $formHiddenInputValue;
+        }
+        $formHiddenInputs['signature'] = $this->_getSignature($stringToSign);
+
+        //throw new Exception(print_r($formHiddenInputs, 1));
+        return $formHiddenInputs;
 	}
     
     public function getInvoiceId($data)
@@ -98,7 +136,7 @@ class Payment_Adapter_AmazonSimplePay extends Payment_AdapterAbstract
         return isset($data['post']['referenceId']) ? (int)$data['post']['referenceId'] : NULL;
     }
     
-	public function ipn($data, Payment_Invoice $invoice)
+	public function getTransaction($data, Payment_Invoice $invoice)
     {
         $ipn = $data['post'];
         
@@ -132,8 +170,11 @@ class Payment_Adapter_AmazonSimplePay extends Payment_AdapterAbstract
 		return $validation->validateRequest($ipn, $this->getParam('notify_url'), 'POST');
     }
 
-	public static function getConfig() {
+	public static function getConfig()
+    {
 		return array(
+            'supports_one_time_payments'   =>  true,
+            'supports_subscriptions'     =>  true,
             'description'     =>  'Enter your Amazon Simple Pay details',
             'form'  => array(
                 'AWSAccessKeyId' => array('text', array(
@@ -152,4 +193,34 @@ class Payment_Adapter_AmazonSimplePay extends Payment_AdapterAbstract
         );
 	}
 
+    private function _getSignature($stringToSign)
+    {
+        $secretKey = $this->getParam('AWSSecretKey');
+        $binary_hmac = supporter_amazon_create_hmac("sha1", trim($stringToSign), $secretKey, true);
+        return base64_encode($binary_hmac);
+    }
+}
+
+//from http://www.php.net/manual/en/function.hash-hmac.php#93440 to enable PHP4 support
+function supporter_amazon_create_hmac($algo, $data, $key, $raw_output = false) {
+    $algo = strtolower($algo);
+    $pack = 'H'.strlen($algo('test'));
+    $size = 64;
+    $opad = str_repeat(chr(0x5C), $size);
+    $ipad = str_repeat(chr(0x36), $size);
+
+    if (strlen($key) > $size) {
+        $key = str_pad(pack($pack, $algo($key)), $size, chr(0x00));
+    } else {
+        $key = str_pad($key, $size, chr(0x00));
+    }
+
+    for ($i = 0; $i < strlen($key) - 1; $i++) {
+        $opad[$i] = $opad[$i] ^ $key[$i];
+        $ipad[$i] = $ipad[$i] ^ $key[$i];
+    }
+
+    $output = $algo($opad.pack($pack, $algo($ipad.$data)));
+
+    return ($raw_output) ? pack($pack, $output) : $output;
 }
