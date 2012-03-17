@@ -15,6 +15,14 @@
  * @copyright Copyright (c) 2010-2012 BoxBilling (http://www.boxbilling.com)
  * @license   http://www.boxbilling.com/LICENSE.txt
  * @version   $Id$
+ * @edited by Evtimiy Mihaylov (evo@vaupe.com)
+ * 
+ * 
+ * Additional instructions:
+ * Add this file to /[boxbillingdirectory]/bb-library/Server/Manager/
+ * The hosting plans in Kloxo are in format plan__type-user. Only the "plan" part should be entered as hosting plan name.
+ * The DNS template name should be entered in the Access hash field in format dnstemplatename.dnst.
+ * 
  */
 class Server_Manager_Kloxo extends Server_Manager
 {
@@ -67,7 +75,9 @@ class Server_Manager_Kloxo extends Server_Manager
     	$ch = curl_init ();
     	curl_setopt ($ch, CURLOPT_URL, $host);
     	curl_setopt ($ch, CURLOPT_RETURNTRANSFER, true);
-    	curl_setopt ($ch, CURLOPT_TIMEOUT, 1);
+curl_setopt ($ch, CURLOPT_SSL_VERIFYHOST, 0);
+curl_setopt ($ch, CURLOPT_SSL_VERIFYPEER, 0);
+    	curl_setopt ($ch, CURLOPT_TIMEOUT, 10);
 		$result = curl_exec($ch);
 
 		if (curl_errno ($ch)) {
@@ -102,7 +112,8 @@ class Server_Manager_Kloxo extends Server_Manager
 	public function createAccount(Server_Account $a) {
 		$p = $a->getPackage();
 		$resourcePlan = $this->_getResourcePlan($p);
-		$dnsTemplate = $this->_getDnsTemplate($p);
+		/* $dnsTemplate = $this->_getDnsTemplate($p); */
+		$client = $a->getClient();
 
 		$params = array(
 			'action'			=>	'add',
@@ -110,10 +121,10 @@ class Server_Manager_Kloxo extends Server_Manager
 			'name'				=>	$a->getUsername(),
 			'v-plan_name'		=>	$resourcePlan,
 			'v-type'			=>	$a->getReseller() ? 'reseller' : 'customer',
-			'v-contactemail'	=>	$a->getEmail(),
+			'v-contactemail'	=>	$client->getEmail(),
 			'v-send_welcome_f'	=>	'off',
 			'v-domain_name'		=>	$a->getDomain(),
-			'v-dnstemplate_name'=>	$dnsTemplate,
+			'v-dnstemplate_name'=>	$this->_config['accesshash'],
 			'v-password'		=>	$a->getPassword(),
 		);
 
@@ -165,7 +176,27 @@ class Server_Manager_Kloxo extends Server_Manager
 
 	public function changeAccountPackage(Server_Account $a, Server_Package $p)
     {
-		throw new Server_Exception('Changes to account can only be made in Kloxo');
+		
+
+		$params = array(
+			'class'		=>	'client',
+			'name'		=>	$a->getUsername(),
+			'action'	=>	'update',
+			'subaction'	=>	'change_plan',
+			'v-resourceplan_name'=>	$this->_getResourcePlan($p),
+		);
+
+		$result = $this->_makeRequest($params);
+
+		if (isset($result['return']) && $result['return'] == 'error') {
+			throw new Server_Exception('Kloxo error: ' . $result['message']);
+		}
+
+		return true;
+
+
+
+
 	}
 
 	public function changeAccountPassword(Server_Account $a, $new) {
