@@ -5,9 +5,10 @@
     "icon": "screenshot.jpg",
     "author": "BoxBilling",
     "author_url": "http://extensions.boxbilling.com/",
-    "meta_title": "Billing and client management software",
-    "meta_description": "Billing and client management software",
-    "meta_keywords": "free billing software, billing software",
+
+    "meta_title": "",
+    "meta_description": "",
+    "meta_keywords": "",
 
     "extends": "boxbilling"
 }
