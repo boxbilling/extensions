@@ -1,0 +1,222 @@
+{% set theme    = guest.extension_theme %}
+{% set company  = guest.system_company %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block meta_title %}{% endblock %} - {{ theme.meta_title }}</title>
+
+    <meta property="bb:url" content="{{ constant('BB_URL') }}"/>
+    <meta property="bb:client_area" content="{{ '/'|link }}"/>
+    
+    <meta name="description" content="{% block meta_description %}{{ theme.meta_description }}{% endblock %}" />
+    <meta name="keywords" content="{% block meta_keywords %}{{ theme.meta_keywords }}{% endblock %}" />
+    <meta name="robots" content="index, follow" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+    <link href="http://fonts.googleapis.com/css?family=Cuprum" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="{{ theme.url }}css/print.css"  media="print" />
+    <link rel="stylesheet" type="text/css" href="{{ theme.url }}css/style.css" media="screen" />
+    <!--[if IE 6]><link rel="stylesheet" type="text/css" href="{{ theme.url }}css/ie6.css" media="screen" /><![endif]-->
+    <!--[if IE 7]><link rel="stylesheet" type="text/css" href="{{ theme.url }}css/ie.css" media="screen" /><![endif]-->
+
+    <link rel="shortcut icon" href="{{ constant('BB_URL') }}favicon.ico" />
+    <script type="text/javascript" src="{{ theme.url }}js/jquery.min.js"></script>
+    <script type="text/javascript" src="{{ theme.url }}js/bb-jquery.js"></script>
+    <script type="text/javascript" src="{{ theme.url }}js/jquery.tipsy.js"></script>
+
+</head>
+
+<body>
+
+<div class="header">
+    <div class="container_16">
+        <div class="grid_4">
+            <a href="{{''|link }}"><img class="logo" src="{{ company.logo_url|default(theme.url ~ 'images/logo.png') }}" alt="Logo"></a>
+        </div>
+
+        <div class="grid_12">
+            {% if client %}
+            <ul class="middleNav">
+                <li>
+                    <a href="{{ ''|link }}" class="show-tip" title="{% trans 'Dashboard' %}"><span class="big-dark-icon i-home"></span></a>
+                </li>
+                <li>
+                    <a href="{{ 'cart'|link }}" class="show-tip" title="{% trans 'Shopping cart' %}"><span class="big-dark-icon i-cart"></span></a>
+                </li>
+                <li>
+                    <a href="{{ 'me'|link }}" class="show-tip" title="{% trans 'Profile' %}"><span class="big-dark-icon i-profile"></span></a>
+                </li>
+                <li>
+                    <a href="client/client/logout" class="show-tip api" title="{% trans 'Sign out' %}"><span class="big-dark-icon i-logout"></span></a>
+                </li>
+            </ul>
+
+            {% else %}
+            {% block header_buttons %}
+            <div class="top-buttons">
+                <a id="login-form-link" class="bb-button bb-button-submit" href="{{ 'login'|link }}">{% trans 'Sign in' %}</a>
+                <a class="bb-button bb-button-red" href="{{ 'login'|link }}?register=1">{% trans 'Register' %}</a>
+            </div>
+            {% endblock %}
+            {% endif %}
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+
+<div id="main">
+    <div class="container_16">
+        {% block content_before %}{% endblock %}
+
+        <div class="grid_12">
+            {% include "partial_message.phtml" %}
+            {% block content %}{% endblock %}
+            {% block content_after %}{% endblock %}
+        </div>
+
+        <div class="grid_4">
+            {% block sidebar %}{% endblock %}
+
+            {% if not client %}
+            <div class="widget" id="login-form" style="display: none;" >
+                <div class="head">
+                    <h2 class="dark-icon i-profile">{% trans 'Login to client area' %}</h2>
+                </div>
+                <div class="block">
+                <form action="" method="post" class="api_form" data-api-url="guest/client/login" data-api-redirect="{{ ''|link }}">
+                    <fieldset>
+                        <legend>{% trans 'Login to client area' %}</legend>
+                        <p>
+                            <input type="email" name="email" value="{{ request.email }}" required="required" placeholder="{% trans 'Email address' %}">
+                        </p>
+                        <p>
+                            <input type="password" name="password" value="" required="required" placeholder="{% trans 'Password' %}">
+                        </p>
+                        <a class="bb-button" href="{{ 'reset-password'|link }}">{% trans 'Reset password' %}</a>
+                        <input class="bb-button bb-button-submit" type="submit" value="{% trans 'Sign in' %}" style="float: right">
+                    </fieldset>
+                </form>
+                </div>
+            </div>
+            {% endif %}
+            
+            <div class="gradient" style="margin-bottom: 10px;">
+                <nav>{% include "partial_menu.phtml" %}</nav>
+            </div>
+
+            {% set languages = guest.extension_languages %}
+            {% if languages|length > 1 %}
+            <div class="widget">
+                <div class="head">
+                    <h2 class="dark-icon i-drag">{% trans 'Select language' %}</h2>
+                </div>
+                <div class="block">
+                    <select name="lang" class="language_selector">
+                    {% for lang in languages %}
+                        <option value="{{ lang }}" class="lang_{{ lang }}">{{ lang|trans }}</option>
+                    {% endfor %}
+                    </select>
+                </div>
+            </div>
+            {% endif %}
+            
+            {% block sidebar2 %}{% endblock %}
+
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+
+<div class="footer">
+    <div class="container_16">
+        <div class="grid_4">
+            <div class="box">
+                <h2>{% trans 'Popular articles' %}</h2>
+                <div class="block">
+                    <ul>
+                        {% for i, article in guest.kb_article_get_list({"per_page":4}).list %}
+                            <li><a href="{{ '/kb'|link }}/{{article.category.slug}}/{{article.slug}}">{{article.title|truncate(30)}}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid_4">
+            <div class="box">
+                <h2>{% trans 'Recent posts' %}</h2>
+                <div class="block">
+                    <ul>
+                        {% set posts = guest.news_get_list({"per_page": 4}) %}
+                        {% for i, post in posts.list %}
+                        <li>
+                            <a href="{{ '/blog'|link }}/{{post.slug}}">{{post.title|truncate(30)}}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid_4">
+            <div class="box">
+                <h2>{% trans 'Forum topics' %}</h2>
+                <div class="block">
+                    <ul>
+                        {% for i, topic in guest.forum_get_topic_list({"per_page":4}).list %}
+                        <li>
+                            <a href="{{ '/forum'|link }}/{{topic.forum.slug}}/{{topic.slug}}">{{topic.title|truncate(25)}}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid_4">
+            <div class="box">
+                <h2>{{ company.name }}</h2>
+                <div class="block">
+                    <ul>
+                        <li>
+                            <a href="{{ '/about-us'|link }}">{% trans 'About us' %}</a>
+                        </li>
+                        <li>
+                            <a href="{{ '/tos'|link }}">{% trans 'Terms and conditions' %}</a>
+                        </li>
+                        <li>
+                            <a href="{{ '/privacy-policy'|link }}">{% trans 'Privacy policy' %}</a>
+                        </li>
+                        <li>
+                            <a href="{{ '/contact-us'|link }}" title="Contact us">Contact us</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="clear"></div>
+    </div>
+</div>
+
+<div class="footer lower">
+    <div class="container_16">
+        <div class="grid_16">
+            <div class="box">
+                <div class="block">
+                    <p>
+                    {# Removing this link is allowed only for BoxBilling PRO license owners. #}
+                    {#<a href="http://www.boxbilling.com" title="Billing Software" target="_blank" style="float:right">Powered by BoxBilling</a>#}
+                    © {{ now|date('Y') }} {{ company.signature }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+<div class="loading dim" style="display:none"><div class="popup_block"><h3>{% trans 'Loading ..' %}</h3></div></div>
+    {% block js %}{% endblock %}
+    <noscript>NOTE: Many features on BoxBilling require Javascript and cookies. You can enable both via your browser's preference settings.</noscript>
+</body>
+</html>
