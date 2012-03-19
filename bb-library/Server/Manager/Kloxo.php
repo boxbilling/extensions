@@ -16,13 +16,13 @@
  * @license   http://www.boxbilling.com/LICENSE.txt
  * @version   $Id$
  * @edited by Evtimiy Mihaylov (evo@vaupe.com)
- * 
- * 
+ *
+ *
  * Additional instructions:
  * Add this file to /[boxbillingdirectory]/bb-library/Server/Manager/
  * The hosting plans in Kloxo are in format plan__type-user. Only the "plan" part should be entered as hosting plan name.
  * The DNS template name should be entered in the Access hash field in format dnstemplatename.dnst.
- * 
+ *
  */
 class Server_Manager_Kloxo extends Server_Manager
 {
@@ -56,7 +56,7 @@ class Server_Manager_Kloxo extends Server_Manager
     {
         return $this->getLoginUrl();
     }
-    
+
     private function _makeRequest($params)
     {
 		$host = 'http';
@@ -77,7 +77,7 @@ class Server_Manager_Kloxo extends Server_Manager
     	curl_setopt ($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt ($ch, CURLOPT_SSL_VERIFYHOST, 0);
 curl_setopt ($ch, CURLOPT_SSL_VERIFYPEER, 0);
-    	curl_setopt ($ch, CURLOPT_TIMEOUT, 10);
+    	curl_setopt ($ch, CURLOPT_TIMEOUT, 30);
 		$result = curl_exec($ch);
 
 		if (curl_errno ($ch)) {
@@ -102,7 +102,7 @@ curl_setopt ($ch, CURLOPT_SSL_VERIFYPEER, 0);
 
 		return false;
 	}
-    
+
     public function synchronizeAccount(Server_Account $a)
     {
         $this->getLog()->info('Synchronizing account with server '.$a->getUsername());
@@ -176,7 +176,7 @@ curl_setopt ($ch, CURLOPT_SSL_VERIFYPEER, 0);
 
 	public function changeAccountPackage(Server_Account $a, Server_Package $p)
     {
-		
+
 
 		$params = array(
 			'class'		=>	'client',
@@ -204,7 +204,7 @@ curl_setopt ($ch, CURLOPT_SSL_VERIFYPEER, 0);
 			'class'		=>	'client',
 			'name'		=>	$a->getUsername(),
 			'action'	=>	'update',
-			'subaction'	=>	'change_password',
+			'subaction'	=>	'password',
 			'v-password'=>	$new,
 		);
 
@@ -221,7 +221,7 @@ curl_setopt ($ch, CURLOPT_SSL_VERIFYPEER, 0);
     {
         throw new Server_Exception('Server manager does not support username changes');
     }
-    
+
     public function changeAccountDomain(Server_Account $a, $new)
     {
         throw new Server_Exception('Server manager does not support domain changes');
@@ -231,7 +231,7 @@ curl_setopt ($ch, CURLOPT_SSL_VERIFYPEER, 0);
     {
         throw new Server_Exception('Server manager does not support ip changes');
     }
-    
+
 	private function _getResourcePlan(Server_Package $p)
 	{
 		$params = array(
