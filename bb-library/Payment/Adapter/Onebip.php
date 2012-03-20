@@ -61,7 +61,7 @@ class Payment_Adapter_Onebip extends Payment_AdapterAbstract
      */
     public function getServiceURL()
     {
-		return 'https://www.onebip.com/otms2/';
+		return 'https://www.onebip.com/otms/';
     }
 
     /**
@@ -77,7 +77,7 @@ class Payment_Adapter_Onebip extends Payment_AdapterAbstract
         $data['description'] = $invoice->getTitle();
         $data['price'] = $invoice->getTotalWithTax() * 100;
         $data['currency'] = $invoice->getCurrency();
-        $data['command'] = 'express_pay';
+        $data['command'] = 'standard_pay';
         
         $data['item_code'] = $invoice->getId();
         $data['return_url'] = $this->getParam('return_url');
@@ -93,7 +93,6 @@ class Payment_Adapter_Onebip extends Payment_AdapterAbstract
         
         $data['logo_url'] = $this->getParam('logo_url');
         
-        //throw new Exception(print_r($data, 1));
         return $data;
     }
 
@@ -144,8 +143,8 @@ class Payment_Adapter_Onebip extends Payment_AdapterAbstract
 
         $tx = new Payment_Transaction();
         $tx->setId($payment_id);
-        $tx->setAmount($price / 100);
-        $tx->setCurrency($currency);
+        $tx->setAmount($original_price / 100);
+        $tx->setCurrency($original_currency);
         $tx->setStatus(Payment_Transaction::STATUS_COMPLETE);
         $tx->setType(Payment_Transaction::TXTYPE_PAYMENT);
         return $tx;
