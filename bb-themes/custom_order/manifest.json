@@ -1,0 +1,10 @@
+{
+    "name": "Custom order example theme",
+    "version": "1.0.0",
+    "description": "Display custom parameters on custom product order form. Enable this theme. Setup custom product and set plugin name: 'Steam' to see it in action",
+    "icon": "screenshot.jpg",
+    "author": "BoxBilling",
+    "author_url": "http://extensions.boxbilling.com/",
+
+    "extends": "boxbilling"
+}
