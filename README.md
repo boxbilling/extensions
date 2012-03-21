@@ -1,21 +1,24 @@
-Welcome to BoxBilling Extensions repository
+Extensions examples
 ------------
 
-This repository is dedicated to be main location on the web to look and develop
-BoxBilling extensions.
+Extensions on this repository are for **development, learning and testing**
+purposes only.
 
-Types of extensions
+Usually they are developed to solve specific problem for client request.
+
+Repository contains code examples for other developers to get started.
+
+Official extensions
 ------------
 
-BoxBilling can be extended with these types of extensions:
+Official extensions site is being prepared on http://extensions.boxbilling.com
 
-* Client Area Themes
-* Event Listeners
-* Domain Registrars
+You will be able to download official and tested extensions from there.
 
-Support
+Important note
 ------------
 
-Read https://github.com/boxbilling/extensions/wiki for more information
+**Do not download** and upload all extensions from this repository to your installation **without
+consulting** with BoxBilling support staff.
+It may break your BoxBilling installation and lead to unexpected results.
 
-* Use Git Issue tracker for errors reporting
