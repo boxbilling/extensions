@@ -1,0 +1,26 @@
+{% if service.plugin == 'Steam' %}
+<div class="widget">
+    <div class="head">
+        <h2 class="dark-icon i-services">{{ order.title }}</h2>
+    </div>
+        
+    <div class="grid_12 alpha omega">
+        <div class="box">
+            <h2>{% trans 'Steam server details' %}</h2>
+            <table>
+                <tbody>
+                    <tr>
+                        <td>
+                            {% trans 'Steam ID' %}
+                        </td>
+                        <td>
+                            <strong>{{ service.config.steam_id }}</strong>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+{% endif %}
