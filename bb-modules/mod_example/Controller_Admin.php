@@ -51,22 +51,6 @@ class Box_Mod_Example_Controller_Admin
     }
 
     /**
-     * Return info about module
-     */
-    public function getInfo()
-    {
-        return array(
-            'title'         =>  'Example BoxBilling extension',
-            'description'   =>  'This is a dummy extension for developer to get started',
-            'uri'           =>  'http://github.com/boxbilling/',
-            'author'        =>  'BoxBilling',
-            'author_uri'    =>  'http://extensions.boxbilling.com/',
-            'version'       =>  '0.1.1',
-            'license'       =>  'GPL version 2 or later - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html',
-        );
-    }
-    
-    /**
      * Method to install module
      *
      * @return bool
