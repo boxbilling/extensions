@@ -1,13 +1,22 @@
 # Example extension readme file
 
-Requirements for BoxBilling module
+Module purpose is to provide a starting point for developer to get started
+creating his own BoxBilling module.
 
-## Required
+Explore the files and comments in the code to better understand the structure
+of module. Contact Development helpdesk at www.boxbilling.com if you need more
+information.
+
+In general modules are used to extend BoxBilling basic functionality.
+
+## BoxBilling module requirements
+
+### Required
 
 * Directory name must start with **mod_**
 * Folder must contain **manifest.json** file to describe itself
 
-## Optional
+### Optional
 
 * **README.md** - file for installation and getting started instructions
 * **Controller_Admin.php** - if module has install/uninstall instructions or
