@@ -9,6 +9,8 @@ information.
 
 In general modules are used to extend BoxBilling basic functionality.
 
+All modules can access other modules via API or database
+
 ## BoxBilling module requirements
 
 ### Required
@@ -21,11 +23,12 @@ In general modules are used to extend BoxBilling basic functionality.
 * **README.md** - file for installation and getting started instructions
 * **Controller_Admin.php** - if module has install/uninstall instructions or
   admin area interface
+* **Controller_Client.php** - if module has client area interface
 * Api_Admin.php         - file for admin API
 * Api_Client.php        - file for client API
 * Api_Guest.php         - file for Guest API
 * Folder html_admin     - for admin area templates, to store custom *.phtml files
-* Folder html_client    - for client area templates
+* Folder html_client    - for client area templates, to store custom *.phtml files
 
 ## Tips
 

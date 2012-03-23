@@ -1,0 +1,55 @@
+{% extends request.ajax ? "layout_blank.phtml" : "layout_default.phtml" %}
+
+{% block meta_title %}{% trans 'Example module' %}{% endblock %}
+
+{% block content %}
+
+<div class="widget">
+    <div class="head">
+        <h2 class="dark-icon i-profile">{% trans 'Example module title' %}</h2>
+    </div>
+    
+    <table>
+        <tbody>
+            <tr>
+                <td>This is an example content</td>
+            </tr>
+        </tbody>
+
+        <tfoot>
+            <tr>
+                <td>
+                    {% if client %}
+                    <a class="bb-button bb-button-submit" href="{{ 'example/protected'|link }}">{% trans 'See protected content' %}</a>
+                    {% else %}
+                    <a class="bb-button bb-button-submit" href="{{ 'login'|link }}">{% trans 'Login to client area' %}</a>
+                    {% endif %}
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+{% if show_protected %}
+<div class="widget">
+    <div class="head">
+        <h2 class="dark-icon i-profile">{% trans 'This content can be seen only if client is logged in' %}</h2>
+    </div>
+    <table>
+        <tbody>
+            <tr>
+                <td>{% trans 'Your protected content' %}</td>
+            </tr>
+        </tbody>
+
+        <tfoot>
+            <tr>
+                <td>
+                    <a class="bb-button bb-button-red" href="{{ 'me'|link }}">{% trans 'Manage profile' %}</a>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+{% endif %}
+{% endblock %}
