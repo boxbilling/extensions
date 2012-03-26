@@ -85,11 +85,22 @@ class Payment_Adapter_Onebip extends Payment_AdapterAbstract
         $data['cancel_url'] = $this->getParam('cancel_url');
         
         $c = $invoice->getBuyer();
-        $data['customer_email'] = $c->getEmail();
+        $data['customer_email']     = $c->getEmail();
         $data['customer_firstname'] = $c->getFirstName();
-        $data['customer_lastname'] = $c->getLastName();
-        $data['customer_cell'] = $c->getPhone();
-        $data['customer_country'] = $c->getCountry();
+        $data['customer_lastname']  = $c->getLastName();
+
+        if($c->getPhone()) {
+            $data['customer_cell'] = $c->getPhone();
+        }
+        
+        if($c->getCountry()) {
+            $data['customer_country'] = $c->getCountry();
+        }
+        
+        if($this->testMode) {
+            $data['debug'] = 1;
+            $data['debug_url'] = $this->getParam('notify_url');
+        }
         
         $data['logo_url'] = $this->getParam('logo_url');
         
