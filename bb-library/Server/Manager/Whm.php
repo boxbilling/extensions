@@ -50,7 +50,7 @@ class Server_Manager_Whm extends Server_Manager
             $type = 'pass';
         }
 
-        $this->_api = new Server_Manager_Whm_Xmlapi(
+        $this->_api = new xmlapi(
                 $this->_config['host'],
                 $this->_config['username'],
                 $auth
@@ -113,7 +113,6 @@ class Server_Manager_Whm extends Server_Manager
 	public function createAccount(Server_Account $a)
     {
         $this->getLog()->info('Creating account '.$a->getUsername());
-        $this->testConnection();
 
         $client = $a->getClient();
         $package = $a->getPackage();
@@ -395,12 +394,6 @@ class Server_Manager_Whm extends Server_Manager
 
         $json = json_decode($body);
 
-        // Try again
-        if (!is_object($json)) {
-            $body = $this->_api->xmlapi_query($action, $params);
-            $json = json_decode($body);
-        }
-
         if(!is_object($json)) {
             $msg = sprintf('Function call "%s" response is not valid, body: %s', $action, $body);
             $this->getLog()->crit($msg);
@@ -433,12 +426,12 @@ class Server_Manager_Whm extends Server_Manager
 /**
 * cPanel XMLAPI Client Class
 *
-* This class allows for easy interaction with cPanel's XML-API allow functions within the XML-API to be called
+* This class allows for easy interaction with cPanel's XML-API allow functions within the XML-API to be called 
 * by calling funcions within this class
-*
+*  
 * LICENSE:
 *
-* Copyright (c) 2009, cPanel, Inc.
+* Copyright (c) 2011, cPanel, Inc.
 * All rights reserved.
 *
 * Redistribution and use in source and binary forms, with or without modification, are permitted provided
@@ -460,13 +453,31 @@ class Server_Manager_Whm extends Server_Manager
 * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 * POSSIBILITY OF SUCH DAMAGE.
 *
-* Version: 1.0.7
-* Last updated: 10 November 2010
+* Version: 1.0.12
+* Last updated: 23 July 2011
 *
 * Changes
+* 
+* 1.0.12:
+* github#2 - [Bugfix]: typo related to environment variable XMLAPI_USE_SSL
+*
+* 1.0.11:
+* [Feature]: Remove value requirement for park()'s 'topdomain' argument 
+*  (Case 51116)
+* 
+* 1.0.10:
+* github#1 - [Bugfix]: setresellerpackagelimits() does not properly prepare 
+*  input arguments for query (Case 51076)
+*
+* 1.0.9:
+* added input argument to servicestatus method which allows single service
+*  filtering (Case 50804)
+* 
+* 1.0.8:
+* correct unpark bug as reported by Randall Kent
 *
 * 1.0.7:
-* Corrected typo for setrellerlimits where xml_query incorrectly called xml-api's setresellerips
+* Corrected typo for setrellerlimits where xml_query incorrectly called xml-api's setresellerips 
 *
 * 1.0.6:
 * Changed 'user' URL parameter for API1/2 calls to 'cpanel_xmlapi_user'/'cpanel_jsonapi_user' to resolve conflicts with API2 functions that use 'user' as a parameter
@@ -483,7 +494,7 @@ class Server_Manager_Whm extends Server_Manager
 *
 * 1.0.3:
 * Fixed issue with set_auth_type using incorrect logic for determining acceptable auth types
-* Suppress non-UTF8 encoding when using curl
+* Suppress non-UTF8 encoding when using curl 
 *
 * 1.0.2:
 * Increased curl buffer size to 128kb from 16kb
@@ -504,9 +515,9 @@ class Server_Manager_Whm extends Server_Manager
 * Changed submission from GET to POST
 *
 *
-* @copyright 2009 cPanel, Inc
+* @copyright 2011 cPanel, Inc
 * @license http://sdk.cpanel.net/license/bsd.html
-* @version 1.0.6
+* @version 1.0.11
 * @link http://twiki.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/XmlApi
 * @since File available since release 0.1
 **/
@@ -514,7 +525,7 @@ class Server_Manager_Whm extends Server_Manager
 /**
 * The base XML-API class
 *
-* The XML-API class allows for easy execution of cPanel XML-API calls.  The goal of this project is to create
+* The XML-API class allows for easy execution of cPanel XML-API calls.  The goal of this project is to create 
 * an open source library that can be used for multiple types of applications.  This class relies on PHP5 compiled
 * with both curl and simplexml support.
 *
@@ -526,24 +537,23 @@ class Server_Manager_Whm extends Server_Manager
 * 2.) Setting access credentials within the class via either set_password or set_hash:
 * $xmlapi->set_hash("username", $accessHash);
 * $xmlapi->set_password("username", "password");
-*
+* 
 * 3.) Execute a function
 * $xmlapi->listaccts();
 *
 * @category Cpanel
 * @package xmlapi
-* @copyright 2009 cPanel, Inc.
+* @copyright 2011 cPanel, Inc.
 * @license http://sdk.cpanel.net/license/bsd.html
-* @version Release: 1.0.6
+* @version Release: 1.0.11
 * @link http://twiki.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/XmlApi
 * @since Class available since release 0.1
 **/
 
-class Server_Manager_Whm_Xmlapi
-{
+class xmlapi {
 	// should debugging statements be printed?
 	private $debug			= false;
-
+	
 	// The host to connect to
 	private $host				=	'127.0.0.1';
 
@@ -561,14 +571,14 @@ class Server_Manager_Whm_Xmlapi
 
 	//  the actual password or hash
 	private $auth 			= null;
-
+	
 	// username to authenticate as
 	private $user				= null;
-
+	
 	// The HTTP Client to use
-
+	
 	private $http_client		= 'curl';
-
+	
 	/**
 	* Instantiate the XML-API Object
 	* All parameters to this function are optional and can be set via the accessor functions or constants
@@ -580,7 +590,7 @@ class Server_Manager_Whm_Xmlapi
 	* @return Xml_Api object
 	*/
 	public function __construct($host = null, $user = null, $password = null ) {
-
+		
 		// Check if debugging must be enabled
 		if ( (defined('XMLAPI_DEBUG')) && (XMLAPI_DEBUG == '1') ) {
 		 	$this->debug = true;
@@ -590,15 +600,15 @@ class Server_Manager_Whm_Xmlapi
 		if ( (defined('XMLAPI_RAW_XML')) && (XMLAPI_RAW_XML == '1') ) {
 		 	$this->raw_xml = true;
 		}
-
+		
 		/**
 		* Authentication
 		* This can either be passed at this point or by using the set_hash or set_password functions
 		**/
-
+		
 		if ( ( defined('XMLAPI_USER') ) && ( strlen(XMLAPI_USER) > 0 ) ) {
 			$this->user = XMLAPI_USER;
-
+	
 			// set the authtype to pass and place the password in $this->pass
 			if ( ( defined('XMLAPI_PASS') ) && ( strlen(XMLAPI_PASS) > 0 ) ) {
 				$this->auth_type = 'pass';
@@ -610,35 +620,35 @@ class Server_Manager_Whm_Xmlapi
 				$this->auth_type = 'hash';
 				$this->auth = preg_replace("/(\n|\r|\s)/", '', XMLAPI_HASH);
 			}
-
+			
 			// Throw warning if XMLAPI_HASH and XMLAPI_PASS are defined
-			if ( ( ( defined('XMLAPI_HASH') ) && ( strlen(XMLAPI_HASH) > 0 ) )
+			if ( ( ( defined('XMLAPI_HASH') ) && ( strlen(XMLAPI_HASH) > 0 ) ) 
 				&& ( ( defined('XMLAPI_PASS') ) && ( strlen(XMLAPI_PASS) > 0 ) ) ) {
 				error_log('warning: both XMLAPI_HASH and XMLAPI_PASS are defined, defaulting to XMLAPI_HASH');
 			}
-
-
+			
+			
 			// Throw a warning if XMLAPI_HASH and XMLAPI_PASS are undefined and XMLAPI_USER is defined
 			if ( !(defined('XMLAPI_HASH') ) || !defined('XMLAPI_PASS') ) {
 				error_log('warning: XMLAPI_USER set but neither XMLAPI_HASH or XMLAPI_PASS have not been defined');
 			}
-
+			
 		}
-
+		
 		if ( ( $user != null ) && ( strlen( $user ) < 9 ) ) {
 			$this->user = $user;
 		}
-
+		
 		if ($password != null ) {
 			$this->set_password($password);
 		}
-
+		
 		/**
 		* Connection
-		*
+		* 
 		* $host/XMLAPI_HOST should always be equal to either the IP of the server or it's hostname
 		*/
-
+		
 		// Set the host, error if not defined
 		if ( $host == null ) {
 			if ( (defined('XMLAPI_HOST')) && (strlen(XMLAPI_HOST) > 0) ) {
@@ -649,13 +659,13 @@ class Server_Manager_Whm_Xmlapi
 		} else {
 			$this->host = $host;
 		}
+		
 
-
-		// disabling SSL is probably a bad idea.. just saying.
-		if ( defined('XMLAPI_USER_SSL' ) && (XMLAPI_USE_SSL == '0' ) ) {
+		// disabling SSL is probably a bad idea.. just saying.		
+		if ( defined('XMLAPI_USE_SSL' ) && (XMLAPI_USE_SSL == '0' ) ) {
 			$this->protocol = "http";
 		}
-
+		
 		// Detemine what the default http client should be.
 		if ( function_exists('curl_setopt') ) {
 			$this->http_client = "curl";
@@ -664,9 +674,9 @@ class Server_Manager_Whm_Xmlapi
 		} else {
 			throw new Exception('allow_url_fopen and curl are neither available in this PHP configuration');
 		}
-
+		
 	}
-
+	
 	/**
 	* Accessor Functions
 	**/
@@ -679,7 +689,7 @@ class Server_Manager_Whm_Xmlapi
 	public function get_debug() {
 		return $this->debug;
 	}
-
+	
 	/**
 	* Turn on debug mode
 	*
@@ -693,7 +703,7 @@ class Server_Manager_Whm_Xmlapi
 	public function set_debug( $debug = 1 ) {
 		$this->debug = $debug;
 	}
-
+	
 	/**
 	* Get the host being connected to
 	*
@@ -704,7 +714,7 @@ class Server_Manager_Whm_Xmlapi
 	public function get_host() {
 		return $this->host;
 	}
-
+	
 	/**
 	* Set the host to query
 	*
@@ -715,7 +725,7 @@ class Server_Manager_Whm_Xmlapi
 	public function set_host( $host ) {
 		$this->host = $host;
 	}
-
+	
 	/**
 	* Get the port to connect to
 	*
@@ -726,7 +736,7 @@ class Server_Manager_Whm_Xmlapi
 	public function get_port() {
 		return $this->port;
 	}
-
+	
 	/**
 	* Set the port to connect to
 	*
@@ -745,19 +755,19 @@ class Server_Manager_Whm_Xmlapi
 		if ( !is_int( $port ) ) {
 			$port = intval($port);
 		}
-
+		
 		if ( $port < 1 || $port > 65535 ) {
 			throw new Exception('non integer or negative integer passed to set_port');
 		}
-
+		
 		// Account for ports that are non-ssl
 		if ( $port == '2086' || $port == '2082' || $port == '80' || $port == '2095' ) {
 			$this->set_protocol('http');
 		}
-
+		
 		$this->port = $port;
 	}
-
+	
 	/**
 	* Return the protocol being used to query
 	*
@@ -768,7 +778,7 @@ class Server_Manager_Whm_Xmlapi
 	public function get_protocol() {
 		return $this->protocol;
 	}
-
+	
 	/**
 	* Set the protocol to use to query
 	*
@@ -784,8 +794,8 @@ class Server_Manager_Whm_Xmlapi
 		}
 		$this->protocol = $proto;
 	}
-
-	/**
+	
+	/** 
 	* Return what format calls with be returned in
 	*
 	* This function will return the currently set output format
@@ -795,7 +805,7 @@ class Server_Manager_Whm_Xmlapi
 	public function get_output() {
 		return $this->output;
 	}
-
+	
 	/**
 	* Set the output format for call functions
 	*
@@ -821,7 +831,7 @@ class Server_Manager_Whm_Xmlapi
 		}
 		$this->output = $output;
 	}
-
+	
 	/**
 	* Return the auth_type being used
 	*
@@ -832,7 +842,7 @@ class Server_Manager_Whm_Xmlapi
 	public function get_auth_type() {
 		return $this->auth_type;
 	}
-
+	
 	/**
 	* Set the auth type
 	*
@@ -853,7 +863,7 @@ class Server_Manager_Whm_Xmlapi
 		}
 		$this->auth_type = $auth_type;
 	}
-
+	
 	/**
 	* Set the password to be autenticated with
 	*
@@ -869,7 +879,7 @@ class Server_Manager_Whm_Xmlapi
 		$this->auth_type = 'pass';
 		$this->auth = $pass;
 	}
-
+	
 	/**
 	* Set the hash to authenticate with
 	*
@@ -884,7 +894,7 @@ class Server_Manager_Whm_Xmlapi
 		$this->auth_type = 'hash';
 		$this->auth = preg_replace("/(\n|\r|\s)/", '', $hash);
 	}
-
+	
 	/**
 	* Return the user being used for authtication
 	*
@@ -895,7 +905,7 @@ class Server_Manager_Whm_Xmlapi
 	public function get_user() {
 		return $this->user;
 	}
-
+	
 	/**
 	* Set the user to authenticate against
 	*
@@ -908,12 +918,12 @@ class Server_Manager_Whm_Xmlapi
 	public function set_user( $user ) {
 		$this->user = $user;
 	}
-
+	
 	/**
 	* Set the user and hash to be used for authentication
 	*
 	* This function will allow one to set the user AND hash to be authenticated with
-	*
+	* 
 	* @param string $user username
 	* @param string $hash WHM Access Hash
 	* @see set_hash()
@@ -923,7 +933,7 @@ class Server_Manager_Whm_Xmlapi
 		$this->set_hash( $hash );
 		$this->set_user( $user );
 	}
-
+	
 	/**
 	* Set the user and password to be used for authentication
 	*
@@ -937,7 +947,7 @@ class Server_Manager_Whm_Xmlapi
 		$this->set_password( $pass );
 		$this->set_user( $user );
 	}
-
+	
 	/**
 	* Return XML format
 	*
@@ -949,7 +959,7 @@ class Server_Manager_Whm_Xmlapi
 	public function return_xml() {
 		$this->set_output('xml');
 	}
-
+	
 	/**
 	* Return simplexml format
 	*
@@ -978,14 +988,14 @@ class Server_Manager_Whm_Xmlapi
  	* @param string client The http client to use
 	* @see get_http_client()
 	*/
-
+	
 	public function set_http_client( $client ) {
 		if ( ( $client != 'curl' ) && ( $client != 'fopen' ) ) {
 			throw new Exception('only curl and fopen and allowed http clients');
 		}
 		$this->http_client = $client;
 	}
-
+	
 	/**
 	* Get the HTTP Client in use
 	*
@@ -997,13 +1007,13 @@ class Server_Manager_Whm_Xmlapi
 	public function get_http_client() {
 		return $this->http_client;
 	}
-
- 	/*
+	
+ 	/*	
 	*	Query Functions
 	*	--
 	*	This is where the actual calling of the XML-API, building API1 & API2 calls happens
 	*/
-
+	
 	/**
 	* Perform an XML-API Query
 	*
@@ -1014,9 +1024,7 @@ class Server_Manager_Whm_Xmlapi
 	* @return mixed
 	*/
 	public function xmlapi_query( $function, $vars = array() ) {
-
-        $this->output = 'json';
-
+		
 		// Check to make sure all the data needed to perform the query is in place
 		if (!$function) {
 			throw new Exception('xmlapi_query() requires a function to be passed to it');
@@ -1025,19 +1033,19 @@ class Server_Manager_Whm_Xmlapi
 		if ($this->user == null ) {
 			throw new Exception('no user has been set');
 		}
-
+		
 		if ($this->auth ==null) {
 			throw new Exception('no authentication information has been set');
 		}
 
 		// Build the query:
-
-//		$query_type = '/xml-api/';
-
-//		if ( $this->output == 'json' ) {
+		
+		$query_type = '/xml-api/';
+		
+		if ( $this->output == 'json' ) {
 			$query_type = '/json-api/';
-//		}
-
+		}
+		
 		$args = http_build_query($vars, '', '&');
 		$url =  $this->protocol . '://' . $this->host . ':' . $this->port . $query_type . $function;
 
@@ -1047,7 +1055,7 @@ class Server_Manager_Whm_Xmlapi
 		}
 
 		// Set the $auth string
-
+		
 		$authstr;
 		if ( $this->auth_type == 'hash' ) {
 			$authstr = 'Authorization: WHM ' . $this->user . ':' . $this->auth . "\r\n";
@@ -1056,35 +1064,35 @@ class Server_Manager_Whm_Xmlapi
 		} else {
 			throw new Exception('invalid auth_type set');
 		}
-
+		
 		if ($this->debug) {
 			error_log("Authentication Header: " . $authstr ."\n");
 		}
 
 		// Perform the query (or pass the info to the functions that actually do perform the query)
-
+		
 		$response;
 		if ( $this->http_client == 'curl' ) {
 			$response = $this->curl_query($url, $args, $authstr);
 		} elseif ( $this->http_client == 'fopen' ) {
 			$response = $this->fopen_query($url, $args, $authstr);
 		}
+		
 
-
-
+				
 		/*
 		*	Post-Query Block
 		* Handle response, return proper data types, debug, etc
 		*/
-
+		
 		// print out the response if debug mode is enabled.
 		if ($this->debug) {
 			error_log("RESPONSE:\n " . $response);
 		}
-
+		
 		// The only time a response should contain <html> is in the case of authentication error
 		// cPanel 11.25 fixes this issue, but if <html> is in the response, we'll error out.
-
+		
 		if (stristr($response, '<html>') == true) {
 			if (stristr($response, 'Login Attempt Failed') == true) {
 				error_log("Login Attempt Failed");
@@ -1096,8 +1104,8 @@ class Server_Manager_Whm_Xmlapi
 			}
 			return;
 		}
-
-
+		
+		
 		// perform simplexml transformation (array relies on this)
 		if ( ($this->output == 'simplexml') || $this->output == 'array') {
 			$response = simplexml_load_string($response, null, LIBXML_NOERROR | LIBXML_NOWARNING);
@@ -1109,7 +1117,7 @@ class Server_Manager_Whm_Xmlapi
 				error_log("SimpleXML var_dump:\n" . print_r($response, true));
 			}
 		}
-
+		
 		// perform array tranformation
 		if ($this->output == 'array') {
 			$response = $this->unserialize_xml($response);
@@ -1119,7 +1127,7 @@ class Server_Manager_Whm_Xmlapi
 		}
 		return $response;
 	}
-
+	
 	private function curl_query( $url, $postdata, $authstr ) {
 		$curl = curl_init();
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
@@ -1134,14 +1142,14 @@ class Server_Manager_Whm_Xmlapi
 		curl_setopt($curl, CURLOPT_URL, $url);
 		// Increase buffer size to avoid "funny output" exception
 		curl_setopt($curl, CURLOPT_BUFFERSIZE, 131072);
-
+	
 		// Pass authentication header
 		$header[0] =$authstr .
 			"Content-Type: application/x-www-form-urlencoded\r\n" .
 			"Content-Length: " . strlen($postdata) . "\r\n" . "\r\n" . $postdata;
-
+		
 		curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
-
+			
 		curl_setopt($curl, CURLOPT_POST, 1);
         curl_setopt($curl, CURLOPT_POSTFIELDS, "");
 
@@ -1152,12 +1160,12 @@ class Server_Manager_Whm_Xmlapi
 		curl_close($curl);
 		return $result;
 	}
-
+	
 	private function fopen_query( $url, $postdata, $authstr ) {
 		if ( !(ini_get('allow_url_fopen') ) ) {
 			throw new Exception('fopen_query called on system without allow_url_fopen enabled in php.ini');
 		}
-
+		
 		$opts = array(
 			'http' => array(
 				'allow_self_signed' => true,
@@ -1171,8 +1179,8 @@ class Server_Manager_Whm_Xmlapi
 		$context = stream_context_create($opts);
 		return file_get_contents($url, false, $context);
 	}
-
-
+	
+	
 	/*
 	* Convert simplexml to associative arrays
 	*
@@ -1194,8 +1202,8 @@ class Server_Manager_Whm_Xmlapi
 		// Run callback and return
 		return (!is_array($data) && is_callable($callback)) ? call_user_func($callback, $data) : $data;
 	}
-
-
+	
+	
 	/* TO DO:
 	  Implement API1 and API2 query functions!!!!!
 	*/
@@ -1219,24 +1227,24 @@ class Server_Manager_Whm_Xmlapi
 			error_log("api1_query requires that a module and function are passed to it");
 			return false;
 		}
-
+		
 		if (!is_array($args)) {
 			error_log('api1_query requires that it is passed an array as the 4th parameter');
 			return false;
 		}
-
+		
 		$cpuser = 'cpanel_xmlapi_user';
 		$module_type = 'cpanel_xmlapi_module';
 		$func_type = 'cpanel_xmlapi_func';
-		$api_type = 'cpanel_xmlapi_apiversion';
+		$api_type = 'cpanel_xmlapi_apiversion';		
 
 		if ( $this->get_output() == 'json' ) {
 		    $cpuser = 'cpanel_jsonapi_user';
 			$module_type = 'cpanel_jsonapi_module';
 			$func_type = 'cpanel_jsonapi_func';
-			$api_type = 'cpanel_jsonapi_apiversion';
+			$api_type = 'cpanel_jsonapi_apiversion';			
 		}
-
+		
 		$call = array(
 				$cpuser => $user,
 				$module_type => $module,
@@ -1248,7 +1256,7 @@ class Server_Manager_Whm_Xmlapi
 		}
 		return $this->xmlapi_query('cpanel', $call);
 	}
-
+	
 	/**
 	* Call an API2 Function
 	*
@@ -1264,8 +1272,8 @@ class Server_Manager_Whm_Xmlapi
 	* @link http://docs.cpanel.net/twiki/bin/view/DeveloperResources/ApiRef/WebHome API1 & API2 Call documentation
 	* @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/ApiTwo Legacy API2 Documentation
 	* @link http://docs.cpanel.net/twiki/bin/view/DeveloperResources/ApiBasics/CallingApiTwo API2 Documentation
-	*/
-
+	*/ 
+	
 	public function api2_query($user, $module, $function, $args = array()) {
 		if (!isset($user) || !isset($module) || !isset($function) ) {
 			error_log("api2_query requires that a username, module and function are passed to it");
@@ -1275,7 +1283,7 @@ class Server_Manager_Whm_Xmlapi
 			error_log("api2_query requires that an array is passed to it as the 4th parameter");
 			return false;
 		}
-
+		
 		$cpuser = 'cpanel_xmlapi_user';
 		$module_type = 'cpanel_xmlapi_module';
 		$func_type = 'cpanel_xmlapi_func';
@@ -1287,14 +1295,14 @@ class Server_Manager_Whm_Xmlapi
 			$func_type = 'cpanel_jsonapi_func';
 			$api_type = 'cpanel_jsonapi_apiversion';
 		}
-
+		
 		$args[$cpuser] = $user;
 		$args[$module_type] = $module;
 		$args[$func_type] = $function;
 		$args[$api_type] = '2';
 		return $this->xmlapi_query('cpanel', $args);
 	}
-
+	
 	####
 	#  XML API Functions
 	####
@@ -1318,20 +1326,20 @@ class Server_Manager_Whm_Xmlapi
 	/**
 	* Create a cPanel Account
 	*
-	* This function will allow one to create an account, the $acctconf parameter requires that the follow
+	* This function will allow one to create an account, the $acctconf parameter requires that the follow 
 	* three associations are defined:
 	*	- username
 	*	- password
 	*	- domain
 	*
-	* Failure to prive these will cause an error to be logged.  Any other key/value pairs as defined by the createaccount call
+	* Failure to prive these will cause an error to be logged.  Any other key/value pairs as defined by the createaccount call 
 	* documentation are allowed parameters for this call.
-	*
+	* 
 	* @param array $acctconf
 	* @return mixed
 	* @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/CreateAccount XML API Call documentation
 	*/
-
+	
 	public function createacct($acctconf) {
 		if (!is_array($acctconf)) {
 			error_log("createacct requires that first parameter passed to it is an array");
@@ -1346,7 +1354,7 @@ class Server_Manager_Whm_Xmlapi
 
 	/**
 	* Change a cPanel Account's Password
-	*
+	* 
 	* This function will allow you to change the password of a cpanel account
 	*
 	* @param string $username The username to change the password of
@@ -1406,7 +1414,7 @@ class Server_Manager_Whm_Xmlapi
 	* @param string $username The username to modify
 	* @param array $args the new values for the modified account (see {@link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/ModifyAccount modifyacct documentation})
 	* @return mixed
-	* @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/ModifyAccount XML API Call documentation
+	* @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/ModifyAccount XML API Call documentation 
 	*/
 	public function modifyacct($username, $args = array()) {
 		if (!isset($username)) {
@@ -1508,7 +1516,7 @@ class Server_Manager_Whm_Xmlapi
 	* @param bool $keepdns When pass a true value, the DNS zone will be retained
 	* @return mixed
 	* @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/TerminateAccount
-	*/
+	*/ 
 	public function removeacct($username, $keepdns = false) {
 		if (!isset($username)) {
 			error_log("removeacct requires that a username is passed to it");
@@ -1546,7 +1554,7 @@ class Server_Manager_Whm_Xmlapi
 	* @param string $pkg The package to change the account to.
 	* @return mixed
 	* @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/ChangePackage XML API Call documentation
-	*/
+	*/ 
 	public function changepackage($username, $pkg) {
 		if (!isset($username) || !isset($pkg)) {
 			error_log("changepackage requires that username and pkg are passed to it");
@@ -1569,7 +1577,7 @@ class Server_Manager_Whm_Xmlapi
 
 	/**
 	* Display Data about a Virtual Host
-	*
+	* 
 	* This function will return information about a specific domain.  This data is essentially a representation of the data
 	* Contained in the httpd.conf VirtualHost for the domain.
 	*
@@ -1588,7 +1596,7 @@ class Server_Manager_Whm_Xmlapi
 
 	/**
 	* Change a site's IP Address
-	*
+	* 
 	* This function will allow you to change the IP address that a domain listens on.
 	* In order to properly call this function Either $user or $domain parameters must be defined
 	* @param string $ip The $ip address to change the account or domain to
@@ -1643,8 +1651,8 @@ class Server_Manager_Whm_Xmlapi
 	/**
 	* Add a record to a zone
 	*
-	* This will append a record to a DNS Zone.  The $args argument to this function
-	* must be an associative array containing information about the DNS zone, please
+	* This will append a record to a DNS Zone.  The $args argument to this function 
+	* must be an associative array containing information about the DNS zone, please 
 	* see the XML API Call documentation for more info
 	*
 	* @param string $zone The DNS zone that you want to add the record to
@@ -1657,7 +1665,7 @@ class Server_Manager_Whm_Xmlapi
 			error_log("addzonerecord requires that $args passed to it is an array");
 			return;
 		}
-
+		
 		$args['zone'] = $zone;
 		return $this->xmlapi_query('addzonerecord', $args);
 	}
@@ -1676,13 +1684,13 @@ class Server_Manager_Whm_Xmlapi
 	* @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/EditZoneRecord XML API Call documentation
 	* @see dumpzone()
 	*/
-
+	
 	public function editzonerecord( $zone, $line, $args ) {
 		if (!is_array($args)) {
 			error_log("editzone requires that $args passed to it is an array");
 			return;
 		}
-
+		
 		$args['domain'] = $zone;
 		$args['Line'] = $line;
 		return $this->xmlapi_query('editzonerecord', $args);
@@ -1691,7 +1699,7 @@ class Server_Manager_Whm_Xmlapi
 	/**
 	* Retrieve a DNS Record
 	*
-	* This function will return a data structure representing a DNS record, to
+	* This function will return a data structure representing a DNS record, to 
 	* retrieve all lines see dumpzone.
 	* @param string $zone The zone that you want to retrieve a record from
 	* @param string $line The line of the zone that you want to retrieve
@@ -1721,7 +1729,7 @@ class Server_Manager_Whm_Xmlapi
 
 	/**
 	* Return a List of all DNS Zones on the server
-	*
+	* 
 	* This XML API function will return an array containing all the DNS Zones on the server
 	*
 	* @return mixed
@@ -1748,7 +1756,7 @@ class Server_Manager_Whm_Xmlapi
 		}
 		return $this->xmlapi_query('dumpzone', array('domain' => $domain));
 	}
-
+	
 	/**
 	* Return a Nameserver's IP
 	*
@@ -1781,7 +1789,7 @@ class Server_Manager_Whm_Xmlapi
 		}
 		return $this->xmlapi_query('removezonerecord', array('zone' => $zone, 'Line' => $line) );
 	}
-
+	
 	/**
 	* Reset a zone
 	*
@@ -1804,13 +1812,13 @@ class Server_Manager_Whm_Xmlapi
 
 	/**
 	* Add a new package
-	*
+	* 
 	* This function will allow you to add a new package
 	* This function should be passed an associative array containing elements that define package parameters.
-	* These variables map directly to the parameters for the XML-API Call, please refer to the link below for a complete
+	* These variables map directly to the parameters for the XML-API Call, please refer to the link below for a complete 
 	* list of possible variable.  The "name" element is required.
 	* @param array $pkg an associative array containing package parameters
-	* @return mixed
+	* @return mixed 
 	* @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/AddPackage XML API Call documentation
 	*/
 	public function addpkg($pkg) {
@@ -1823,7 +1831,7 @@ class Server_Manager_Whm_Xmlapi
 
 	/**
 	* Remove a package
-	*
+	* 
 	* This function allow you to delete a package
 	* @param string $pkgname The package you wish to delete
 	* @return mixed
@@ -1910,7 +1918,7 @@ class Server_Manager_Whm_Xmlapi
 		return $this->xmlapi_query('saveacllist', $acl);
 	}
 
-
+	
 	/**
 	* List available saved ACLs
 	*
@@ -2011,7 +2019,7 @@ class Server_Manager_Whm_Xmlapi
 	/**
 	* Set a reseller's dedicated IP addresses
 	*
-	* This function will set a reseller's dedicated IP addresses.  If an IP is not passed to this function,
+	* This function will set a reseller's dedicated IP addresses.  If an IP is not passed to this function, 
 	* it will reset the reseller to use the server's main shared IP address.
 	* @param string $user The username of the reseller to change dedicated IPs for
 	* @param string $ip The IP to assign to the  reseller, this can be a comma-seperated list of IPs to allow for multiple IP addresses
@@ -2029,7 +2037,7 @@ class Server_Manager_Whm_Xmlapi
 		}
 		return $this->xmlapi_query('setresellerips',$params);
 	}
-
+	
 	/**
 	* Set Accounting Limits for a reseller account
 	*
@@ -2050,7 +2058,7 @@ class Server_Manager_Whm_Xmlapi
 		}
 		return $this->xmlapi_query('setresellerlimits',$reseller_cfg);
 	}
-
+	
 	/**
 	* Set a reseller's main IP
 	*
@@ -2095,7 +2103,8 @@ class Server_Manager_Whm_Xmlapi
 			}
 			$params = array(
 				'user' => $user,
-				'no_limit' => '0'
+				'no_limit' => '0',
+			    'package' => $package,
 			);
 			if ($allowed) {
 				$params['allowed'] = 1;
@@ -2108,7 +2117,7 @@ class Server_Manager_Whm_Xmlapi
 			return $this->xmlapi_query('setresellerpackagelimits', $params);
 		}
 	}
-
+	
 	/**
 	* Suspend a reseller and all accounts owned by a reseller
 	*
@@ -2119,7 +2128,7 @@ class Server_Manager_Whm_Xmlapi
 	* @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/SuspendReseller XML API Call documentation
 	*/
 	public function suspendreseller($reseller, $reason = null) {
-		if (!isset($reseller) ) {
+		if (!isset($reseller) ) { 
 			error_log("suspendreseller requires that the reseller's username is passed to it");
 			return false;
 		}
@@ -2129,8 +2138,8 @@ class Server_Manager_Whm_Xmlapi
 		}
 		return $this->xmlapi_query('suspendreseller', $params);
 	}
-
-
+	
+	
 	/**
 	* Unsuspend a Reseller Account
 	*
@@ -2146,7 +2155,7 @@ class Server_Manager_Whm_Xmlapi
 		}
 		return $this->xmlapi_query('unsuspendreseller', array('user' => $user));
 	}
-
+	
 	/**
 	* Get the number of accounts owned by a reseller
 	*
@@ -2162,7 +2171,7 @@ class Server_Manager_Whm_Xmlapi
 		}
 		return $this->xmlapi_query('acctcounts', array('user' => $user) );
 	}
-
+	
 	/**
 	* Set a reseller's nameservers
 	*
@@ -2184,7 +2193,7 @@ class Server_Manager_Whm_Xmlapi
 		}
 		return $this->xmlapi_query('setresellernameservers', $params);
 	}
-
+	
 	####
 	# Server information
 	####
@@ -2326,7 +2335,7 @@ class Server_Manager_Whm_Xmlapi
 
 	/**
 	* Set the resolvers used by the server
-	*
+	* 
 	* This function will set the resolvers in /etc/resolv.conf for the server
 	* @param string $nameserver1 The IP of the first nameserver to use
 	* @param string $nameserver2 The IP of the second namesever to use
@@ -2409,12 +2418,19 @@ class Server_Manager_Whm_Xmlapi
 	* Service Status
 	*
 	* This function will return the status of all services on the and whether they are running or not
+	* @param string $service A single service to filter for.
 	* @return mixed
 	* @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/ServiceStatus XML API Call documentation
 	*/
-	public function servicestatus() {
-		return $this->xmlapi_query('servicestatus');
-	}
+    public function servicestatus($args=array())
+     {
+        if(!empty($args) && !is_array($args)){
+            $args = array('service'=>$args);
+        } elseif (!is_array($args)) {
+            $args = array();
+        }
+        return $this->xmlapi_query('servicestatus', $args);
+     }
 
 	/**
 	* Configure A Service
@@ -2432,21 +2448,21 @@ class Server_Manager_Whm_Xmlapi
 			return false;
 		}
 		$params = array('service' => $service);
-
+	
 		if ($enabled) {
 			$params['enabled'] = 1;
 		} else {
 			$params['enabled'] = 0;
 		}
-
+		
 		if ($monitored) {
 			$params['monitored'] = 1;
 		} else {
 			$params['monitored'] = 0;
 		}
-
+		
 		return $this->xmlapi_query('configureservice', $params);
-
+		
 	}
 
 	####
@@ -2491,7 +2507,7 @@ class Server_Manager_Whm_Xmlapi
 	/**
 	* Install an SSL certificate
 	*
-	* This function will allow you to install an SSL certificate that is uploaded via the $argument parameter to this call.  The arguments for this call map directly to the parameters for the XML API call,
+	* This function will allow you to install an SSL certificate that is uploaded via the $argument parameter to this call.  The arguments for this call map directly to the parameters for the XML API call, 
 	* please consult the XML API Call documentation for more information.
 	* @param array $args The configuration for the SSL certificate
 	* @return mixed
@@ -2538,12 +2554,14 @@ class Server_Manager_Whm_Xmlapi
 	// This API function displays a list of all parked domains for a specific user.
 	public function park($username, $newdomain, $topdomain) {
 		$args = array();
-		if ( (!isset($username)) && (!isset($newdomain)) && (!isset($topdomain)) ) {
-			error_log("park requires that a username, new domain and topdomain are passed to it");
+		if ( (!isset($username)) && (!isset($newdomain)) ) {
+			error_log("park requires that a username and new domain are passed to it");
 			return false;
 		}
 		$args['domain'] = $newdomain;
-		$args['topdomain'] = $topdomain;
+		if ($topdomain) {
+		    $args['topdomain'] = $topdomain;   
+		}
 		return $this->api2_query($username, 'Park', 'park', $args);
 	}
 
@@ -2555,7 +2573,7 @@ class Server_Manager_Whm_Xmlapi
 			return false;
 		}
 		$args['domain'] = $domain;
-		return $this->api1_query($username, 'Park', 'unpark', $args);
+		return $this->api2_query($username, 'Park', 'unpark', $args);
 	}
 
 	####
@@ -2641,4 +2659,6 @@ class Server_Manager_Whm_Xmlapi
 		}
 		return $this->api2_query($username, 'StatsBar', 'stat', $values);
 	}
+	
+	
 }
