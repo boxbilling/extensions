@@ -5,6 +5,6 @@
     "author":       "BoxBilling",
     "author_url":   "http://extensions.boxbilling.com/",
     "license":      "GPL version 2 or later - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
-    "version":      "1.0.0",
+    "version":      "1.0.1",
     "minimum_boxbilling_version": "2.3"
 }
