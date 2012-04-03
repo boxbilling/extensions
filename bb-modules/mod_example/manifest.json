@@ -1,4 +1,6 @@
 {
+    "id":           "example",
+	"type":         "mod",
     "name":         "Example module",
     "description":  "Module for BoxBilling developer to get started",
     "homepage_url": "http://github.com/boxbilling/",

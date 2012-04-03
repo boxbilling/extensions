@@ -1,4 +1,6 @@
 {
+    "id":           "embed",
+	"type":         "mod",
     "name":         "Embed module",
     "description":  "Provides ability to embed parts of BoxBilling to other websites",
     "homepage_url": "http://github.com/boxbilling/",
