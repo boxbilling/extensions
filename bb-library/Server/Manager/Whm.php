@@ -58,6 +58,12 @@ class Server_Manager_Whm extends Server_Manager
 
         $this->_api->set_auth_type($type);
         $this->_api->set_output('json');
+        
+        if($this->_config['secure']) {
+            $this->_api->set_protocol('https');
+        } else {
+            $this->_api->set_protocol('http');
+        }
 	}
 
     public function getLoginUrl()
@@ -126,10 +132,13 @@ class Server_Manager_Whm extends Server_Manager
 			'password'		=> $a->getPassword(),
 			'contactemail'  => $client->getEmail(),
 			'plan'			=> $this->_getPackageName($package),
-        	'reseller'		=> $a->getReseller(),
         	'useregns'		=> 0,
         );
-
+            
+        if($a->getReseller()) {
+            $var_hash['reseller'] = 1;
+        }
+        
         $json = $this->_request($action, $var_hash);
         $result = ($json->result[0]->status == 1);
 
@@ -219,7 +228,10 @@ class Server_Manager_Whm extends Server_Manager
 			'db_pass_update'	=> false,
 		);
 
-		$this->_request($action, $var_hash);
+		$result = $this->_request($action, $var_hash);
+        if(isset($result->passwd[0]) && $result->passwd[0]->status == 0) {
+            throw new Server_Exception($result->passwd[0]->statusmsg);
+        }
         return true;
     }
 
@@ -1089,22 +1101,6 @@ class xmlapi {
 		if ($this->debug) {
 			error_log("RESPONSE:\n " . $response);
 		}
-		
-		// The only time a response should contain <html> is in the case of authentication error
-		// cPanel 11.25 fixes this issue, but if <html> is in the response, we'll error out.
-		
-		if (stristr($response, '<html>') == true) {
-			if (stristr($response, 'Login Attempt Failed') == true) {
-				error_log("Login Attempt Failed");
-				return;
-			}
-			if (stristr($response, 'action="/login/"') == true) {
-				error_log("Authentication Error");
-				return;
-			}
-			return;
-		}
-		
 		
 		// perform simplexml transformation (array relies on this)
 		if ( ($this->output == 'simplexml') || $this->output == 'array') {
