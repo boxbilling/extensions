@@ -3,13 +3,13 @@ msgstr ""
 "Project-Id-Version: BoxBilling RC 2.3.29\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2012-04-11 18:55+0100\n"
-"Last-Translator: \n"
+"PO-Revision-Date: 2012-07-01 16:01+0300\n"
+"Last-Translator: BoxBilling <info@boxbilling.com>\n"
 "Language-Team: Rhys\n"
+"Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: English\n"
 "X-Poedit-KeywordsList: _;gettext;gettext_noop\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-Language: Spanish\n"
@@ -180,8 +180,25 @@ msgstr "Añadir fondos"
 msgid "Login / Sign up"
 msgstr "Identificarse / Registrarse"
 
+msgid "Sign In / Create new account"
+msgstr "Sign In / Create new account"
+
+msgid "Become a member to participate in forum, contact support, order new services"
+msgstr "Become a member to participate in forum, contact support, order new services"
+
 msgid "Company"
 msgstr "Empresa"
+
+#, fuzzy
+msgid "How to reset my password?"
+msgstr "Recuperar contraseña"
+
+msgid "Enter your email to reset password. You will receive new password after reset link is confirmed."
+msgstr "Enter your email to reset password. You will receive new password after reset link is confirmed."
+
+#, fuzzy
+msgid "Password reset confirmation email was sent"
+msgstr "Confirmación de contraseña requerida"
 
 msgid "Profile details"
 msgstr "Detalles del perfil"
@@ -203,6 +220,9 @@ msgstr "Gravatar"
 
 msgid "Currency"
 msgstr "Moneda"
+
+msgid "API"
+msgstr "API"
 
 msgid "Update profile"
 msgstr "Actualizar perfil"
@@ -239,6 +259,22 @@ msgstr "Cambiar contraseña"
 
 msgid "Enter new password"
 msgstr "Escriba la nueva contraseña"
+
+msgid "API key"
+msgstr "API key"
+
+msgid "API key allows integration with external applications. You will need this key for authentication."
+msgstr "API key allows integration with external applications. You will need this key for authentication."
+
+msgid "Warning! Resetting the key will break existing applications using it."
+msgstr "Warning! Resetting the key will break existing applications using it."
+
+msgid "Your API key"
+msgstr "Your API key"
+
+#, fuzzy
+msgid "Reset key"
+msgstr "Reiniciar"
 
 msgid "Please register with"
 msgstr "Por favor, regístrate con"
@@ -291,9 +327,6 @@ msgstr "Asunto del Email "
 msgid "Date sent"
 msgstr "Fecha de envío"
 
-msgid "Forum"
-msgstr "Foro"
-
 msgid "Thread / Thread Starter"
 msgstr "Tema / Autor del Tema"
 
@@ -330,6 +363,9 @@ msgstr "Mensaje del tema"
 msgid "Create new topic"
 msgstr "Crear un nuevo tema"
 
+msgid "Forum"
+msgstr "Foro"
+
 msgid "Welcome to our forums. If you wish to become a member and post, you have to be registered member."
 msgstr "Bienvenido a nuestros foros. Si quieres convertirte en miembro y publicar, tienes que estar registrado."
 
@@ -341,6 +377,10 @@ msgstr "Mensajes"
 
 msgid "Forums are closed"
 msgstr "Los foros están cerrados"
+
+#, fuzzy
+msgid "Favorite topics"
+msgstr "Comenzar nuevo tema"
 
 msgid "Topic information"
 msgstr "Información del tema"
@@ -472,7 +512,8 @@ msgstr "Contacto"
 msgid "Contact us for more information"
 msgstr "Contacta con nosotros para más información"
 
-msgid "Anouncements"
+#, fuzzy
+msgid "Announcements"
 msgstr "Anuncios"
 
 #, fuzzy
@@ -485,10 +526,12 @@ msgstr "Centro de ayuda"
 msgid "Browse our KB for answers and FAQs"
 msgstr "Consulta nuestro Centro de Ayuda"
 
-msgid "Billing Software"
-msgstr "Software de Facturación"
+#, fuzzy
+msgid "Invoice Software"
+msgstr "No se pasó el ID de la factura"
 
-msgid "Powered by BoxBilling billing software"
+#, fuzzy
+msgid "Powered by BoxBilling invoice software"
 msgstr "Powered by BoxBilling software de facturación"
 
 msgid "Processing payment ..."
@@ -536,6 +579,17 @@ msgstr "Factura Proforma"
 #, fuzzy
 msgid "Invoice is paid"
 msgstr "Factura pagada"
+
+#, fuzzy
+msgid "Account"
+msgstr "Cantidad"
+
+#, fuzzy
+msgid "Company number"
+msgstr "Nombre de la Empresa"
+
+msgid "VAT"
+msgstr "VAT"
 
 msgid "Discount"
 msgstr "Descuento"
@@ -687,7 +741,8 @@ msgstr "Razón"
 msgid "Submit"
 msgstr "Enviar"
 
-msgid "Open new support ticket reagarding this order"
+#, fuzzy
+msgid "Open new support ticket regarding this order"
 msgstr "Abrir nuevo ticket de soporte en relación a este pedido"
 
 msgid "Submit new support ticket. Ticket will be visible in support section after submission"
@@ -720,14 +775,14 @@ msgstr "Ciclo de Facturación"
 msgid "Back to services"
 msgstr "Volver a servicios"
 
-msgid "Terms and Conditions"
-msgstr "Terms and Conditions"
-
 msgid "Configure"
 msgstr "Configurar"
 
 msgid "The product/service you have chosen has the following configuration options for you to choose from."
 msgstr "Si existen extras u opciones de configuración, se mostrarán en el siguiente paso."
+
+msgid "Terms and Conditions"
+msgstr "Terms and Conditions"
 
 msgid "Domain management"
 msgstr "Administración de Dominio"
@@ -1011,20 +1066,17 @@ msgstr "Autor"
 msgid "Time opened"
 msgstr "Tiempo abierto"
 
+msgid "Close ticket"
+msgstr "Ticket Cerrado"
+
 msgid "Ticket ID"
 msgstr "Ticket Nº"
 
 msgid "Related to"
 msgstr "En relación con"
 
-msgid "Service #"
-msgstr "Servicio #"
-
 msgid "Tickets list"
 msgstr "Listado de Tickets"
-
-msgid "Close ticket"
-msgstr "Ticket Cerrado"
 
 msgid "Support tickets"
 msgstr "Tickets de Soporte"
@@ -1068,6 +1120,657 @@ msgstr "Elegir producto"
 msgid "Confirm"
 msgstr "Confirmar"
 
+msgid "Invalid identity"
+msgstr "Identidad inválida"
+
+msgid ":module method toApiArray not found"
+msgstr ":module método toApiArray no encontrado"
+
+msgid "Client api can not be invoked from guest or admin role"
+msgstr ""
+
+msgid "Invalid identity. Clear browser cookies"
+msgstr "Identidad inválida. Limpia las cookies del navegador"
+
+#, fuzzy
+msgid "Method :method must contain underscore"
+msgstr "El método :method debe contener subrayados"
+
+#, fuzzy
+msgid "BoxBilling module :mod is not installed/activated"
+msgstr "El módulo de BoxBilling \":mod\" no está instalado/activado"
+
+#, fuzzy
+msgid "Module api file :file is not available"
+msgstr "El módulo api de archivos :file no está disponible"
+
+#, fuzzy
+msgid "Api class must be instance of Api_Abstract"
+msgstr "La clase Api debe ser una instancia de Api_Abstract"
+
+#, fuzzy
+msgid ":type API call :method does not exist in module :module"
+msgstr ":type llamada API :method no existe en el módulo :module"
+
+msgid "Page :url not found"
+msgstr "Página :url no encontrada"
+
+msgid "Page not found"
+msgstr "Página no encontrada"
+
+msgid "CURL extension is not enabled"
+msgstr "Extensión CURL no activada"
+
+#, fuzzy
+msgid ":module method getSearchQuery not found"
+msgstr ":module método toApiArray no encontrado"
+
+msgid "Invalid :module method getSearchQuery return"
+msgstr ""
+
+msgid "FTP extension is not enabled in PHP. You will not be able to use automatic updates and other automation."
+msgstr "Extensión FTP no activada en PHP. No podrás utilizar las actualizaciones automáticas ni otras automatizaciones."
+
+msgid "The ftp PHP extension is not available"
+msgstr "La extensión FTP de PHP no está disponible"
+
+msgid "FTP hostname is required"
+msgstr "Nombre de host del FTP requerido"
+
+msgid "FTP username is required"
+msgstr "Usuario del FTP requerido"
+
+msgid "FTP password is required"
+msgstr "Contraseña del FTP requerida"
+
+msgid "Failed to connect to FTP Server :host : :port"
+msgstr "Fallo al conectar al servidor FTP :host : :port"
+
+msgid "FTP Username/Password incorrect for :usernmae"
+msgstr "Usuario/Contraseña del FTP incorrecta para :username"
+
+msgid "Missing log message"
+msgstr "Falta mensaje del log"
+
+msgid "Bad log priority"
+msgstr "Mala prioridad de log"
+
+msgid "Resource is not a stream"
+msgstr "El recurso no es un stream"
+
+msgid "Mode cannot be changed on existing streams"
+msgstr "Modo no puede cambiarse en streams existentes"
+
+#, fuzzy
+msgid ":stream cannot be opened with mode :mode"
+msgstr ":stream no puede abrirse con el modo :mode"
+
+msgid "Unable to write to stream"
+msgstr "Imposible escribir a stream"
+
+msgid "Unknown mail transport: :transport"
+msgstr "Desconocido transporte mail :transport"
+
+msgid "SMTP host not configured"
+msgstr "Host SMTP no configurado"
+
+msgid "SMTP port not configured"
+msgstr "Puerto SMTP no configurado"
+
+#, fuzzy
+msgid "SMTP hostname is not configured."
+msgstr "Host SMTP no configurado"
+
+msgid "Module :mod manifest file is missing"
+msgstr "Falta el Módulo :mod del archivo de manifiesto"
+
+#, fuzzy
+msgid "Module :mod manifest file is not valid. Check file syntax and permissions."
+msgstr "Módulo :mod archivo de manifiesto no es válido. Comprueba la sintaxis del archivo."
+
+#, fuzzy
+msgid "Service class :class was not found in :path"
+msgstr "La Pasarela de pago de la clase $class no existe"
+
+#, fuzzy
+msgid "Client controller class :class was not found in :path"
+msgstr "La Pasarela de pago de la clase $class no existe"
+
+#, fuzzy
+msgid "Admin controller class :class was not found in :path"
+msgstr "La Pasarela de pago de la clase $class no existe"
+
+#, fuzzy
+msgid "Core module can not be installed"
+msgstr "Los módulos del core de BoxBilling no se pueden instalar o eliminar"
+
+#, fuzzy
+msgid "Core module can not be uninstalled"
+msgstr "Los módulos del core de BoxBilling no se pueden instalar o eliminar"
+
+#, fuzzy
+msgid "Core module can not be updated"
+msgstr "El código del módulo no fue aprobado"
+
+msgid "Period Error. Unit :unit is not defined"
+msgstr "Error de período. Unidad :unit no está definida"
+
+msgid "Invalid period quantity :qty for unit :unit. Allowed range is from :from to :to"
+msgstr "Cantidad de período :qty inválida para unidad :unit. El rango permitido es de :from a :to"
+
+#, fuzzy
+msgid "Every week"
+msgstr "Cada año"
+
+msgid "Every month"
+msgstr "Cada mes"
+
+msgid "Every 3 months"
+msgstr "Cada 3 meses"
+
+msgid "Every 6 months"
+msgstr "Cada 6 meses"
+
+msgid "Every year"
+msgstr "Cada año"
+
+msgid "Every 2 years"
+msgstr "Cada 2 años"
+
+msgid "Every 3 years"
+msgstr "Cada 3 años"
+
+msgid "Every :number day"
+msgstr "Cada :number día"
+
+#, fuzzy
+msgid "Every :number week(s)"
+msgstr "Cada :number semanas"
+
+msgid "Every :number months"
+msgstr "Cada :number meses"
+
+msgid "Every :number years"
+msgstr "Cada :number años"
+
+msgid "Unit not defined"
+msgstr "Unidad no definida"
+
+msgid "Can not determine months amount from unit"
+msgstr "No se puede determinar la cantidad de meses de la unidad"
+
+msgid "Email is not valid"
+msgstr "El email no es válido"
+
+msgid "Password too short!"
+msgstr "¡Contraseña demasiado corta!"
+
+msgid "Password must include at least one number!"
+msgstr "¡La Contraseña debe incluir al menos un número!"
+
+msgid "Password must include at least one letter!"
+msgstr "¡La Contraseña debe incluir al menos una letra!"
+
+msgid "File :file does not exist"
+msgstr "El archivo :file no existe"
+
+msgid "Invalid zip file"
+msgstr "Archivo zip inválido"
+
+msgid "Zip extraction failed"
+msgstr "Fallo la extracción del zip"
+
+msgid "Administrators group can not be removed"
+msgstr "El grupo Administradores no se puede eliminar"
+
+msgid "Can not remove group which has staff members"
+msgstr "No se puede eliminar un grupo que contiene miembros del staff"
+
+msgid "This administrator account is protected and can not be removed"
+msgstr "Esta cuenta de administrador está protegida y no se puede eliminar"
+
+msgid ":product_title"
+msgstr ""
+
+#, fuzzy
+msgid "Period parameter not passed"
+msgstr "Parámetro de período no pasado"
+
+msgid "I'm afraid we are out of stock."
+msgstr "Me temo que está fuera de stock."
+
+#, fuzzy
+msgid "Addon period parameter not passed"
+msgstr "El parámetro de período del Addon no pasó"
+
+msgid "Product not found"
+msgstr "Producto no encontrado"
+
+msgid "Add products to cart before applying promo code"
+msgstr "Añade productos a la cesta antes de aplicar un código promocional"
+
+msgid "Define clients currency before adding funds."
+msgstr "Define la moneda de los clientes antes de añadir fondos."
+
+msgid "Funds amount is not valid"
+msgstr "Cantidad de fondos no válida"
+
+msgid "Funds description is not valid"
+msgstr "Descripción de fondos no válida"
+
+msgid "Not enough credits in balance to pay for invoice"
+msgstr "No hay suficientes créditos en el balance para pagar la factura"
+
+msgid "Client currency do not match invoice currency"
+msgstr "La moneda del cliente no coincide con la moneda de la factura"
+
+msgid "Can not add negative amount to client balance for debit transaction"
+msgstr "No se puede agregar un valor negativo al balance del cliente para transacciones de débito"
+
+msgid "Conversion rate can't be 0"
+msgstr "La tasa de conversión no puede ser 0"
+
+msgid "Can not remove group with clients"
+msgstr "No se puede eliminar un grupo con clientes"
+
+msgid "Unknown order status: :status"
+msgstr "Desconocido estado del pedido :status"
+
+msgid "Error creating "
+msgstr "Error al crear"
+
+msgid "Only active orders can be suspended"
+msgstr "Sólo pedidos activos pueden ser suspendidos"
+
+msgid "Can not cancel "
+msgstr "No se puede cancelar"
+
+msgid "Service "
+msgstr "Servicio"
+
+msgid "Currency can not be changed. Client already have invoices issued."
+msgstr "No se puede cambiar la moneda. Clientes ya tienen facturas emitidas."
+
+msgid "Currency can not be changed. Client already have orders."
+msgstr "La moneda no puede ser cambiada. El cliente ya tiene pedidos."
+
+#, fuzzy
+msgid "Currency conversion rate can be zero"
+msgstr "La tasa de conversión no puede ser 0"
+
+msgid "Can not remove default currency"
+msgstr "No se puede eliminar la moneda por defecto"
+
+msgid "BoxBilling module :module not found. Was it installed?"
+msgstr "Módulo :module de BoxBilling no encontrado. ¿Fue instalado?"
+
+msgid "BoxBilling core modules can not be installed or removed"
+msgstr "Los módulos del core de BoxBilling no se pueden instalar o eliminar"
+
+msgid "Module can not be installed. It requires at least :min version of BoxBilling. You are using :v"
+msgstr "El módulo no se puede instalar. Requiere al menos la versión :min de BoxBilling. Tu estás usando la :v"
+
+msgid "Could not retrieve version information for extension :ext"
+msgstr ""
+
+#, fuzzy
+msgid "Latest :mod version installed. No need to update"
+msgstr "Tienes la versión más reciente de BoxBilling. No es necesario actualizar."
+
+#, fuzzy
+msgid "Could not retrieve :ext information"
+msgstr "Contacta con nosotros para más información"
+
+msgid "Visit extension site for update information."
+msgstr ""
+
+#, fuzzy
+msgid "BoxBilling core modules can not be managed"
+msgstr "Los módulos del core de BoxBilling no se pueden instalar o eliminar"
+
+msgid "Could not extract extension zip file"
+msgstr ""
+
+#, fuzzy
+msgid "Module already installed."
+msgstr "TLD ya registrado"
+
+msgid "Extension can not be moved. Make sure your server write permissions to bb-modules folder."
+msgstr ""
+
+msgid "Extension can not be moved. Make sure your server write permissions to bb-themes folder."
+msgstr ""
+
+msgid "Extension can not be moved. Make sure your server write permissions to bb-locale folder."
+msgstr ""
+
+msgid "Extension does not support auto-install deature. Extension must be installed manually"
+msgstr ""
+
+msgid "Unable to connect to BoxBilling extensiosn site."
+msgstr ""
+
+msgid "This is a last message in topic. Remove topic in order to remove this message."
+msgstr "Este es el último mensaje del tema. Elimina el tema con el fin de eliminar este mensaje."
+
+msgid "Invoice item title is missing"
+msgstr "Falta el título del ítem de la factura"
+
+#, fuzzy
+msgid ":product setup"
+msgstr "Nombre del producto"
+
+msgid "Could not activate proforma item. Order :id not found"
+msgstr "No se pudo activar el Item de la proforma. Pedido :id no encontrado"
+
+msgid "Can not checkout empty cart."
+msgstr "No se puede realizar un pedido con el carro vacío."
+
+msgid "Selected currency :selected does not match your profile currency :code. Please change cart currency to continue."
+msgstr "La moneda seleccionada :selected no coincide con tu perfil de moneda :code. Por favor cambia la moneda de compra para continuar. "
+
+msgid "Client currency is not defined. Currency can be set in client profile."
+msgstr "La moneda del cliente no está definida. La monede puede definirse en el perfil del cliente."
+
+#, fuzzy
+msgid "Can not refund invoice with negative amount"
+msgstr "No se puede eliminar un servidor que tiene cuentas activas"
+
+msgid "You must have at least one active order before you can add funds so you cannot proceed at the current time!"
+msgstr "Debes tener al menos un pedido activo antes de poder añadir fondos, por lo que no puedes proceder en este momento."
+
+msgid "Amount is not valid"
+msgstr "Importe no valido"
+
+msgid "Payment for invoice :serie:id"
+msgstr ""
+
+msgid "Can not remove invoice. It was paid but services were not activated"
+msgstr "No se puede eliminar la factura. Se pagó, pero los servicios no se activaron"
+
+msgid "Can not remove category which has articles"
+msgstr "No se puede eliminar la categoría que contiene artículos"
+
+msgid "Payment gateway :adapter was not found"
+msgstr "Pasarela de pago :adapter no se encontró"
+
+msgid "Invalid payment adapter :adapter"
+msgstr "Adaptador de pago :adapter inválido"
+
+msgid "Can not remove product category with products"
+msgstr "No se puede eliminar una categoría de productos que contiene productos"
+
+msgid "Could not determine domain price. Domain action is missing"
+msgstr ""
+
+msgid "Unknown TLD. Could not determine registration price"
+msgstr "TLD desconocido. No se puede determinar el precio de registro"
+
+msgid "Domain product can not be removed."
+msgstr "El producto dominio no se puede eliminar."
+
+#, fuzzy
+msgid "Could not find main domain product"
+msgstr "No se pudo encontrar el producto del dominio principal"
+
+msgid "Hosting product must have domain configuration"
+msgstr "El producto Hosting debe tener la configuración del dominio"
+
+msgid "Domain action is missing"
+msgstr "Falta la acción de dominio"
+
+msgid "Hosting product must have defined register_sld parameter"
+msgstr "El producto Hosting debe tener definido el parámetro register_sld"
+
+msgid "Hosting product must have defined register_tld parameter"
+msgstr "El producto Hosting debe tener definido el parámetro register_tld"
+
+msgid "Hosting product must have defined transfer_sld parameter"
+msgstr "El producto Hosting debe tener definido el parámetro transfer_sld"
+
+msgid "Hosting product must have defined transfer_tld parameter"
+msgstr "El producto Hosting debe tener tener definido el parámetro transfer_tld"
+
+msgid "Product pricing could not be determined. "
+msgstr "No es posible determinar el precio del producto."
+
+msgid "Repo class for product was not found"
+msgstr "La clase Repo para el producto no se ha encontrado"
+
+#, fuzzy
+msgid "Unknown Period selected for setup price"
+msgstr "Período seleccionado desconocido para el precio de configuración"
+
+msgid "Product :id payment type is recurrent, but period was not selected"
+msgstr "El tipo de pago para el producto :id es recurrente, pero el perídodo no se ha seleccionado"
+
+msgid "Unknown Period selected for price"
+msgstr "Período seleccionado desconocido para el precio"
+
+msgid "Can not remove product which has active orders."
+msgstr "No se puede eliminar un producto que contiene pedidos activos."
+
+msgid "Could not activate order. Service was not created"
+msgstr "No se pudo activar el pedido. El servicio no fue creado"
+
+msgid "Order :id has no active service"
+msgstr "El pedido :id no tiene el servicio activo"
+
+msgid "Custom plugin method :method is forbidden"
+msgstr ""
+
+#, fuzzy
+msgid "Plugin class file :file was not found"
+msgstr "El archivo manifiesto :file no se encontró"
+
+msgid "Plugin :plugin does not support action :action"
+msgstr ""
+
+msgid "Are you registering new domain or transfering existing? Action parameter missing."
+msgstr "¿Estás registrando un nuevo dominio o transfiriendo uno existente? Falta el parámetro de acción."
+
+msgid "Invalid domain action."
+msgstr "Acción de dominio inválida."
+
+msgid "Order data must contain :field configuration field"
+msgstr ""
+
+msgid "Domain name :domain is not valid"
+msgstr "El nombre de Dominio :domain no es válido"
+
+msgid "Domain TLD is not valid."
+msgstr "El TLD de Dominio no es válido."
+
+msgid "Domain name is required."
+msgstr "Nombre de dominio requerido"
+
+msgid "Transfer domain type (tld) is required."
+msgstr "El tipo de transferencia de dominio (tld) es requerido."
+
+msgid "Transfer domain name (sld) is required."
+msgstr "El nombre de transferencia de dominio (sld) es requerido."
+
+msgid "Transfer code is required for domains transfers."
+msgstr "El Código de Transferencia es requerido para transferir dominios."
+
+msgid "TLD not found"
+msgstr "TLD no encontrado"
+
+msgid ":domain can not be transfered!"
+msgstr ":domain no puede ser transferido"
+
+msgid "Domain registration tld parameter missing."
+msgstr "Falta parámetro TLD de registro de dominio"
+
+msgid "Domain registration sld parameter missing."
+msgstr "Falta parámetro SLD de registro de dominio"
+
+msgid "Years parameter is missing for domain configuration."
+msgstr "Falta parámetro de Años para la configuración del dominio."
+
+msgid ":tld can be registered for at least :years years"
+msgstr ":tld puede ser registrado al menos :years años"
+
+msgid ":domain is already registered!"
+msgstr ":domain ya está registrado"
+
+msgid "Default domain nameservers are not configured"
+msgstr "Nombres de Servidores por defecto no configurados"
+
+msgid "Nameserver 1 is required"
+msgstr "Nombre de Servidor 1 requerido"
+
+msgid "Nameserver 2 is required"
+msgstr "Nombre de Servidor 2 requerido"
+
+msgid "Required field contact is missing"
+msgstr "Falta el campo de contacto requerido"
+
+#, fuzzy
+msgid "Required field :field is missing"
+msgstr "Falta el campo de contacto requerido"
+
+msgid "Domain name is not valid"
+msgstr "Nombre de dominio no válido"
+
+msgid "Domain can not be transfered"
+msgstr "El Dominio no puede ser transferido"
+
+msgid "Domain can not be registered"
+msgstr "El Dominio no puede ser registrado"
+
+msgid "Filename is missing in product config."
+msgstr "Falta el nombre del archivo en la configuración de producto."
+
+msgid "Can not remove hosting plan which has active accounts"
+msgstr "No se puede elimininar el plan de alojamiento que tiene cuentas activas"
+
+msgid "Invalid server manager. Server was not configured properly."
+msgstr "Administrador de servidor no válido. El servidor no está configurado apropiadamente."
+
+msgid "Server manager :adapter is not valid"
+msgstr "Administrador de servidor :adapter no es válido"
+
+msgid "Can not remove server which has active accounts"
+msgstr "No se puede eliminar un servidor que tiene cuentas activas"
+
+msgid "Hosting product is not configured completely. Configure server for hosting product."
+msgstr "Productos de Hosting no configurados completamente. Configura el servidor para los productos de hosting."
+
+msgid "Hosting product is not configured completely. Configure hosting plan for hosting product."
+msgstr "Productos de Hosting no configurados completamente. Configura un plan de alojamiento para los productos de hosting."
+
+msgid "Domain name is not valid."
+msgstr "Nombre de dominio no válido"
+
+msgid "Domain extension is not valid."
+msgstr "La extensión de dominio no es válida."
+
+msgid "Server from order configuration was not found"
+msgstr "La configuración del servidor del pedido no se encontró"
+
+msgid "Hosting plan from order configuration was not found"
+msgstr "La configuración del Plan de Alojamiento del pedido no se encontró"
+
+msgid "Account password is missing or is not valid"
+msgstr "La contraseña de la cuenta falta o no es válida"
+
+msgid "Account ip is missing or is not valid"
+msgstr "La IP de la cuenta falta o no es válida"
+
+msgid "Domain sld or tld is missing"
+msgstr "Falta SLD o TLD del dominio"
+
+msgid "License plugin :plugin was not found"
+msgstr "El plugin de licencia :plugin no se encontró"
+
+#, fuzzy
+msgid "License plugin do not have generate method"
+msgstr "El Plugin de Licencia no ha generado el método"
+
+msgid "Parameter :param does not exist"
+msgstr "El parámetro :param no existe"
+
+msgid "Theme was not found in path :path"
+msgstr "El tema no se encontró en la ruta :path"
+
+msgid "Theme manifest file :file was not found"
+msgstr "El archivo manifiesto :file no se encontró"
+
+msgid "Unable to decode theme manifest file :file"
+msgstr "No se puede decodificar el archivo manifiesto del tema :file"
+
+msgid "Please check if you have configured FTP layer properly in Configuration > General settings > FTP layer."
+msgstr "Por favor comprueba que has configurado la capa FTP apropiadamente en Configuración > Ajustes Generales > Capa FTP."
+
+msgid "Please make sure that FTP Root is defined properly. Could not find bb-config.php file in :path"
+msgstr "Por favor asegúrate de que el acceso Root al FTP está definido correctamente. No se pudo encontrar el archivo bb-config.php en :path"
+
+msgid "You have reached free version limit. Upgrade to PRO version of BoxBilling if you want this limit removed."
+msgstr "Has llegado al final del plazo de la versión libre. Actualiza a la versión PRO de BoxBilling si quieres eliminar este plazo."
+
+msgid "BoxBilling license key must be defined in bb-config.php file as BB_LICENSE constant."
+msgstr "La clave de licencia de BoxBilling debe estar definida en el archivo bb-config.php como constante BB_LICENSE."
+
+msgid "PHP curl extension is disabled on your server. Please enable php curl extension."
+msgstr "La extensión CURL de PHP está desactivada en tu servidor. Por favor activa la extensión CURL de PHP."
+
+msgid "Can not remove helpdesk which has tickets"
+msgstr "No se puede eliminar un Servicio de Asistencia que contiene entradas"
+
+#, fuzzy
+msgid "Domain registrar :adapter was not found"
+msgstr "Registrador :adapter no se encontró"
+
+msgid "Registrar :adapter was not found"
+msgstr "Registrador :adapter no se encontró"
+
+#, fuzzy
+msgid "Registrar adapter :adapter should extend Registrar_AdapterAbstract"
+msgstr "Adaptador de registrador :adapter debería extender Registrar_AdapterAbstract"
+
+msgid "Can not remove registrar which has domains"
+msgstr "No se puede eliminar un registrador que tiene dominios"
+
+msgid "Could not determine transaction origin. Transaction payment gateway is unknown."
+msgstr "No se pudo determinar el origen de la transacción. Se desconoce la pasarela de pago de la transacción."
+
+msgid "Can not handle transaction received from unknown payment gateway: :id"
+msgstr "No se puede manejar transacciones recibidas de la pasarela de pago desconocida: :id"
+
+msgid "Transaction :id is not associated with an invoice."
+msgstr "La transacción :id no está asociada con una factura."
+
+#, fuzzy
+msgid "Instant payment notification (IPN) did not pass gateway :id validation"
+msgstr "Notificación Instantánea de Pago (IPN) no pasó la validación de la pasarela de pago :id"
+
+#, fuzzy
+msgid "Payment gateway :id method getTransaction should return Payment_Transaction object"
+msgstr "Pasarela de pago :id método getTransaction debe devolver un objeto  Payment_Transaction"
+
+msgid "Can not create subscription. Subscription id from payment gateway was not received"
+msgstr "No se puede crear la suscripción. El ID de la suscripción de la pasarela de pago no se ha recibido"
+
+msgid "Only approved transaction can be processed"
+msgstr "Sólo las transacciones aprobadas pueden ser procesadas"
+
+msgid "Transaction currency :code do not match required currency :required"
+msgstr "La moneda de transacción :code no coincide con la moneda requerida :required"
+
+msgid "Transaction status on payment gateway is Pending. Only Complete or Unknown transactions can be processed."
+msgstr "El estado de la transacción en la pasarela de pago es Pendiente. Sólo transacciones Completadas o Desconocidas pueden ser procesadas."
+
+msgid "ID is required"
+msgstr "ID requerido"
+
+msgid "Event not found"
+msgstr "Evento no encontrado"
+
+#, fuzzy
+msgid "Unknown API call :call"
+msgstr "Llamada API desconocida"
+
 msgid "Unauthorized IP"
 msgstr "IP No Autorizada"
 
@@ -1080,6 +1783,142 @@ msgstr "Llamada API desconocida"
 
 msgid "Authentication Failed"
 msgstr "Falló Autenticación"
+
+msgid "Client API can be initiated"
+msgstr ""
+
+#, fuzzy
+msgid "Shopping cart id is missing"
+msgstr "Falta el ID del tema"
+
+#, fuzzy
+msgid "Shopping cart not found"
+msgstr "Carrito"
+
+msgid "You have already used this promo code. Please remove promo code and checkout again."
+msgstr ""
+
+msgid "Currency code not passed"
+msgstr "El código de moneda no pasó"
+
+msgid "Currency not found"
+msgstr "Moneda no encontrada"
+
+msgid "Promo code not passed"
+msgstr "El código de promoción no pasó"
+
+msgid "Promo code is expired or does not exist"
+msgstr "El código de promoción ha caducado o no existe"
+
+msgid "Cart item id not passed"
+msgstr "El id del ítem de la cesta no pasó"
+
+msgid "Product id not passed"
+msgstr "No se pasó el ID del producto"
+
+#, fuzzy
+msgid "Client ID required"
+msgstr "ID de Cliente requerido"
+
+msgid "Client not found"
+msgstr "Cliente no encontrado"
+
+msgid "ID required"
+msgstr "ID requerido"
+
+msgid "Email required"
+msgstr "Email requerido"
+
+msgid "First name is required"
+msgstr "Nombre requerido"
+
+msgid "Password is required"
+msgstr "Contraseña requerida"
+
+msgid "Email is already registered."
+msgstr "El email ya está registrado."
+
+msgid "Client id is missing"
+msgstr "Falta el ID de cliente"
+
+msgid "Id required"
+msgstr "ID requerido"
+
+msgid "Can not change email. It is already registered."
+msgstr "No se puede cambiar el email. Ya está registrado."
+
+msgid "Client ID is required"
+msgstr "ID de Cliente requerido"
+
+msgid "Password required"
+msgstr "Contraseña requerida"
+
+msgid "Password confirmation required"
+msgstr "Confirmación de contraseña requerida"
+
+msgid "Passwords do not match"
+msgstr "La contraseña no coincide"
+
+#, fuzzy
+msgid "Balance line not found"
+msgstr "Norma de Impuesto no encontrada"
+
+msgid "Amount is required"
+msgstr "Total requerido"
+
+msgid "Description is required"
+msgstr "Descripción requerida"
+
+msgid "Id not passed"
+msgstr "ID no pasó"
+
+msgid "Group title is missing"
+msgstr "Falta el título de grupo"
+
+msgid "Group id is missing"
+msgstr "Falta el ID de grupo"
+
+msgid "Group not found"
+msgstr "Grupo no encontrado"
+
+msgid "Password confiration required"
+msgstr "Configuración de contraseña requerida"
+
+msgid "Passwords do not match."
+msgstr "Las contraseñas no coinciden."
+
+msgid "First name required"
+msgstr "Nombre requerido"
+
+msgid "Email is already registered. You may want to login instead of registering."
+msgstr "Email ya registrado. Puedes identificarte en lugar de registrarte."
+
+msgid "Please check your login details"
+msgstr "Por favor, comprueba tus datos de acceso"
+
+msgid "Email not found in our database"
+msgstr "Email no encontrado en nuestra base de datos"
+
+msgid "Hash required"
+msgstr "Hash requerido"
+
+msgid "The link have expired or you have already confirmed password reset."
+msgstr "El enlace ha expirado o ya se ha confirmado el restablecimiento de la contraseña."
+
+msgid "Currency code is missing"
+msgstr "Falta el código de moneda"
+
+msgid "Currency format is missing"
+msgstr "Falta el formato de moneda"
+
+msgid "Currency already registered"
+msgstr "Moneda ya registrada"
+
+msgid "Currency code is not valid"
+msgstr "Código de Moneda no válido"
+
+msgid "Currency rate is not valid"
+msgstr "Tipo de Moneda no válido"
 
 msgid "Email ID is required"
 msgstr "ID de Email es requerido"
@@ -1104,17 +1943,259 @@ msgstr "Email asunto de plantilla es requerido"
 msgid "Email template content is required"
 msgstr "Email contenido de plantilla es requerido"
 
-msgid "Order id is required"
+#, fuzzy
+msgid "Template code not passed"
+msgstr "El código de promoción no pasó"
+
+msgid "Receiver is not defined. Define to or to_client or to_staff parameter"
+msgstr ""
+
+#, fuzzy
+msgid "Email template code was not passed"
+msgstr "Email de código de plantilla es requerido"
+
+#, fuzzy
+msgid "Email template :code was not found"
+msgstr "Emails que te hemos enviado"
+
+msgid "Theme code is missing"
+msgstr "Falta el código del tema"
+
+msgid "You have latest version of BoxBilling. You do not need to update."
+msgstr "Tienes la versión más reciente de BoxBilling. No es necesario actualizar."
+
+#, fuzzy
+msgid "Extension id was not passed"
+msgstr "ID de Cliente no facilitado"
+
+#, fuzzy
+msgid "Extension type was not passed"
+msgstr "El código del módulo no fue aprobado"
+
+#, fuzzy
+msgid "Parameter ext was not passed"
+msgstr "Parámetro de período no pasado"
+
+#, fuzzy
+msgid "Extension not found"
+msgstr "Evento no encontrado"
+
+msgid "Forum id missing"
+msgstr "Falta el ID del foro"
+
+msgid "Forum not found"
+msgstr "Foro no encontrado"
+
+msgid "Forum title is missing"
+msgstr "Falta el título del foro"
+
+msgid "priority params is missing"
+msgstr "faltan parámetros prioritarios"
+
+msgid "Topic id is missing"
+msgstr "Falta el ID del tema"
+
+msgid "Forum Topic not found"
+msgstr "Tema del foro no encontrado"
+
+msgid "Forum ID not passed"
+msgstr "No se ha pasado el ID del foro"
+
+msgid "Forum topic title not passed"
+msgstr "No se ha pasado el título del foro"
+
+msgid "Forum topic message not passed"
+msgstr "No se ha pasado el mensaje del tema del foro"
+
+msgid "Your message is too short"
+msgstr "Tu mensaje es demasiado corto"
+
+msgid "Forum topic id missing"
+msgstr "Falta el ID del tema del foro"
+
+msgid "Forum Topic ID not passed"
+msgstr "No se ha pasado el ID del tema del foro"
+
+msgid "Forum Topic message ID not passed"
+msgstr "No se ha pasado el ID del mensaje del tema del foro"
+
+#, fuzzy
+msgid "Forum Topic Message not found"
+msgstr "Mensaje del tema del foro no encontrado"
+
+#, fuzzy
+msgid "Forum Topic message not found"
+msgstr "Mensaje del tema del foro no encontrado"
+
+msgid "Topic message not passed"
+msgstr "No se ha pasado el mensaje del tema"
+
+msgid "ID or slug is missing"
+msgstr "Falta el ID o Slug"
+
+msgid "Forum topic not passed"
+msgstr "No se pasó el tema del foro"
+
+msgid "Forum message not passed"
+msgstr "No se ha pasado el mensaje del foro"
+
+msgid "Forum is locked. No new topics can be started"
+msgstr "Foros cerrados. No se pueden iniciar nuevos temas"
+
+msgid "Forum topic is locked. No new message can be posted"
+msgstr "Tema del foro cerrado. No se pueden publicar nuevos mensajes"
+
+msgid "Enter some keywords for search"
+msgstr "Indica algunas palabras para la búsqueda"
+
+msgid "Search keyword must be longer than 3 characters"
+msgstr "La palabra clave a buscar debe tener más de 3 carácteres"
+
+#, fuzzy
+msgid "Hook event not passed"
+msgstr "El código de promoción no pasó"
+
+#, fuzzy
+msgid "Param mod not passed"
+msgstr "El código de promoción no pasó"
+
+msgid "Invoice id not passed"
+msgstr "No se pasó el ID de la factura"
+
+msgid "Invoice was not found"
+msgstr "No se ha encontró la factura"
+
+msgid "Invoice item id not passed"
+msgstr "No se pasó el ID del ítem de la factura"
+
+msgid "Invoice item was not found"
+msgstr "Item de la Factura no encontrado"
+
+msgid "Order id required"
 msgstr "ID del pedido requerido"
 
 msgid "Order not found"
 msgstr "Pedido no encontrado"
 
-msgid "Order is not activated"
-msgstr "El pedido no está activado"
+msgid "Order :id is free. No need to generate invoice."
+msgstr "El pedido :id es gratis. No es necesario generar factura."
 
-msgid "ID or slug is missing"
-msgstr "Falta el ID o Slug"
+msgid "Transaction id is missing"
+msgstr "Falta el ID de la transacción"
+
+msgid "Transaction not found"
+msgstr "Transacción no encontrada"
+
+msgid "Transaction invoice id is missing"
+msgstr "Falta el ID de transacción de la factura"
+
+msgid "Payment gateway id is missing"
+msgstr "Falta la pasarela de pago"
+
+msgid "Gateway was not found"
+msgstr "No se encontró la Pasarela"
+
+msgid "Payment gateway code is missing"
+msgstr "Falta el código de la pasarela de pago"
+
+msgid "Payment gateway is not available for installation."
+msgstr "Pasarela de pago no disponible para instalación."
+
+msgid "Gateway id not passed"
+msgstr "El ID de la pasarela no pasó"
+
+msgid "Gateway not found"
+msgstr "Pasarela no encontrada"
+
+msgid "Client id not passed"
+msgstr "ID de Cliente no facilitado"
+
+msgid "Payment gateway id not passed"
+msgstr "El ID de la pasarela de pago no pasó"
+
+msgid "Subscription currency not passed"
+msgstr "La moneda de suscripción no pasó"
+
+msgid "Payment gateway not found"
+msgstr "Pasarela de pago no encontrada"
+
+msgid "Client currency must match subscription currency. Check if clients currency is defined."
+msgstr "La moneda del cliente debe coincidir con la moneda de suscripción. Comprueba si la moneda de los clientes está definida."
+
+msgid "Subscription id not passed"
+msgstr "El ID de suscripción no pasó"
+
+msgid "Subscription not found"
+msgstr "Suscripción no encontrada"
+
+msgid "Tax id is missing"
+msgstr "Falta el ID del impuesto"
+
+msgid "Tax rule not found"
+msgstr "Norma de Impuesto no encontrada"
+
+msgid "Tax name is missing"
+msgstr "Falta el Nombre del impuesto"
+
+msgid "Tax rate is missing or is not valid"
+msgstr "La Tasa de Impuestos no se encuentra o no es válida"
+
+msgid "Invoice hash not passed"
+msgstr "No se pasó el hash de la factura"
+
+msgid "Invoice hash not passed. Missing param hash"
+msgstr "El Hash de la Factura no pasó. Falta parámetro de hash"
+
+msgid "Payment method not found. Missing param gateway_id"
+msgstr "Método de Pago no encontrado. Falta parámetro gateway_id"
+
+msgid "Invoice not found"
+msgstr "No se encuentra la factura"
+
+msgid "Payment method not found"
+msgstr "Método de pago no encontrado"
+
+msgid "This invoice can't be subscribed"
+msgstr "Esta factura no puede ser suscrita"
+
+msgid "Article id not passed"
+msgstr "El id del artículo no pasó"
+
+msgid "Article not found"
+msgstr "Artículo no encontrado"
+
+msgid "Article category id not passed"
+msgstr "El ID de la categoría de artículo no pasó"
+
+msgid "Article title not passed"
+msgstr "El título de artículo no pasó"
+
+msgid "Article id is missing"
+msgstr "Falta el ID del artículo"
+
+msgid "Caegory id not passed"
+msgstr "El ID de categoría no pasó"
+
+msgid "Article Category not found"
+msgstr "Categoría de artículo no encontrada"
+
+msgid "Category title not passed"
+msgstr "El título de categoría no pasó"
+
+msgid "Category id is missing"
+msgstr "Falta ID de Categoría"
+
+msgid "Category not found"
+msgstr "Categoría no encontrada"
+
+msgid "Article item not found"
+msgstr "Ítem del artículo no encontrado"
+
+msgid "Category ID or slug is missing"
+msgstr "Falta el ID de Categoría o Slug"
+
+msgid "Knowledge base category not found"
+msgstr "Categoría del Centro de Ayuda no encontrada"
 
 msgid "News item not found"
 msgstr "Item de Noticias no encontrado"
@@ -1129,26 +2210,16 @@ msgstr "Publicación no encontrada"
 msgid "Post title not passed"
 msgstr "Título de la Publicación no facilitada"
 
-msgid "Order has no active service"
-msgstr "El pedido no tiene el servicio activo"
+#, fuzzy
+msgid "Notification id is missing"
+msgstr "Falta el id de la nota"
 
-msgid "Only pending setup orders can be deleted."
-msgstr "Sólo pedidos pendientes de configurar pueden ser borrados."
+#, fuzzy
+msgid "Notification message was not found"
+msgstr "Mensaje del ticket no encontrado"
 
-msgid "Order id required"
-msgstr "ID del pedido requerido"
-
-msgid "Client id not passed"
-msgstr "ID de Cliente no facilitado"
-
-msgid "Product id not passed"
-msgstr "No se pasó el ID del producto"
-
-msgid "Client not found"
-msgstr "Cliente no encontrado"
-
-msgid "Product not found"
-msgstr "Producto no encontrado"
+msgid "This feature is available in BoxBilling PRO version."
+msgstr ""
 
 #, fuzzy
 msgid "Currency :code not found"
@@ -1157,14 +2228,32 @@ msgstr "Moneda :code no encontrada"
 msgid "Product :id is out of stock."
 msgstr "El Producto :id está fuera de stock."
 
-msgid "Order group id parameter is missing for addon product order. Add group_id field to config array to specify order."
-msgstr "Falta el parámetro ID del grupo de pedido de addons de productos. Añadir campo group_id a la matriz de configuración para especificar el pedido."
+#, fuzzy
+msgid "Group ID parameter is missing for addon product order"
+msgstr "Falta parámetro de Años para la configuración del dominio."
 
-msgid "Parent orde"
-msgstr "Pedido padre"
+#, fuzzy
+msgid "Parent order :group_id was not found"
+msgstr "Pasarela de pago :adapter no se encontró"
+
+#, fuzzy
+msgid "Only pending setup or failed orders can be activated"
+msgstr "Sólo pedidos pendientes de configurar pueden ser borrados."
+
+#, fuzzy
+msgid "Only suspended orders can be unsuspended"
+msgstr "Sólo pedidos activos pueden ser suspendidos"
+
+#, fuzzy
+msgid "Only canceled orders can be uncanceled"
+msgstr "Sólo pedidos activos pueden ser suspendidos"
 
 msgid "Order config not passed"
 msgstr "Configuración del pedido no pasada"
+
+#, fuzzy
+msgid "Order status was not passed"
+msgstr "No se pasó el ID del pedido"
 
 #, fuzzy
 msgid "Order history line id not passed"
@@ -1176,50 +2265,63 @@ msgstr "Línea de historial de pedidos no encontrada"
 msgid "Order id not passed"
 msgstr "No se pasó el ID del pedido"
 
-msgid "File can not be downloaded at the moment. Please contact support"
-msgstr "El archivo no puede ser descargado en este momento. Por favor contacta con soporte"
+msgid "Only pending setup orders can be deleted."
+msgstr "Sólo pedidos pendientes de configurar pueden ser borrados."
 
-msgid "File was not uploaded"
-msgstr "El archivo no se ha cargado"
+msgid "Title is required"
+msgstr "Título es requerido"
 
-msgid "Error uploading file"
-msgstr "Error subiendo archivo"
+msgid "Type is required"
+msgstr "Tipo es requerido"
 
-msgid "Theme code is missing"
-msgstr "Falta el código del tema"
+msgid "Product Category Id is required"
+msgstr "ID de Categoría de Producto es requerido"
 
-msgid "You have latest version of BoxBilling. You do not need to update."
-msgstr "Tienes la versión más reciente de BoxBilling. No es necesario actualizar."
+msgid "You have already created domain product."
+msgstr "Ya has creado el producto dominio."
 
-msgid "Module code was not passed"
-msgstr "El código del módulo no fue aprobado"
+msgid "Pricing type is required"
+msgstr "Tipo de Precio es requerido"
 
-msgid "You have reached free version limit. Upgrade to PRO version of BoxBilling if you want this limit removed."
-msgstr "Has llegado al final del plazo de la versión libre. Actualiza a la versión PRO de BoxBilling si quieres eliminar este plazo."
+msgid "Addon id is required"
+msgstr "Addon es requerido"
 
-msgid "Tld is required"
-msgstr "TLD requerido"
+msgid "Addon not found"
+msgstr "Addon no encontrado"
 
-msgid "TLD not found"
-msgstr "TLD no encontrado"
+msgid "Category title is missing"
+msgstr "Falta título de Categoría"
 
-msgid "Sld is required"
-msgstr "SLD requerido"
+msgid "Promo code is missing"
+msgstr "Falta código promocional"
 
-msgid "Domain :domain is not valid"
-msgstr "Dominio :domain no es válido"
+msgid "Promo type is missing"
+msgstr "Falta tipo de promoción"
 
-msgid "Domain availability could not be determined. TLD is not active."
-msgstr "La disponibilidad del dominio no puede ser determinada. TLD no está activo."
+msgid "Promo value is missing"
+msgstr "Falta valor de la promoción"
 
-msgid "Domain is not available."
-msgstr "Dominio no disponible."
+msgid "Promo id is missing"
+msgstr "Falta ID de la promoción"
 
-msgid "TLD is not active."
-msgstr "TLD no está activo."
+msgid "Promo not found"
+msgstr "Promoción no encontrada"
 
-msgid "Domain can not be transferred."
-msgstr "El dominio no puede ser transferido."
+msgid "Product ID or slug is missing"
+msgstr "Falta ID de Producto o Slug "
+
+msgid "Order id is required"
+msgstr "ID del pedido requerido"
+
+#, fuzzy
+msgid "BoxBilling license order not found"
+msgstr "Módulo :module de BoxBilling no encontrado. ¿Fue instalado?"
+
+msgid "Order is not activated"
+msgstr "El pedido no está activado"
+
+msgid "API call is missing arguments"
+msgstr ""
 
 msgid "TLD is missing"
 msgstr "Falta el TLD"
@@ -1257,239 +2359,250 @@ msgstr "Falta el ID de registrador"
 msgid "Domain order is not activated"
 msgstr "Pedido de Dominio no activado"
 
-msgid "ID is required"
-msgstr "ID requerido"
+msgid "Tld is required"
+msgstr "TLD requerido"
 
-msgid "Event not found"
-msgstr "Evento no encontrado"
+msgid "Sld is required"
+msgstr "SLD requerido"
 
-msgid "Currency not found"
-msgstr "Moneda no encontrada"
+msgid "Domain :domain is not valid"
+msgstr "Dominio :domain no es válido"
 
-msgid "Currency code is missing"
-msgstr "Falta el código de moneda"
+msgid "Domain availability could not be determined. TLD is not active."
+msgstr "La disponibilidad del dominio no puede ser determinada. TLD no está activo."
 
-msgid "Currency format is missing"
-msgstr "Falta el formato de moneda"
+msgid "Domain is not available."
+msgstr "Dominio no disponible."
 
-msgid "Currency already registered"
-msgstr "Moneda ya registrada"
+msgid "TLD is not active."
+msgstr "TLD no está activo."
 
-msgid "Currency code is not valid"
-msgstr "Código de Moneda no válido"
+msgid "Domain can not be transferred."
+msgstr "El dominio no puede ser transferido."
 
-msgid "Currency rate is not valid"
-msgstr "Tipo de Moneda no válido"
+#, fuzzy
+msgid "Domain :domain registration"
+msgstr "Dominio :domain no es válido"
 
-msgid "Email required"
-msgstr "Email requerido"
+#, fuzzy
+msgid "Domain :domain transfer"
+msgstr "El Dominio no puede ser transferido"
 
-msgid "First name required"
-msgstr "Nombre requerido"
+msgid "File was not uploaded"
+msgstr "El archivo no se ha cargado"
 
-msgid "Password required"
-msgstr "Contraseña requerida"
+msgid "Error uploading file"
+msgstr "Error subiendo archivo"
 
-msgid "Password confirmation required"
-msgstr "Confirmación de contraseña requerida"
+msgid "File can not be downloaded at the moment. Please contact support"
+msgstr "El archivo no puede ser descargado en este momento. Por favor contacta con soporte"
 
-msgid "Passwords do not match"
-msgstr "La contraseña no coincide"
+msgid "Product is not configured completely."
+msgstr "El producto no está configurado completamente."
 
-msgid "Email is already registered. You may want to login instead of registering."
-msgstr "Email ya registrado. Puedes identificarte en lugar de registrarte."
+msgid "plan_id is missing"
+msgstr "Falta plan_id"
 
-msgid "Please check your login details"
-msgstr "Por favor, comprueba tus datos de acceso"
+msgid "Hosting plan not found"
+msgstr "Plan de alojamiento no encontrado"
 
-msgid "Email not found in our database"
-msgstr "Email no encontrado en nuestra base de datos"
+msgid "Server name is missing"
+msgstr "Falta el nombre de servidor"
 
-msgid "Hash required"
-msgstr "Hash requerido"
+msgid "Server IP is missing"
+msgstr "Falta la IP del servidor"
 
-msgid "The link have expired or you have already confirmed password reset."
-msgstr "El enlace ha expirado o ya se ha confirmado el restablecimiento de la contraseña."
+msgid "Server manager is missing"
+msgstr "Falta el administrador del servidor"
 
-msgid "Can not change email. It is already registered."
-msgstr "No se puede cambiar el email. Ya está registrado."
+msgid "Server id is missing"
+msgstr "Falta el id del servidor"
 
-msgid "Password confiration required"
-msgstr "Configuración de contraseña requerida"
+msgid "Server not found"
+msgstr "Servidor no encontrado"
 
-msgid "Passwords do not match."
-msgstr "Las contraseñas no coinciden."
+msgid "Hosting plan id is missing"
+msgstr "Falta el ID del Plan de alojamiento"
 
-msgid "ID required"
-msgstr "ID requerido"
+msgid "Hosting plan name is missing"
+msgstr "Falta el nombre del plan de alojamiento"
 
-msgid "First name is required"
-msgstr "Nombre requerido"
+msgid "Hoting plan name can not be empty"
+msgstr "El plan de alojamiento no puede estar vacío"
 
-msgid "Password is required"
-msgstr "Contraseña requerida"
+#, fuzzy
+msgid ":hosting for :domain"
+msgstr "Cambiar dominio"
 
-msgid "Email is already registered."
-msgstr "El email ya está registrado."
+#, fuzzy
+msgid "Solusvm order not found"
+msgstr "Pedido no encontrado"
 
-msgid "Client id is missing"
-msgstr "Falta el ID de cliente"
+#, fuzzy
+msgid "Node is not selected for import."
+msgstr "No has seleccionado ningún producto"
 
-msgid "Id required"
-msgstr "ID requerido"
+#, fuzzy
+msgid "No servers selected for import."
+msgstr "Período seleccionado desconocido para el precio"
 
-msgid "Client ID is required"
-msgstr "ID de Cliente requerido"
+#, fuzzy
+msgid "Select product for orders."
+msgstr "Elegir producto"
 
-msgid "Amount is required"
-msgstr "Total requerido"
+#, fuzzy
+msgid "Product is not configured completely. Please provide solusvm node in product configuration page."
+msgstr "Productos de Hosting no configurados completamente. Configura el servidor para los productos de hosting."
 
-msgid "Description is required"
-msgstr "Descripción requerida"
+#, fuzzy
+msgid "Product is not configured completely. Please provide solusvm plan in product configuration page."
+msgstr "Productos de Hosting no configurados completamente. Configura un plan de alojamiento para los productos de hosting."
 
-msgid "Id not passed"
-msgstr "ID no pasó"
+msgid "No clients selected for import."
+msgstr ""
 
-msgid "Group title is missing"
-msgstr "Falta el título de grupo"
+msgid "No clients found on SolusVM server."
+msgstr ""
 
-msgid "Group id is missing"
-msgstr "Falta el ID de grupo"
+msgid "Virtual private server :title"
+msgstr ""
 
-msgid "Group not found"
-msgstr "Grupo no encontrado"
-
-msgid "Invoice hash not passed"
-msgstr "No se pasó el hash de la factura"
-
-msgid "Invoice was not found"
-msgstr "No se ha encontró la factura"
-
-msgid "Invoice hash not passed. Missing param hash"
-msgstr "El Hash de la Factura no pasó. Falta parámetro de hash"
-
-msgid "Payment method not found. Missing param gateway_id"
-msgstr "Método de Pago no encontrado. Falta parámetro gateway_id"
-
-msgid "Invoice not found"
-msgstr "No se encuentra la factura"
-
-msgid "Payment method not found"
-msgstr "Método de pago no encontrado"
-
-msgid "This invoice can't be subscribed"
-msgstr "Esta factura no puede ser suscrita"
-
-msgid "Order :id is free. No need to generate invoice."
-msgstr "El pedido :id es gratis. No es necesario generar factura."
-
-msgid "Invoice is related to orde"
-msgstr "La factura está relacionada con el pedido"
-
-msgid "Invoice id not passed"
-msgstr "No se pasó el ID de la factura"
-
-msgid "Refund amount in not valid"
-msgstr "El importe de devolución no es válido"
-
-msgid "Refund amount can not be greater than total invoice amount"
-msgstr "La cantidad del reembolso no puede ser mayor que la cantidad total de la factura"
-
-msgid "Invoice item id not passed"
-msgstr "No se pasó el ID del ítem de la factura"
-
-msgid "Invoice item was not found"
-msgstr "Item de la Factura no encontrado"
-
-msgid "Transaction id is missing"
-msgstr "Falta el ID de la transacción"
-
-msgid "Transaction not found"
-msgstr "Transacción no encontrada"
-
-msgid "Transaction invoice id is missing"
-msgstr "Falta el ID de transacción de la factura"
-
-msgid "Payment gateway id is missing"
-msgstr "Falta la pasarela de pago"
-
-msgid "Gateway was not found"
-msgstr "No se encontró la Pasarela"
-
-msgid "Payment gateway code is missing"
-msgstr "Falta el código de la pasarela de pago"
-
-msgid "Payment gateway is not available for installation."
-msgstr "Pasarela de pago no disponible para instalación."
-
-msgid "Gateway id not passed"
-msgstr "El ID de la pasarela no pasó"
-
-msgid "Gateway not found"
-msgstr "Pasarela no encontrada"
-
-msgid "Payment gateway id not passed"
-msgstr "El ID de la pasarela de pago no pasó"
-
-msgid "Subscription currency not passed"
-msgstr "La moneda de suscripción no pasó"
-
-msgid "Payment gateway not found"
-msgstr "Pasarela de pago no encontrada"
-
-msgid "Client currency must match subscription currency. Check if clients currency is defined."
-msgstr "La moneda del cliente debe coincidir con la moneda de suscripción. Comprueba si la moneda de los clientes está definida."
-
-msgid "Subscription id not passed"
-msgstr "El ID de suscripción no pasó"
-
-msgid "Subscription not found"
-msgstr "Suscripción no encontrada"
-
-msgid "Tax id is missing"
-msgstr "Falta el ID del impuesto"
-
-msgid "Tax rule not found"
-msgstr "Norma de Impuesto no encontrada"
-
-msgid "Tax name is missing"
-msgstr "Falta el Nombre del impuesto"
-
-msgid "Tax rate is missing or is not valid"
-msgstr "La Tasa de Impuestos no se encuentra o no es válida"
-
-msgid "Parameter key is missing"
-msgstr "Falta el parámetro Clave"
-
-msgid "Please enter your name"
+#, fuzzy
+msgid "Please enter VPS hostname."
 msgstr "Por favor indica tu nombre"
 
-msgid "Please enter your email"
-msgstr "Por favor indiqua tu email"
+#, fuzzy
+msgid "Hostname :hostname is not valid."
+msgstr "Nombre de dominio no válido"
 
-msgid "Please enter your subject"
-msgstr "Por favor indica tu asunto"
+msgid "Please select VPS template."
+msgstr ""
 
-msgid "Please enter your message"
-msgstr "Por favor indica tu mensaje"
+#, fuzzy
+msgid "SolusVM API ID is missing."
+msgstr "Falta el ID"
 
-msgid "Public ticket hash required"
-msgstr "Hash del ticket público requerido"
+#, fuzzy
+msgid "SolusVM API KEY is missing."
+msgstr "Falta el ID de grupo"
 
-msgid "Public ticket not found"
-msgstr "Ticket público no encontrado"
+#, fuzzy
+msgid "SolusVM API ipaddress is missing."
+msgstr "Falta el ID de grupo"
 
-msgid "message required"
-msgstr "mensaje requerido"
+#, fuzzy
+msgid "SolusVM API secure is missing."
+msgstr "Falta ID de Producto o Slug "
 
-msgid "Message can not be blank"
-msgstr "El mensaje no puede estar en blanco"
+#, fuzzy
+msgid "SolusVM API port is missing."
+msgstr "Falta ID de Producto o Slug "
 
-msgid "Ticket id required"
-msgstr "ID del ticket requerido"
+#, fuzzy
+msgid "Could not activate order because ordered product does not exists"
+msgstr "No se pudo activar el pedido. El servicio no fue creado"
+
+#, fuzzy
+msgid "Could not activate order. Product :id configuration is missing node parameter"
+msgstr "No se pudo activar el pedido. El servicio no fue creado"
+
+#, fuzzy
+msgid "Could not activate order. Product :id configuration is missing plan parameter"
+msgstr "No se pudo activar el pedido. El servicio no fue creado"
+
+msgid "Could not activate order. Product :id configuration is missing virtualization type parameter"
+msgstr ""
+
+#, fuzzy
+msgid "Could not activate order. Product :id configuration is missing ips amount parameter"
+msgstr "No se pudo activar el pedido. El servicio no fue creado"
+
+#, fuzzy
+msgid "Root password must be longer than 4 symbols"
+msgstr "La palabra clave a buscar debe tener más de 3 carácteres"
+
+#, fuzzy
+msgid "Plan name must not be empty"
+msgstr "El plan de alojamiento no puede estar vacío"
+
+#, fuzzy
+msgid "Hostname must not be empty"
+msgstr "El plan de alojamiento no puede estar vacío"
+
+#, fuzzy
+msgid "Template must not be empty"
+msgstr "El plan de alojamiento no puede estar vacío"
+
+#, fuzzy
+msgid "Password must be longer than 4 symbols"
+msgstr "¡La contraseña debe incluir al menos un símbolo!"
+
+msgid "To use reCAPTCHA you must get an API key from <a href='https://www.google.com/recaptcha/admin/create'>https://www.google.com/recaptcha/admin/create</a>"
+msgstr "Para usar reCAPTCHA debes conseguir una clave API de <a href='https://www.google.com/recaptcha/admin/create'>https://www.google.com/recaptcha/admin/create</a>"
+
+msgid "Captcha verification failed."
+msgstr "Falló la verificación del Captcha"
+
+msgid "Your Username is blacklisted in global database"
+msgstr "Tu nombre de usuario está en la lista negra de la base de datos mundial"
+
+msgid "Your Email is blacklisted in global database"
+msgstr "Tu Email está en la lista negra de la base de datos global"
+
+msgid "Your IP is blacklisted in global database"
+msgstr "Tu IP está en la lista negra de la base de datos global"
+
+msgid "ID is missing"
+msgstr "Falta el ID"
+
+msgid "Staff member not found"
+msgstr "Miembro del Staff no encontrado"
+
+msgid "Email param is missing"
+msgstr "Falta el parámetro Email"
+
+msgid "Password param is missing"
+msgstr "Falta el parámetro Contraseña"
+
+msgid "Name param is missing"
+msgstr "Falta el parámetro Nombre"
+
+msgid "Staff group is missing"
+msgstr "Falta el grupo del Staff"
+
+msgid "Administrator account already exists"
+msgstr ""
+
+#, fuzzy
+msgid "Administrator email is missing."
+msgstr "Falta el ID de registrador"
+
+#, fuzzy
+msgid "Administrator password is missing."
+msgstr "Falta el precio de registro"
+
+msgid "Check your login details"
+msgstr "Comprueba tus datos de acceso"
+
+msgid "Ticket id is missing"
+msgstr "Falta el ID del ticket"
 
 msgid "Ticket not found"
 msgstr "Ticket no encontrado"
+
+#, fuzzy
+msgid "Ticket message id is missing"
+msgstr "Falta el id del mensaje del ticket"
+
+#, fuzzy
+msgid "Ticket message content is missing"
+msgstr "Falta el contenido del mensaje del ticket"
+
+msgid "Ticket message not found"
+msgstr "Mensaje del ticket no encontrado"
+
+msgid "Ticket ID required"
+msgstr "ID del ticket requerido"
 
 msgid "Ticket content required"
 msgstr "Contenido del ticket requerido"
@@ -1502,29 +2615,6 @@ msgstr "Ticket support_helpdesk_id requerido"
 
 msgid "Helpdesk invalid"
 msgstr "Departamento inválido"
-
-msgid "We have already received this request."
-msgstr "Ya hemos recibido esta petición."
-
-msgid "Ticket ID required"
-msgstr "ID del ticket requerido"
-
-msgid "Ticket can not be reopened."
-msgstr "El ticket no puede ser reabierto."
-
-msgid "Ticket id is missing"
-msgstr "Falta el ID del ticket"
-
-#, fuzzy
-msgid "Ticket message id is missing"
-msgstr "Falta el id del mensaje del ticket"
-
-#, fuzzy
-msgid "Ticket message content is missing"
-msgstr "Falta el contenido del mensaje del ticket"
-
-msgid "Ticket message not found"
-msgstr "Mensaje del ticket no encontrado"
 
 msgid "Client name parameter is missing"
 msgstr "Falta el parámetro nombre del cliente "
@@ -1580,818 +2670,43 @@ msgstr "Falta el id de la nota"
 msgid "Note not found"
 msgstr "Nota no encontrada"
 
-msgid "Currency code not passed"
-msgstr "El código de moneda no pasó"
+msgid "Ticket id required"
+msgstr "ID del ticket requerido"
 
-msgid "Promo code not passed"
-msgstr "El código de promoción no pasó"
+msgid "We have already received this request."
+msgstr "Ya hemos recibido esta petición."
 
-msgid "Promo code is expired or does not exist"
-msgstr "El código de promoción ha caducado o no existe"
+msgid "Ticket can not be reopened."
+msgstr "El ticket no puede ser reabierto."
 
-msgid "Cart item id not passed"
-msgstr "El id del ítem de la cesta no pasó"
+msgid "Please enter your name"
+msgstr "Por favor indica tu nombre"
 
-msgid "Forum not found"
-msgstr "Foro no encontrado"
+msgid "Please enter your email"
+msgstr "Por favor indiqua tu email"
 
-msgid "Forum Topic not found"
-msgstr "Tema del foro no encontrado"
+msgid "Please enter your subject"
+msgstr "Por favor indica tu asunto"
 
-msgid "Forum Topic ID not passed"
-msgstr "No se ha pasado el ID del tema del foro"
+msgid "Please enter your message"
+msgstr "Por favor indica tu mensaje"
 
-msgid "Enter some keywords for search"
-msgstr "Indica algunas palabras para la búsqueda"
+msgid "Public ticket hash required"
+msgstr "Hash del ticket público requerido"
 
-msgid "Search keyword must be longer than 3 characters"
-msgstr "La palabra clave a buscar debe tener más de 3 carácteres"
+msgid "Public ticket not found"
+msgstr "Ticket público no encontrado"
 
-msgid "Forum ID not passed"
-msgstr "No se ha pasado el ID del foro"
+msgid "message required"
+msgstr "mensaje requerido"
 
-msgid "Forum topic not passed"
-msgstr "No se pasó el tema del foro"
+msgid "Message can not be blank"
+msgstr "El mensaje no puede estar en blanco"
 
-msgid "Forum message not passed"
-msgstr "No se ha pasado el mensaje del foro"
-
-msgid "Your message is too short"
-msgstr "Tu mensaje es demasiado corto"
-
-msgid "Forum is locked. No new topics can be started"
-msgstr "Foros cerrados. No se pueden iniciar nuevos temas"
-
-msgid "Topic message not passed"
-msgstr "No se ha pasado el mensaje del tema"
-
-msgid "Forum topic is locked. No new message can be posted"
-msgstr "Tema del foro cerrado. No se pueden publicar nuevos mensajes"
-
-msgid "Forum id missing"
-msgstr "Falta el ID del foro"
-
-msgid "Forum title is missing"
-msgstr "Falta el título del foro"
-
-msgid "priority params is missing"
-msgstr "faltan parámetros prioritarios"
-
-msgid "Topic id is missing"
-msgstr "Falta el ID del tema"
-
-msgid "Forum topic title not passed"
-msgstr "No se ha pasado el título del foro"
-
-msgid "Forum topic message not passed"
-msgstr "No se ha pasado el mensaje del tema del foro"
-
-msgid "Forum topic id missing"
-msgstr "Falta el ID del tema del foro"
-
-msgid "ForumTopic not found"
-msgstr "Tema del foro no encontrado"
-
-msgid "Forum Topic message ID not passed"
-msgstr "No se ha pasado el ID del mensaje del tema del foro"
+msgid "Parameter key is missing"
+msgstr "Falta el parámetro Clave"
 
 #, fuzzy
-msgid "Forum Topic message not found"
-msgstr "Mensaje del tema del foro no encontrado"
-
-msgid "Product ID or slug is missing"
-msgstr "Falta ID de Producto o Slug "
-
-msgid "Title is required"
-msgstr "Título es requerido"
-
-msgid "Type is required"
-msgstr "Tipo es requerido"
-
-msgid "Product Category Id is required"
-msgstr "ID de Categoría de Producto es requerido"
-
-msgid "You have already created domain product."
-msgstr "Ya has creado el producto dominio."
-
-msgid "Pricing type is required"
-msgstr "Tipo de Precio es requerido"
-
-msgid "Addon id is required"
-msgstr "Addon es requerido"
-
-msgid "Addon not found"
-msgstr "Addon no encontrado"
-
-msgid "Category id is missing"
-msgstr "Falta ID de Categoría"
-
-msgid "Category not found"
-msgstr "Categoría no encontrada"
-
-msgid "Category title is missing"
-msgstr "Falta título de Categoría"
-
-msgid "Promo code is missing"
-msgstr "Falta código promocional"
-
-msgid "Promo type is missing"
-msgstr "Falta tipo de promoción"
-
-msgid "Promo value is missing"
-msgstr "Falta valor de la promoción"
-
-msgid "Promo id is missing"
-msgstr "Falta ID de la promoción"
-
-msgid "Promo not found"
-msgstr "Promoción no encontrada"
-
-msgid "plan_id is missing"
-msgstr "Falta plan_id"
-
-msgid "Hosting plan not found"
-msgstr "Plan de alojamiento no encontrado"
-
-msgid "Server name is missing"
-msgstr "Falta el nombre de servidor"
-
-msgid "Server IP is missing"
-msgstr "Falta la IP del servidor"
-
-msgid "Server manager is missing"
-msgstr "Falta el administrador del servidor"
-
-msgid "Server id is missing"
-msgstr "Falta el id del servidor"
-
-msgid "Server not found"
-msgstr "Servidor no encontrado"
-
-msgid "Hosting plan id is missing"
-msgstr "Falta el ID del Plan de alojamiento"
-
-msgid "Hosting plan name is missing"
-msgstr "Falta el nombre del plan de alojamiento"
-
-msgid "Hoting plan name can not be empty"
-msgstr "El plan de alojamiento no puede estar vacío"
-
-msgid "Check your login details"
-msgstr "Comprueba tus datos de acceso"
-
-msgid "ID is missing"
-msgstr "Falta el ID"
-
-msgid "Staff member not found"
-msgstr "Miembro del Staff no encontrado"
-
-msgid "Email param is missing"
-msgstr "Falta el parámetro Email"
-
-msgid "Password param is missing"
-msgstr "Falta el parámetro Contraseña"
-
-msgid "Name param is missing"
-msgstr "Falta el parámetro Nombre"
-
-msgid "Staff group is missing"
-msgstr "Falta el grupo del Staff"
-
-msgid "Article item not found"
-msgstr "Ítem del artículo no encontrado"
-
-msgid "Category ID or slug is missing"
-msgstr "Falta el ID de Categoría o Slug"
-
-msgid "Knowledge base category not found"
-msgstr "Categoría del Centro de Ayuda no encontrada"
-
-msgid "Article id not passed"
-msgstr "El id del artículo no pasó"
-
-msgid "Article not found"
-msgstr "Artículo no encontrado"
-
-msgid "Article category id not passed"
-msgstr "El ID de la categoría de artículo no pasó"
-
-msgid "Article title not passed"
-msgstr "El título de artículo no pasó"
-
-msgid "Article id is missing"
-msgstr "Falta el ID del artículo"
-
-msgid "Caegory id not passed"
-msgstr "El ID de categoría no pasó"
-
-msgid "Article Category not found"
-msgstr "Categoría de artículo no encontrada"
-
-msgid "Category title not passed"
-msgstr "El título de categoría no pasó"
-
-msgid "Invalid identity. Clear browser cookies"
-msgstr "Identidad inválida. Limpia las cookies del navegador"
-
-#, fuzzy
-msgid "Method :method must contain underscore"
-msgstr "El método :method debe contener subrayados"
-
-msgid "BoxBilling module \":mod\" is not installed/activated"
-msgstr "El módulo de BoxBilling \":mod\" no está instalado/activado"
-
-#, fuzzy
-msgid "Module api file :file is not available"
-msgstr "El módulo api de archivos :file no está disponible"
-
-#, fuzzy
-msgid "Api class must be instance of Api_Abstract"
-msgstr "La clase Api debe ser una instancia de Api_Abstract"
-
-#, fuzzy
-msgid ":type API call :method does not exist in module :module"
-msgstr ":type llamada API :method no existe en el módulo :module"
-
-msgid "Invalid identity"
-msgstr "Identidad inválida"
-
-msgid ":module method toApiArray not found"
-msgstr ":module método toApiArray no encontrado"
-
-msgid "Page :url not found"
-msgstr "Página :url no encontrada"
-
-msgid "Page not found"
-msgstr "Página no encontrada"
-
-msgid "Table :table model is not defined"
-msgstr "Modelo de tabla :table no definida"
-
-msgid "File :file does not exist"
-msgstr "El archivo :file no existe"
-
-msgid "Invalid zip file"
-msgstr "Archivo zip inválido"
-
-msgid "Zip extraction failed"
-msgstr "Fallo la extracción del zip"
-
-msgid "Missing log message"
-msgstr "Falta mensaje del log"
-
-msgid "Bad log priority"
-msgstr "Mala prioridad de log"
-
-msgid "Unknown mail transport: :transport"
-msgstr "Desconocido transporte mail :transport"
-
-msgid "SMTP host not configured"
-msgstr "Host SMTP no configurado"
-
-msgid "SMTP port not configured"
-msgstr "Puerto SMTP no configurado"
-
-msgid "Unable to login to SMTP server."
-msgstr "Imposible conectar con el servidor SMTP."
-
-msgid "Email is not valid"
-msgstr "El email no es válido"
-
-msgid "Password too short!"
-msgstr "¡Contraseña demasiado corta!"
-
-msgid "Password must include at least one number!"
-msgstr "¡La Contraseña debe incluir al menos un número!"
-
-msgid "Password must include at least one letter!"
-msgstr "¡La Contraseña debe incluir al menos una letra!"
-
-msgid "Period Error. Unit :unit is not defined"
-msgstr "Error de período. Unidad :unit no está definida"
-
-msgid "Invalid period quantity :qty for unit :unit. Allowed range is from :from to :to"
-msgstr "Cantidad de período :qty inválida para unidad :unit. El rango permitido es de :from a :to"
-
-msgid "Every month"
-msgstr "Cada mes"
-
-msgid "Every 3 months"
-msgstr "Cada 3 meses"
-
-msgid "Every 6 months"
-msgstr "Cada 6 meses"
-
-msgid "Every year"
-msgstr "Cada año"
-
-msgid "Every 2 years"
-msgstr "Cada 2 años"
-
-msgid "Every 3 years"
-msgstr "Cada 3 años"
-
-msgid "Every :number day"
-msgstr "Cada :number día"
-
-msgid "Every :number weeks"
-msgstr "Cada :number semanas"
-
-msgid "Every :number months"
-msgstr "Cada :number meses"
-
-msgid "Every :number years"
-msgstr "Cada :number años"
-
-msgid "Unit not defined"
-msgstr "Unidad no definida"
-
-msgid "Can not determine months amount from unit"
-msgstr "No se puede determinar la cantidad de meses de la unidad"
-
-msgid "FTP extension is not enabled in PHP. You will not be able to use automatic updates and other automation."
-msgstr "Extensión FTP no activada en PHP. No podrás utilizar las actualizaciones automáticas ni otras automatizaciones."
-
-msgid "The ftp PHP extension is not available"
-msgstr "La extensión FTP de PHP no está disponible"
-
-msgid "FTP hostname is required"
-msgstr "Nombre de host del FTP requerido"
-
-msgid "FTP username is required"
-msgstr "Usuario del FTP requerido"
-
-msgid "FTP password is required"
-msgstr "Contraseña del FTP requerida"
-
-msgid "Failed to connect to FTP Server :host : :port"
-msgstr "Fallo al conectar al servidor FTP :host : :port"
-
-msgid "FTP Username/Password incorrect for :usernmae"
-msgstr "Usuario/Contraseña del FTP incorrecta para :username"
-
-msgid "CURL extension is not enabled"
-msgstr "Extensión CURL no activada"
-
-msgid "Resource is not a stream"
-msgstr "El recurso no es un stream"
-
-msgid "Mode cannot be changed on existing streams"
-msgstr "Modo no puede cambiarse en streams existentes"
-
-#, fuzzy
-msgid ":stream cannot be opened with mode :mode"
-msgstr ":stream no puede abrirse con el modo :mode"
-
-msgid "Unable to write to stream"
-msgstr "Imposible escribir a stream"
-
-msgid "Captcha verification failed."
-msgstr "Falló la verificación del Captcha"
-
-msgid "To use reCAPTCHA you must get an API key from <a href='https://www.google.com/recaptcha/admin/create'>https://www.google.com/recaptcha/admin/create</a>"
-msgstr "Para usar reCAPTCHA debes conseguir una clave API de <a href='https://www.google.com/recaptcha/admin/create'>https://www.google.com/recaptcha/admin/create</a>"
-
-msgid "Your Username is blacklisted in global database"
-msgstr "Tu nombre de usuario está en la lista negra de la base de datos mundial"
-
-msgid "Your Email is blacklisted in global database"
-msgstr "Tu Email está en la lista negra de la base de datos global"
-
-msgid "Your IP is blacklisted in global database"
-msgstr "Tu IP está en la lista negra de la base de datos global"
-
-msgid "Can not remove category which has articles"
-msgstr "No se puede eliminar la categoría que contiene artículos"
-
-msgid "Define clients currency before adding funds."
-msgstr "Define la moneda de los clientes antes de añadir fondos."
-
-msgid "Funds amount is not valid"
-msgstr "Cantidad de fondos no válida"
-
-msgid "Funds description is not valid"
-msgstr "Descripción de fondos no válida"
-
-msgid "Not enough credits in balance to pay for invoice"
-msgstr "No hay suficientes créditos en el balance para pagar la factura"
-
-msgid "Client currency do not match invoice currency"
-msgstr "La moneda del cliente no coincide con la moneda de la factura"
-
-msgid "Can not add negative amount to client balance for debit transaction"
-msgstr "No se puede agregar un valor negativo al balance del cliente para transacciones de débito"
-
-msgid "Conversion rate can't be 0"
-msgstr "La tasa de conversión no puede ser 0"
-
-#, fuzzy
-msgid "Period parameter not passed"
+msgid "_tpl parameter not passed"
 msgstr "Parámetro de período no pasado"
-
-msgid "I'm afraid we are out of stock."
-msgstr "Me temo que está fuera de stock."
-
-#, fuzzy
-msgid "Addon period parameter not passed"
-msgstr "El parámetro de período del Addon no pasó"
-
-msgid "Add products to cart before applying promo code"
-msgstr "Añade productos a la cesta antes de aplicar un código promocional"
-
-msgid "Invalid server manager. Server was not configured properly."
-msgstr "Administrador de servidor no válido. El servidor no está configurado apropiadamente."
-
-msgid "Server manager :adapter is not valid"
-msgstr "Administrador de servidor :adapter no es válido"
-
-msgid "Can not remove server which has active accounts"
-msgstr "No se puede eliminar un servidor que tiene cuentas activas"
-
-msgid "Can not remove default currency"
-msgstr "No se puede eliminar la moneda por defecto"
-
-msgid "Currency can not be changed. Client already have invoices issued."
-msgstr "No se puede cambiar la moneda. Clientes ya tienen facturas emitidas."
-
-msgid "Currency can not be changed. Client already have orders."
-msgstr "La moneda no puede ser cambiada. El cliente ya tiene pedidos."
-
-msgid "Payment gateway :adapter was not found"
-msgstr "Pasarela de pago :adapter no se encontró"
-
-msgid "Invalid payment adapter :adapter"
-msgstr "Adaptador de pago :adapter inválido"
-
-msgid "Can not remove group with clients"
-msgstr "No se puede eliminar un grupo con clientes"
-
-msgid "Unknown transactio"
-msgstr "Transacción desconocida"
-
-msgid "Could not determine transaction origin. Transaction payment gateway is unknown."
-msgstr "No se pudo determinar el origen de la transacción. Se desconoce la pasarela de pago de la transacción."
-
-msgid "Can not handle transaction received from unknown payment gateway: :id"
-msgstr "No se puede manejar transacciones recibidas de la pasarela de pago desconocida: :id"
-
-msgid "Transaction :id is not associated with an invoice."
-msgstr "La transacción :id no está asociada con una factura."
-
-#, fuzzy
-msgid "Invoic"
-msgstr "Factura Proforma"
-
-#, fuzzy
-msgid "Instant payment notification (IPN) did not pass gateway :id validation"
-msgstr "Notificación Instantánea de Pago (IPN) no pasó la validación de la pasarela de pago :id"
-
-#, fuzzy
-msgid "Payment gateway :id method getTransaction should return Payment_Transaction object"
-msgstr "Pasarela de pago :id método getTransaction debe devolver un objeto  Payment_Transaction"
-
-msgid "Can not create subscription. Subscription id from payment gateway was not received"
-msgstr "No se puede crear la suscripción. El ID de la suscripción de la pasarela de pago no se ha recibido"
-
-msgid "Subscriptio"
-msgstr "Suscripción"
-
-msgid "Only approved transaction can be processed"
-msgstr "Sólo las transacciones aprobadas pueden ser procesadas"
-
-msgid "Transaction currency :code do not match required currency :required"
-msgstr "La moneda de transacción :code no coincide con la moneda requerida :required"
-
-msgid "Transaction status on payment gateway is Pending. Only Complete or Unknown transactions can be processed."
-msgstr "El estado de la transacción en la pasarela de pago es Pendiente. Sólo transacciones Completadas o Desconocidas pueden ser procesadas."
-
-msgid "Can not checkout empty cart."
-msgstr "No se puede realizar un pedido con el carro vacío."
-
-msgid "Selected currency :selected does not match your profile currency :code. Please change cart currency to continue."
-msgstr "La moneda seleccionada :selected no coincide con tu perfil de moneda :code. Por favor cambia la moneda de compra para continuar. "
-
-msgid "Client currency is not defined. Currency can be set in client profile."
-msgstr "La moneda del cliente no está definida. La monede puede definirse en el perfil del cliente."
-
-msgid "You must have at least one active order before you can add funds so you cannot proceed at the current time!"
-msgstr "Debes tener al menos un pedido activo antes de poder añadir fondos, por lo que no puedes proceder en este momento."
-
-msgid "Amount is not valid"
-msgstr "Importe no valido"
-
-msgid "Can not remove invoice. It was paid but services were not activated"
-msgstr "No se puede eliminar la factura. Se pagó, pero los servicios no se activaron"
-
-msgid "Module :mod manifest file is missing"
-msgstr "Falta el Módulo :mod del archivo de manifiesto"
-
-#, fuzzy
-msgid "Module :mod manifest file is not valid. Check file syntax."
-msgstr "Módulo :mod archivo de manifiesto no es válido. Comprueba la sintaxis del archivo."
-
-msgid "BoxBilling module :module not found. Was it installed?"
-msgstr "Módulo :module de BoxBilling no encontrado. ¿Fue instalado?"
-
-msgid "BoxBilling core modules can not be installed or removed"
-msgstr "Los módulos del core de BoxBilling no se pueden instalar o eliminar"
-
-msgid "Module can not be installed. It requires at least :min version of BoxBilling. You are using :v"
-msgstr "El módulo no se puede instalar. Requiere al menos la versión :min de BoxBilling. Tu estás usando la :v"
-
-msgid "Unknown service :service"
-msgstr "Servicio :service desconocido"
-
-msgid "Product pricing could not be determined. "
-msgstr "No es posible determinar el precio del producto."
-
-msgid "Repo class for product was not found"
-msgstr "La clase Repo para el producto no se ha encontrado"
-
-#, fuzzy
-msgid "Unknown Period selected for setup price"
-msgstr "Período seleccionado desconocido para el precio de configuración"
-
-msgid "Product :id payment type is recurrent, but period was not selected"
-msgstr "El tipo de pago para el producto :id es recurrente, pero el perídodo no se ha seleccionado"
-
-msgid "Unknown Period selected for price"
-msgstr "Período seleccionado desconocido para el precio"
-
-msgid "Can not remove product which has active orders."
-msgstr "No se puede eliminar un producto que contiene pedidos activos."
-
-#, fuzzy
-msgid "Could not domain action"
-msgstr "No se pudo la acción de dominio"
-
-msgid "Unknown TLD. Could not determine registration price"
-msgstr "TLD desconocido. No se puede determinar el precio de registro"
-
-msgid "Domain product can not be removed."
-msgstr "El producto dominio no se puede eliminar."
-
-msgid "Hosting product is not configured completely. Configure server for hosting product."
-msgstr "Productos de Hosting no configurados completamente. Configura el servidor para los productos de hosting."
-
-msgid "Hosting product is not configured completely. Configure hosting plan for hosting product."
-msgstr "Productos de Hosting no configurados completamente. Configura un plan de alojamiento para los productos de hosting."
-
-msgid "Domain name is not valid."
-msgstr "Nombre de dominio no válido"
-
-msgid "Domain extension is not valid."
-msgstr "La extensión de dominio no es válida."
-
-msgid "Server from order configuration was not found"
-msgstr "La configuración del servidor del pedido no se encontró"
-
-msgid "Hosting plan from order configuration was not found"
-msgstr "La configuración del Plan de Alojamiento del pedido no se encontró"
-
-msgid "Could not activate order. Service was not created"
-msgstr "No se pudo activar el pedido. El servicio no fue creado"
-
-msgid "Order :id has no active service"
-msgstr "El pedido :id no tiene el servicio activo"
-
-msgid "Account password is missing or is not valid"
-msgstr "La contraseña de la cuenta falta o no es válida"
-
-msgid "Account ip is missing or is not valid"
-msgstr "La IP de la cuenta falta o no es válida"
-
-msgid "Domain sld or tld is missing"
-msgstr "Falta SLD o TLD del dominio"
-
-msgid "This is a last message in topic. Remove topic in order to remove this message."
-msgstr "Este es el último mensaje del tema. Elimina el tema con el fin de eliminar este mensaje."
-
-msgid "License plugin :plugin was not found"
-msgstr "El plugin de licencia :plugin no se encontró"
-
-#, fuzzy
-msgid "License plugin do not have generate method"
-msgstr "El Plugin de Licencia no ha generado el método"
-
-msgid "Can not remove product category with products"
-msgstr "No se puede eliminar una categoría de productos que contiene productos"
-
-msgid "Registrar :adapter was not found"
-msgstr "Registrador :adapter no se encontró"
-
-#, fuzzy
-msgid "Registrar adapter :adapter should extend Registrar_AdapterAbstract"
-msgstr "Adaptador de registrador :adapter debería extender Registrar_AdapterAbstract"
-
-msgid "Can not remove registrar which has domains"
-msgstr "No se puede eliminar un registrador que tiene dominios"
-
-msgid "This administrator account is protected and can not be removed"
-msgstr "Esta cuenta de administrador está protegida y no se puede eliminar"
-
-msgid "Administrators group can not be removed"
-msgstr "El grupo Administradores no se puede eliminar"
-
-msgid "Can not remove group which has staff members"
-msgstr "No se puede eliminar un grupo que contiene miembros del staff"
-
-#, fuzzy
-msgid "Could not find main domain product"
-msgstr "No se pudo encontrar el producto del dominio principal"
-
-msgid "Hosting product must have domain configuration"
-msgstr "El producto Hosting debe tener la configuración del dominio"
-
-msgid "Domain action is missing"
-msgstr "Falta la acción de dominio"
-
-msgid "Hosting product must have defined register_sld parameter"
-msgstr "El producto Hosting debe tener definido el parámetro register_sld"
-
-msgid "Hosting product must have defined register_tld parameter"
-msgstr "El producto Hosting debe tener definido el parámetro register_tld"
-
-msgid "Hosting product must have defined transfer_sld parameter"
-msgstr "El producto Hosting debe tener definido el parámetro transfer_sld"
-
-msgid "Hosting product must have defined transfer_tld parameter"
-msgstr "El producto Hosting debe tener tener definido el parámetro transfer_tld"
-
-msgid "Product is not configured completely."
-msgstr "El producto no está configurado completamente."
-
-msgid "Unknown order status: :status"
-msgstr "Desconocido estado del pedido :status"
-
-msgid "Error creating "
-msgstr "Error al crear"
-
-msgid "Only active orders can be suspended"
-msgstr "Sólo pedidos activos pueden ser suspendidos"
-
-msgid "Can not cancel "
-msgstr "No se puede cancelar"
-
-msgid "Service "
-msgstr "Servicio"
-
-msgid "Parameter :param does not exist"
-msgstr "El parámetro :param no existe"
-
-msgid "Theme was not found in path :path"
-msgstr "El tema no se encontró en la ruta :path"
-
-msgid "Theme manifest file :file was not found"
-msgstr "El archivo manifiesto :file no se encontró"
-
-msgid "Unable to decode theme manifest file :file"
-msgstr "No se puede decodificar el archivo manifiesto del tema :file"
-
-msgid "Please check if you have configured FTP layer properly in Configuration > General settings > FTP layer."
-msgstr "Por favor comprueba que has configurado la capa FTP apropiadamente en Configuración > Ajustes Generales > Capa FTP."
-
-msgid "Please make sure that FTP Root is defined properly. Could not find bb-config.php file in :path"
-msgstr "Por favor asegúrate de que el acceso Root al FTP está definido correctamente. No se pudo encontrar el archivo bb-config.php en :path"
-
-msgid "BoxBilling license key must be defined in bb-config.php file as BB_LICENSE constant."
-msgstr "La clave de licencia de BoxBilling debe estar definida en el archivo bb-config.php como constante BB_LICENSE."
-
-msgid "PHP curl extension is disabled on your server. Please enable php curl extension."
-msgstr "La extensión CURL de PHP está desactivada en tu servidor. Por favor activa la extensión CURL de PHP."
-
-msgid "Can not remove hosting plan which has active accounts"
-msgstr "No se puede elimininar el plan de alojamiento que tiene cuentas activas"
-
-msgid "Filename is missing in product config."
-msgstr "Falta el nombre del archivo en la configuración de producto."
-
-msgid "Invoice item title is missing"
-msgstr "Falta el título del ítem de la factura"
-
-msgid "Invoice item price is missing"
-msgstr "Falta el precio del ítem de la factura"
-
-msgid "Could not activate proforma item. Order :id not found"
-msgstr "No se pudo activar el Item de la proforma. Pedido :id no encontrado"
-
-msgid "Not enough money in client :id balance to pay for invoic"
-msgstr "No hay fondos suficientes en el balance del cliente :id para pagar la factura"
-
-msgid "Are you registering new domain or transfering existing? Action parameter missing."
-msgstr "¿Estás registrando un nuevo dominio o transfiriendo uno existente? Falta el parámetro de acción."
-
-msgid "Invalid domain action."
-msgstr "Acción de dominio inválida."
-
-msgid "Domain name :domain is not valid"
-msgstr "El nombre de Dominio :domain no es válido"
-
-msgid "Domain TLD is not valid."
-msgstr "El TLD de Dominio no es válido."
-
-msgid "Domain name is required."
-msgstr "Nombre de dominio requerido"
-
-msgid "Transfer domain type (tld) is required."
-msgstr "El tipo de transferencia de dominio (tld) es requerido."
-
-msgid "Transfer domain name (sld) is required."
-msgstr "El nombre de transferencia de dominio (sld) es requerido."
-
-msgid "Transfer code is required for domains transfers."
-msgstr "El Código de Transferencia es requerido para transferir dominios."
-
-msgid ":domain can not be transfered!"
-msgstr ":domain no puede ser transferido"
-
-msgid "Domain registration tld parameter missing."
-msgstr "Falta parámetro TLD de registro de dominio"
-
-msgid "Domain registration sld parameter missing."
-msgstr "Falta parámetro SLD de registro de dominio"
-
-msgid "Years parameter is missing for domain configuration."
-msgstr "Falta parámetro de Años para la configuración del dominio."
-
-msgid ":tld can be registered for at least :years years"
-msgstr ":tld puede ser registrado al menos :years años"
-
-msgid ":domain is already registered!"
-msgstr ":domain ya está registrado"
-
-msgid "Default domain nameservers are not configured"
-msgstr "Nombres de Servidores por defecto no configurados"
-
-msgid "Nameserver 1 is required"
-msgstr "Nombre de Servidor 1 requerido"
-
-msgid "Nameserver 2 is required"
-msgstr "Nombre de Servidor 2 requerido"
-
-msgid "Required field contact is missing"
-msgstr "Falta el campo de contacto requerido"
-
-msgid "Required field "
-msgstr "Campo Requerido"
-
-msgid "Domain name is not valid"
-msgstr "Nombre de dominio no válido"
-
-msgid "Domain can not be transfered"
-msgstr "El Dominio no puede ser transferido"
-
-msgid "Domain can not be registered"
-msgstr "El Dominio no puede ser registrado"
-
-msgid "Can not remove helpdesk which has tickets"
-msgstr "No se puede eliminar un Servicio de Asistencia que contiene entradas"
-
-msgid "Throw exception to terminate module installation process with a message"
-msgstr "Lanza una excepción para terminar el proceso de instalación del módulo con un mensaje"
-
-msgid "Throw exception to terminate module uninstallation process with a message"
-msgstr "Lanza una excepción para terminar el proceso de desinstalación del módulo con un mensaje"
-
-msgid "Password must include at least one CAPS!"
-msgstr "¡La contraseña debe incluir al menos una MAYÚSCULA!"
-
-msgid "Password must include at least one symbol!"
-msgstr "¡La contraseña debe incluir al menos un símbolo!"
-
-msgid "Currency can not be changed. Client have money in balance."
-msgstr "No se puede cambiar la Moneda. El Cliente tiene dinero en su balance."
-
-msgid "Payment gateway class $class was not found"
-msgstr "La Pasarela de pago de la clase $class no existe"
-
-msgid "Unknown TLD. Could not determine transfer price"
-msgstr "TLD desconocido. No es posible determinar el precio de transferencia"
-
-#~ msgid "Payment"
-#~ msgstr "Pago"
-#~ msgid "Instructions to make payment"
-#~ msgstr "Instrucciones para hacer el pago"
-#~ msgid "Please wait ..."
-#~ msgstr "Por favor, espere ..."
-#~ msgid "Discount:"
-#~ msgstr "Descuento:"
-#~ msgid "Number test"
-#~ msgstr "Número de prueba"
-#~ msgid "Change your avatar at"
-#~ msgstr "Cambie su avatar en"
-#~ msgid "Send EPP code to email"
-#~ msgstr "Enviar el Código EPP al email"
-#~ msgid "Reset account"
-#~ msgstr "Restablecer la cuenta"
-#~ msgid ""
-#~ "This function resets your account completely. All data on your account "
-#~ "will be lost."
-#~ msgstr ""
-#~ "Esta función le permite restaurar su cuenta por completo. Todos los datos "
-#~ "de su cuenta se perderán."
-#~ msgid "I understand that my account data will be completely lost."
-#~ msgstr "Entiendo que los datos de mi cuenta se perderán por completo."
-#~ msgid "en_US"
-#~ msgstr "Inglés"
 
