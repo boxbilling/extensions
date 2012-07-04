@@ -146,25 +146,27 @@ class Server_Manager_Ispconfig3 extends Server_Manager
             'reseller_id' => 1,
             'client_id' => $ci['client_id'],
 
-            'server_id' => $this->getServerId(),
-            'company_name' => $client->getCompany(),
-            'contact_name' => $client->getFullName(),
-            'username' =>$a->getUsername(),
-            'password' =>$a->getPassword(),
-            'language' =>$p->getLanguage(),
-            'usertheme' =>$p->getTheme(),
-            'street' =>$client->getStreet(),
-            'zip' =>$client->getZip(),
-            'city' =>$client->getCity(),
-            'state' =>$client->getState(),
-            'country' =>$client->getCountry(),
-            'telephone' =>$client->getTelephone(),
-            'mobile' =>$client->getTelephone(),
-            'fax' =>$client->getTelephone(),
-            'email' =>$a->getEmail(),
-            'internet' =>$a->getWww(),
-            'icq' =>'',
-            'notes' =>$a->getNote(),
+            'server_id'     => $this->getServerId(),
+            'company_name'  => $client->getCompany(),
+            'contact_name'  => $client->getFullName(),
+            'username'      => $a->getUsername(),
+            'password'      => $a->getPassword(),
+            
+            'language'      => $p->getCustomValue('languge'),
+            'usertheme'     => $p->getCustomValue('theme'),
+            
+            'street'        => $client->getStreet(),
+            'zip'           => $client->getZip(),
+            'city'          => $client->getCity(),
+            'state'         => $client->getState(),
+            'country'       => $client->getCountry(),
+            'telephone'     => $client->getTelephone(),
+            'mobile'        => $client->getTelephone(),
+            'fax'           => $client->getTelephone(),
+            'email'         => $a->getEmail(),
+            'internet'      => $a->getWww(),
+            'icq'           => '',
+            'notes'         => $a->getNote(),
         );
 
         $result = $this->_request('client_update', $params);
@@ -289,15 +291,15 @@ class Server_Manager_Ispconfig3 extends Server_Manager
     private function createClient(Server_Account &$a, $type)
     {
         $client     = $a->getClient();
-        $package    = $a->getPackage();
+        $p          = $a->getPackage();
         $params = array(
             'server_id' => $this->getServerId(),
             'company_name' => $client->getCompany(),
             'contact_name' => $client->getFullName(),
             'username' =>$a->getUsername(),
             'password' =>$a->getPassword(),
-            'language' =>$package->getLanguage(),
-            'usertheme' =>$package->getTheme(),
+            'language'      => $p->getCustomValue('languge'),
+            'usertheme'     => $p->getCustomValue('theme'),
             'street' =>$client->getStreet(),
             'zip' =>$client->getZip(),
             'city' =>$client->getCity(),
