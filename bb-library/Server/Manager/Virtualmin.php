@@ -27,7 +27,7 @@ class Server_Manager_Virtualmin extends Server_Manager
             throw new Server_Exception('cURL extension is not enabled');
         }
         
-        $this->_config['port'] = 20000;
+        $this->_config['port'] = 10000;
 	}
 
 	public static function getForm()
