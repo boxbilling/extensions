@@ -316,6 +316,6 @@ class Registrar_Adapter_Namesilo extends Registrar_AdapterAbstract
     {
         if ($this->isTestEnv())
             return 'http://sandbox.namesilo.com/api/';
-        return 'http://namesilo.com/api/';
+        return 'https://namesilo.com/api/';
     }
 }
