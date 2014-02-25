@@ -50,6 +50,7 @@ class Payment_Adapter_Moneybookers extends Payment_AdapterAbstract
      */
     public function getServiceUrl()
     {
+    	//Please update below URLS to newer domain taht is skrill.com.
         if($this->testMode) {
             return 'http://www.moneybookers.com/app/test_payment.pl';
         }
