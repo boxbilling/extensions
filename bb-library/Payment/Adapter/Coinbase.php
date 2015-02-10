@@ -64,12 +64,6 @@ class Payment_Adapter_Coinbase
 		if (!isset($_GET['status']))
 		{
 			$ch = curl_init();
-			file_put_contents('Coinbase.txt',json_encode($this->config),FILE_APPEND);
-			file_put_contents('Coinbase2.txt',json_encode(array($title, $invoice['total'], $invoice['currency'], $invoice_id, array(
-				"description" => $title,
-				"callback_url"=> ($this->config['return_url']),
-				"cancel_url"=> ($this->config['cancel_url']),
-			))),FILE_APPEND);
 			$coinbase = Coinbase::withApiKey($this->config['Coinbase_api'], $this->config['Coinbase_secret']);
 			
 			$response = $coinbase->createButton($title, $invoice['total'], $invoice['currency'], $invoice_id, array(
@@ -78,7 +72,6 @@ class Payment_Adapter_Coinbase
 				"cancel_url"=> ($this->config['cancel_url']),
 			));
 			
-			file_put_contents('Coinbaser.txt',json_encode($response),FILE_APPEND);
 			return "<a href='https://coinbase.com/checkouts/".$response->button->code ."'>Pay</a>";
 		}
 
@@ -92,7 +85,6 @@ class Payment_Adapter_Coinbase
 		if ($Coinbase['status'] == "completed")
 		{
 			
-			file_put_contents('Coinbase.txt',"\nHorrrrrrrray!\n",FILE_APPEND);
 			$invoice_id = intval($Coinbase["custom"]);
 			$tx = $api_admin->invoice_transaction_get(array('id'=> $id));
 			
