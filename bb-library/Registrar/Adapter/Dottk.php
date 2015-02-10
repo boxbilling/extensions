@@ -1,4 +1,8 @@
 <?php
+/*
+	Dot Tk Registrar, fix by jebwizoscar <1@wa.vg>
+	Last Check: 2015-02-10
+*/
 class Registrar_Adapter_Dottk extends Registrar_AdapterAbstract
 {
     public $config = array(
@@ -29,16 +33,16 @@ class Registrar_Adapter_Dottk extends Registrar_AdapterAbstract
             'label' => 'Manages domains on dotTK via API',
             'form'  => array(
                 'email' => array('text', array(
-                    'label' => 'dotTK email',
-                    'description'=>'dotTK email',
-                ),
-                ),
+                            'label' => 'dotTK email',
+                            'description'=>'dotTK email',
+                    ),
+                 ),
                 'password' => array('password', array(
-                    'label' => 'dotTK password',
-                    'description'=>'dotTK password',
-                    'renderPassword' => true,
-                ),
-                ),
+                            'label' => 'dotTK password',
+                            'description'=>'dotTK password',
+                            'renderPassword' => true,
+                    ),
+                 ),
             ),
         );
     }
@@ -71,7 +75,7 @@ class Registrar_Adapter_Dottk extends Registrar_AdapterAbstract
         if($domain->getNs4()) {
             $nameservers[] = $domain->getNs4();
         }
-
+        
         $result = $this->domainshare_modify($domain->getName(), $nameservers);
         return ($result['status'] == 'DOMAIN MODIFIED');
     }
@@ -79,7 +83,7 @@ class Registrar_Adapter_Dottk extends Registrar_AdapterAbstract
     public function getDomainDetails(Registrar_Domain $domain)
     {
         $result = $this->domainshare_availability_check($domain->getName());
-
+        
         if(isset($result['nameservers'])) {
             $ns = $result['nameservers'];
             if(isset($ns[0]['hostname'])) {
@@ -95,25 +99,37 @@ class Registrar_Adapter_Dottk extends Registrar_AdapterAbstract
                 $domain->setNs4($ns[3]['hostname']);
             }
         }
-
-        $date = $result['expirationdate'];
-        $date_str = substr($date, 0, 4) . ' ' . substr($date, 4, 2) . ' '. substr($date, 6, 2);
-        $domain->setExpirationTime(strtotime($date_str));
-
+        
+        if(!$domain->getRegistrationTime()) {
+            $domain->setRegistrationTime(time());
+        }
+        if(!$domain->getExpirationTime()) {
+            $years = $domain->getRegistrationPeriod();
+            $domain->setExpirationTime(strtotime("+$years year"));
+        }
+        
         return $domain;
     }
 
     public function registerDomain(Registrar_Domain $domain)
-    {
+    {  
         $domainname = $domain->getName();
         $enduseremail = $domain->getContactRegistrar()->getEmail();
         $monthsofregistration = $domain->getRegistrationPeriod() * 12;
         $nameservers = array();
-        $nameservers[] = $domain->getNs1();
-        $nameservers[] = $domain->getNs2();
-        $nameservers[] = $domain->getNs3();
-        $nameservers[] = $domain->getNs4();
-
+        if($domain->getNs1()) {
+            $nameservers[] = $domain->getNs1();
+        }
+        if($domain->getNs2()) {
+            $nameservers[] = $domain->getNs2();
+        }
+        if($domain->getNs3()) {
+            $nameservers[] = $domain->getNs3();
+        }
+        if($domain->getNs4()) {
+            $nameservers[] = $domain->getNs4();
+        }
+        
         $result = $this->domainshare_register($domainname, $enduseremail, $monthsofregistration, $nameservers);
         return ($result['status'] == 'DOMAIN REGISTERED');
     }
@@ -127,14 +143,14 @@ class Registrar_Adapter_Dottk extends Registrar_AdapterAbstract
 
     public function enablePrivacyProtection(Registrar_Domain $domain)
     {
-        throw new Registrar_Exception("dotTK does not support Privacy protection");
+    	throw new Registrar_Exception("dotTK does not support Privacy protection");
     }
 
     public function disablePrivacyProtection(Registrar_Domain $domain)
     {
-        throw new Registrar_Exception("dotTK does not support Privacy protection");
+    	throw new Registrar_Exception("dotTK does not support Privacy protection");
     }
-
+    
     public function getEpp(Registrar_Domain $domain)
     {
         throw new Registrar_Exception('dotTK does not support Epp code retrieval');
@@ -149,10 +165,11 @@ class Registrar_Adapter_Dottk extends Registrar_AdapterAbstract
     {
         throw new Registrar_Exception('dotTK does not support Domain unlocking');
     }
-
+    
     public function deleteDomain(Registrar_Domain $domain)
     {
-        throw new Registrar_Exception('Registrar does not support domain removal.');
+        $this->getLog()->debug('Removing domain: ' . $domain->getName());
+        return true;
     }
 
     public function modifyContact(Registrar_Domain $domain)
@@ -170,18 +187,18 @@ class Registrar_Adapter_Dottk extends Registrar_AdapterAbstract
         throw new Registrar_Exception('DotTk domain transfer is not possible');
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     /*
     PHP module for communicating with the DomainShare REST API.
 
@@ -199,25 +216,25 @@ class Registrar_Adapter_Dottk extends Registrar_AdapterAbstract
 
         $args['email']      = $this->config['email'];
         $args['password']   = $this->config['password'];
-
+        
         if (array_key_exists("nameservers", $args)) {
             if($args["nameservers"] != null) {
-                $nameservers = $args["nameservers"];
-                unset($args["nameservers"]);
+            $nameservers = $args["nameservers"];
+            unset($args["nameservers"]);
             }
         }
 
         if (array_key_exists("keywords", $args)) {
             if($args["keywords"] != null) {
-                $keywords = $args["keywords"];
-                unset($args["keywords"]);
+            $keywords = $args["keywords"];
+            unset($args["keywords"]);
             }
         }
 
 
         foreach ($args as $i => $value) {
             if($value == null)
-                unset($args[$i]);
+            unset($args[$i]);
         }
 
         $postdata = http_build_query($args);
@@ -229,21 +246,21 @@ class Registrar_Adapter_Dottk extends Registrar_AdapterAbstract
             $postdata = $postdata."&keyword=".join("&keyword=",  $keywords);
 
         $opts=array("http" => array("method" => "POST",
-                                    "header" => "Content-type: application/x-www-form-urlencoded",
-                                    "content" => $postdata));
+        "header" => "Content-type: application/x-www-form-urlencoded",
+        "content" => $postdata));
 
         $res = stream_context_create($opts);
         $output = file_get_contents($base_url . $call . ".json", false, $res);
         $response = json_decode($output,true);
-
+        
         if($this->_testMode){
             error_log("DotTk Response: " . print_r($response, 1));
         }
-
+        
         if($response['status'] == 'NOT OK') {
             throw new Registrar_Exception($response['reason']);
         }
-
+        
         return $response;
     }
 
@@ -508,3 +525,4 @@ class Registrar_Adapter_Dottk extends Registrar_AdapterAbstract
     }
 
 }
+
