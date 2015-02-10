@@ -120,21 +120,38 @@ class Payment_Adapter_Ccavenue extends Payment_AdapterAbstract
     public function getTransaction($data, Payment_Invoice $invoice)
     {
         $ipn = $data['post'];
+
+        $Order_Id       = $ipn['Order_Id'];
+        $Amount         = $ipn['Amount'];
+        $AuthDesc       = $ipn['AuthDesc'];
+        $Merchant_Id    = $ipn['Merchant_Id'];
+        $Checksum       = $ipn['Checksum'];
         
-        //@todo
-        $response = new Payment_Transaction();
-        $response->setType(Payment_Transaction::TXTYPE_PAYMENT);
-        $response->setId(uniqid());
-        $response->setAmount($invoice->getTotalWithTax());
-        $response->setCurrency($invoice->getCurrency());
-        $response->setStatus(Payment_Transaction::STATUS_COMPLETE);
-        return $response;
+        $tx = new Payment_Transaction();
+        $tx->setType(Payment_Transaction::TXTYPE_PAYMENT);
+        $tx->setId($Checksum);
+        $tx->setAmount($Amount);
+        $tx->setCurrency($invoice->getCurrency());
+
+        if ($AuthDesc == 'Y') {
+            $tx->setStatus(Payment_Transaction::STATUS_COMPLETE);
+        }
+
+        return $tx;
     }
 
     public function isIpnValid($data, Payment_Invoice $invoice)
     {
         $ipn = $data['post'];
-        return true;
+        
+        $WorkingKey = $this->getParam('workingkey');
+        $Merchant_Id = $ipn['Merchant_Id'];
+        $Amount = $ipn['Amount'];
+        $OrderId = $ipn['Order_Id'];
+        $AuthDesc = $ipn['AuthDesc'];
+        $CheckSum = $ipn['Checksum'];
+        $sum = getchecksum($Merchant_Id, $Amount, $OrderId, $AuthDesc, $WorkingKey);
+        return ($CheckSum == $sum);
     }
 }
 
