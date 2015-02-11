@@ -295,7 +295,7 @@ class Registrar_Adapter_Dottk extends Registrar_AdapterAbstract
         $result = $this->_rest_call("availability_check",array("domainname" => $domainname));
 
         if($result["status"] == "OK")
-            return $result["partner_availability_check"];
+            return $result["process_availability_check"];
 
         else return $result;
     }
