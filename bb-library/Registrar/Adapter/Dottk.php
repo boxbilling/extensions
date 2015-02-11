@@ -76,6 +76,9 @@ class Registrar_Adapter_Dottk extends Registrar_AdapterAbstract
             $nameservers[] = $domain->getNs4();
         }
         
+        if (count($nameservers)<2){
+			throw new Registrar_Exception('You need AT LEAST TWO nameserver to register');
+		}
         $result = $this->domainshare_modify($domain->getName(), $nameservers);
         return ($result['status'] == 'DOMAIN MODIFIED');
     }
