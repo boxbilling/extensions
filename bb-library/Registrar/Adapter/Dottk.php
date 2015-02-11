@@ -76,6 +76,9 @@ class Registrar_Adapter_Dottk extends Registrar_AdapterAbstract
             $nameservers[] = $domain->getNs4();
         }
         
+        if (count($nameservers)<2){
+			throw new Registrar_Exception('You need AT LEAST TWO nameserver to register');
+		}
         $result = $this->domainshare_modify($domain->getName(), $nameservers);
         return ($result['status'] == 'DOMAIN MODIFIED');
     }
@@ -273,7 +276,7 @@ class Registrar_Adapter_Dottk extends Registrar_AdapterAbstract
         $result = $this->_rest_call("ping");
 
         if($result["status"] == "OK")
-            return $result["partner_ping"];
+            return $result["process_ping"];
 
         else return $result;
     }
@@ -295,7 +298,7 @@ class Registrar_Adapter_Dottk extends Registrar_AdapterAbstract
         $result = $this->_rest_call("availability_check",array("domainname" => $domainname));
 
         if($result["status"] == "OK")
-            return $result["partner_availability_check"];
+            return $result["process_availability_check"];
 
         else return $result;
     }
@@ -320,7 +323,7 @@ class Registrar_Adapter_Dottk extends Registrar_AdapterAbstract
         $result = $this->_rest_call("register",array("domainname" => $domainname, "enduseremail" => $enduseremail, "monthsofregistration" => $monthsofregistration, "nameservers" => $nameservers, "forwardurl" => $forwardurl));
 
         if($result["status"] == "OK")
-            return $result["partner_registration"];
+            return $result["process_registration"];
 
         else return $result;
     }
@@ -341,7 +344,7 @@ class Registrar_Adapter_Dottk extends Registrar_AdapterAbstract
         $result = $this->_rest_call("renew",array("domainname" => $domainname, "monthsofregistration" => $monthsofregistration));
 
         if($result["status"] == "OK")
-            return $result["partner_renew"];
+            return $result["process_renew"];
 
         else return $result;
     }
@@ -368,7 +371,7 @@ class Registrar_Adapter_Dottk extends Registrar_AdapterAbstract
         $result = $this->_rest_call("host_registration",array("hostname" => $hostname, "ipaddress" => $ipaddress));
 
         if($result["status"] == "OK")
-            return $result["partner_host_registration"];
+            return $result["process_host_registration"];
 
         else return $result;
     }
@@ -385,7 +388,7 @@ class Registrar_Adapter_Dottk extends Registrar_AdapterAbstract
         $result = $this->_rest_call("host_removal",array("hostname" => $hostname));
 
         if($result["status"] == "OK")
-            return $result["partner_host_removal"];
+            return $result["process_host_removal"];
 
         else return $result;
     }
@@ -402,7 +405,7 @@ class Registrar_Adapter_Dottk extends Registrar_AdapterAbstract
         $result = $this->_rest_call("host_list",array("domainname" => $domainname));
 
         if($result["status"] == "OK")
-            return $result["partner_host_list"];
+            return $result["process_host_list"];
 
         else return $result;
     }
@@ -426,7 +429,7 @@ class Registrar_Adapter_Dottk extends Registrar_AdapterAbstract
         $result = $this->_rest_call("modify",array("domainname" => $domainname, "nameservers" => $nameservers, "forwardurl" => $forwardurl));
 
         if($result["status"] == "OK")
-            return $result["partner_modify"];
+            return $result["process_modify"];
 
         else return $result;
     }
@@ -448,7 +451,7 @@ class Registrar_Adapter_Dottk extends Registrar_AdapterAbstract
         $result = $this->_rest_call("resend_email",array("domainname" => $domainname, "enduseremail" => $enduseremail));
 
         if($result["status"] == "OK")
-            return $result["partner_resend_email"];
+            return $result["process_resend_email"];
 
         else return $result;
     }
@@ -471,7 +474,7 @@ class Registrar_Adapter_Dottk extends Registrar_AdapterAbstract
         $result = $this->_rest_call("domain_deactivate",array("domainname" => $domainname, "reason" => $reason));
 
         if($result["status"] == "OK")
-            return $result["partner_domain_deactivate"];
+            return $result["process_domain_deactivate"];
 
         else return $result;
     }
@@ -496,7 +499,7 @@ class Registrar_Adapter_Dottk extends Registrar_AdapterAbstract
         $result = $this->_rest_call("domain_reactivate",array("domainname" => $domainname));
 
         if($result["status"] == "OK")
-            return $result["partner_domain_reactivate"];
+            return $result["process_domain_reactivate"];
 
         else return $result;
     }
@@ -519,7 +522,7 @@ class Registrar_Adapter_Dottk extends Registrar_AdapterAbstract
         $result = $this->_rest_call("update_parking",array("domainname" => $domainname, "category" => $category, "keywords" => $keywords));
 
         if($result["status"] == "OK")
-            return $result["partner_update_parking"];
+            return $result["process_update_parking"];
 
         else return $result;
     }
