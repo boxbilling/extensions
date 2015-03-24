@@ -217,8 +217,8 @@ class Registrar_Adapter_Dottk extends Registrar_AdapterAbstract
         $nameservers = null;
         $keywords = null;
 
-        $args['email']      = $this->config['email'];
-        $args['password']   = $this->config['password'];
+        $args['email']      = urlencode($this->config['email']);
+        $args['password']   = urlencode($this->config['password']);
         
         if (array_key_exists("nameservers", $args)) {
             if($args["nameservers"] != null) {
@@ -248,21 +248,42 @@ class Registrar_Adapter_Dottk extends Registrar_AdapterAbstract
         if ($keywords)
             $postdata = $postdata."&keyword=".join("&keyword=",  $keywords);
 
-        $opts=array("http" => array("method" => "POST",
-        "header" => "Content-type: application/x-www-form-urlencoded",
-        "content" => $postdata));
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $base_url . $call . ".json");
+		curl_setopt($ch, CURLOPT_POST, true);
+		//curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-        $res = stream_context_create($opts);
-        $output = file_get_contents($base_url . $call . ".json", false, $res);
-        $response = json_decode($output,true);
-        
-        if($this->_testMode){
-            error_log("DotTk Response: " . print_r($response, 1));
-        }
-        
-        if($response['status'] == 'NOT OK') {
-            throw new Registrar_Exception($response['reason']);
-        }
+		// curl_setopt($ch, CURL_IPRESOLVE_V4, true);
+		curl_setopt($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
+
+		// Disabling SSL Certificate support temporarly
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $postdata);
+
+		$output = curl_exec($ch);
+		if($output) {
+			$pos = strrpos($output, "<!DOCTYPE");
+			if($pos !== false) {
+			  $output = substr($output,0,$pos);
+			}
+			$response = json_decode($output,true);
+	 
+			if($this->_testMode){
+				error_log("DotTk Response: " . print_r($response, 1));
+			}
+			
+			if($response['status'] == 'NOT OK') {
+				throw new Registrar_Exception($response['reason']);
+			}
+		} else {
+			$error = curl_error($ch);
+			if($error) {
+				throw new Registrar_Exception("CURL ERROR: " . $error);
+			} else {
+				throw new Registrar_Exception("Unable to reach server.");
+			}
+		}
         
         return $response;
     }
