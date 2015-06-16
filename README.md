@@ -8,13 +8,6 @@ Usually they are developed to solve specific problem for client request.
 
 Repository contains code examples for other developers to get started.
 
-Official extensions
-------------
-
-Official extensions site is being prepared on http://extensions.boxbilling.com
-
-You will be able to download official and tested extensions from there.
-
 Important note
 ------------
 
