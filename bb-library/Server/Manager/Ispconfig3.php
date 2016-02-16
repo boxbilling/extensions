@@ -223,6 +223,8 @@ class Server_Manager_Ispconfig3 extends Server_Manager
 
         $site_params['client_group_id'] = $client->getAid() + 1;	 //always will be this 	groupd id + 1
         $site_params['server_id'] 		= $this->getServerId();
+        
+        $site_params['added_date'] 		= date('Y-m-d');
 
         //Set the defaults
         $site_params['hd_quota'] 		= $package->getQuota();
