@@ -236,8 +236,17 @@ class Server_Manager_Ispconfig3 extends Server_Manager
         $site_params['php_open_basedir'] = $server['php_open_basedir'];
 
         //PHP Configuration
-        $site_params['php'] 			= 'suphp'; //php available posible values
+        $site_params['php'] 			= 'php-fpm'; //php available posible values
         $site_params['ip_address'] 		= '*'; //important
+        $site_params['active']          = 'y';
+        $site_params['pm_process_idle_timeout'] ='30';
+	$site_params['pm_max_requests'] ='30';
+        $site_params['php_fpm_use_socket'] = 'y';
+        $site_params['pm'] = 'ondemand';
+        $site_params['pm_max_children'] ='10';
+        $site_params['pm_max_requests'] ='30';
+        $site_params['php_open_basedir'] = $server['php_open_basedir'];
+        $site_params['added_by']          = 'admin';
         $site_params['active']          = 'y';
 
         //Creating a site
