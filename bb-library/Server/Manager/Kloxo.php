@@ -64,7 +64,7 @@ class Server_Manager_Kloxo extends Server_Manager
 			$host .= 's';
 		}
 		$host .= '://' . $this->_config['host'] . ':'.$this->_config['port'].'/webcommand.php';
-    	$host .= '?login-class=client&login-name=' . urlencode($this->_config['username']);
+    	$host .= '?login-class=auxiliary&login-name=' . urlencode($this->_config['username']);
     	$host .= '&login-password=' . urlencode($this->_config['password']);
     	$host .= '&output-type=json';
 
