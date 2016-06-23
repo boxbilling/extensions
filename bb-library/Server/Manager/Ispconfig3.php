@@ -223,10 +223,17 @@ class Server_Manager_Ispconfig3 extends Server_Manager
 
         $site_params['client_group_id'] = $client->getAid() + 1;	 //always will be this 	groupd id + 1
         $site_params['server_id'] 		= $this->getServerId();
+        
+        $site_params['added_by'] 		= $client->getId();
+        
+        $site_params['backup_interval'] 		= "weekly";
+        $site_params['backup_copies'] 		= '2';
 
         //Set the defaults
         $site_params['hd_quota'] 		= $package->getQuota();
         $site_params['traffic_quota'] 	= $package->getBandwidth();
+        
+        $site_params['subdomain']       = 'www';
 
         //Hardcoded values
         $site_params['allow_override'] 	= 'All';
