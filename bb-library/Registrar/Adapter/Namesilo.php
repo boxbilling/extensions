@@ -1,8 +1,15 @@
 <?php
+/*
+
+Namesilo Registrar Module 
+Payment ID option added by Luka Paunovic from Leo-Host.com
+
+*/
 class Registrar_Adapter_Namesilo extends Registrar_AdapterAbstract
 {
     public $config = array(
-        'apikey' => null
+        'apikey' => null,
+		'Payment_ID' => null
     );
     public function __construct($options)
     {
@@ -14,6 +21,13 @@ class Registrar_Adapter_Namesilo extends Registrar_AdapterAbstract
             unset($options['apikey']);
         } else {
             throw new Registrar_Exception('Domain registrar "Namesilo" is not configured properly. Please update configuration parameter "Namesilo Apikey" at "Configuration -> Domain registration".');
+        }
+		
+        if(isset($options['Payment_ID']) && !empty($options['Payment_ID'])) {
+            $this->config['Payment_ID'] = $options['Payment_ID'];
+            unset($options['Payment_ID']);
+        } else {
+            throw new Registrar_Exception('Domain registrar "Namesilo" is not configured preoprly. Please update configuration paramer Payment ID".');
         }
     }
     public static function getConfig()
@@ -27,9 +41,15 @@ class Registrar_Adapter_Namesilo extends Registrar_AdapterAbstract
                     'renderPassword' => true,
                 ),
                 ),
-            ),
-        );
+			'Payment_ID' => array('Payment_ID', array(
+                            'label' => 'Payment ID',
+                            'description'=>'Payment ID',
+                    ),
+                 ),
+        ),
+		);
     }
+
     public function getTlds()
     {
         return array(
@@ -226,7 +246,6 @@ class Registrar_Adapter_Namesilo extends Registrar_AdapterAbstract
     {
         throw new Registrar_Exception('Registrar does not support domain removal.');
     }
-
     /**
      * @param Registrar_Domain $domain
      * @return bool
@@ -239,7 +258,7 @@ class Registrar_Adapter_Namesilo extends Registrar_AdapterAbstract
 
         $params = array(
             'domain' => $domain->getName(),
-            'years' => $domain->getRegistrationPeriod(),
+            'years' => $domain->getRegistrationPeriod(),          
 
             'fn' => $c->getFirstName(),
             'ln' => $c->getLastName(),
@@ -419,6 +438,7 @@ class Registrar_Adapter_Namesilo extends Registrar_AdapterAbstract
         $params['version'] = 1;
         $params['type'] = 'xml';
         $params['key'] = $this->config['apikey'];
+        $params['payment_id'] = $this->config['Payment_ID'];
 
         $query = http_build_query($params);
 
