@@ -331,15 +331,21 @@ class Server_Manager_Ispconfig3 extends Server_Manager
             'limit_spamfilter_wblist' =>'-1',
             'limit_spamfilter_user' =>'-1',
             'limit_spamfilter_policy' =>'-1',
+            
+            'limit_aps' =>'2',
 
             'default_webserver' =>'1',
             'limit_web_domain' =>'-1',
-            'web_php_options' =>"SuPHP",
+            
+            'limit_web_quota' =>'-1',
+            'limit_traffic_quota' =>'-1',
+            
+            'web_php_options' =>"php-fpm",
             'limit_web_aliasdomain' =>'-1',
             'limit_web_subdomain' =>'-1',
             'limit_ftp_user' =>'-1',
             'limit_shell_user' =>'-1',
-            'ssh_chroot' =>'None',
+            'ssh_chroot' =>"no",
 
             'default_dnsserver' =>'1',
             'limit_dns_zone' =>'-1',
@@ -351,6 +357,10 @@ class Server_Manager_Ispconfig3 extends Server_Manager
             'limit_cron' =>'0',
             'limit_cron_type' =>'',
             'limit_cron_frequency' =>'-1',
+             'limit_traffic_quota' => $p->getBandwidth(),
+            'limit_client' => $type,
+            'added_date'   => date('Y-m-d'),
+            'added_by' => 'admin',
         );
         $action = 'client_add';
         $result = $this->_request($action, $params);
