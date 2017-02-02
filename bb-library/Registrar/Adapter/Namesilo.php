@@ -26,8 +26,6 @@ class Registrar_Adapter_Namesilo extends Registrar_AdapterAbstract
         if(isset($options['Payment_ID']) && !empty($options['Payment_ID'])) {
             $this->config['Payment_ID'] = $options['Payment_ID'];
             unset($options['Payment_ID']);
-        } else {
-            throw new Registrar_Exception('Domain registrar "Namesilo" is not configured preoprly. Please update configuration paramer Payment ID".');
         }
     }
     public static function getConfig()
