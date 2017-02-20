@@ -45,7 +45,7 @@ class Registrar_Adapter_Namesilo extends Registrar_AdapterAbstract
 			'Payment_ID' => array('Payment_ID', array(
                             'label' => 'Payment ID',
                             'description'=>'Payment ID',
-                            'required'=>'',
+                            'required'=> false,
                     ),
                  ),
         ),
