@@ -4,6 +4,9 @@
 Namesilo Registrar Module 
 Payment ID option added by Luka Paunovic from Leo-Host.com
 
+Changelog:
+2.20.2017
+- Set input field for "Payment ID" to optional (which prevented using module without "Payment ID" in previous version), and removed throwing exception when "Payment ID" is empty.
 */
 class Registrar_Adapter_Namesilo extends Registrar_AdapterAbstract
 {
@@ -26,8 +29,6 @@ class Registrar_Adapter_Namesilo extends Registrar_AdapterAbstract
         if(isset($options['Payment_ID']) && !empty($options['Payment_ID'])) {
             $this->config['Payment_ID'] = $options['Payment_ID'];
             unset($options['Payment_ID']);
-        } else {
-            throw new Registrar_Exception('Domain registrar "Namesilo" is not configured preoprly. Please update configuration paramer Payment ID".');
         }
     }
     public static function getConfig()
@@ -44,6 +45,7 @@ class Registrar_Adapter_Namesilo extends Registrar_AdapterAbstract
 			'Payment_ID' => array('Payment_ID', array(
                             'label' => 'Payment ID',
                             'description'=>'Payment ID',
+                            'required'=> false,
                     ),
                  ),
         ),
