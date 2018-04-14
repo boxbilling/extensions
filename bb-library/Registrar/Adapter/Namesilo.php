@@ -2,11 +2,11 @@
 /*
 
 Namesilo Registrar Module 
-Payment ID option added by Luka Paunovic from Leo-Host.com
+Contributor: lukapaunovic
 
 Changelog:
-2.20.2017
-- Set input field for "Payment ID" to optional (which prevented using module without "Payment ID" in previous version), and removed throwing exception when "Payment ID" is empty.
+2.20.2017 - Payment ID
+04.14.2017 - Domain Renewal Bug Fix
 */
 class Registrar_Adapter_Namesilo extends Registrar_AdapterAbstract
 {
@@ -41,15 +41,15 @@ class Registrar_Adapter_Namesilo extends Registrar_AdapterAbstract
                     'description'=>'Namesilo API key',
                     'renderPassword' => true,
                 ),
+            ),
+                'Payment_ID' => array('Payment_ID', array(
+                    'label' => 'Payment ID',
+                    'description'=>'Payment ID',
+                    'required'=> false,
                 ),
-			'Payment_ID' => array('Payment_ID', array(
-                            'label' => 'Payment ID',
-                            'description'=>'Payment ID',
-                            'required'=> false,
-                    ),
-                 ),
-        ),
-		);
+            ),
+            ),
+        );
     }
 
     public function getTlds()
