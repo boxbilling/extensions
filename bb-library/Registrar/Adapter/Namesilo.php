@@ -6,7 +6,7 @@ Contributor: lukapaunovic
 
 Changelog:
 2.20.2017 - Payment ID
-04.14.2017 - Domain Renewal Bug Fix
+04.14.2018 - Domain Renewal Bug Fix
 */
 class Registrar_Adapter_Namesilo extends Registrar_AdapterAbstract
 {
@@ -213,16 +213,16 @@ class Registrar_Adapter_Namesilo extends Registrar_AdapterAbstract
         foreach ($result->nameservers->nameserver as $ns)
         {
             if ($i == 1){
-                $domain->setNs1($ns);
+                $domain->setNs1((string) $ns);
             }
             if ($i == 2){
-                $domain->setNs2($ns);
+                $domain->setNs2((string) $ns);
             }
             if ($i == 3){
-                $domain->setNs3($ns);
+                $domain->setNs3((string) $ns);
             }
             if ($i == 4){
-                $domain->setNs4($ns);
+                $domain->setNs4((string) $ns);
             }
             $i++;
         }
