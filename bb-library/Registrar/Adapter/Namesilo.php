@@ -2,11 +2,11 @@
 /*
 
 Namesilo Registrar Module 
-Payment ID option added by Luka Paunovic from Leo-Host.com
+Contributor: lukapaunovic
 
 Changelog:
-2.20.2017
-- Set input field for "Payment ID" to optional (which prevented using module without "Payment ID" in previous version), and removed throwing exception when "Payment ID" is empty.
+2.20.2017 - Payment ID
+04.14.2018 - Domain Renewal Bug Fix
 */
 class Registrar_Adapter_Namesilo extends Registrar_AdapterAbstract
 {
@@ -41,15 +41,15 @@ class Registrar_Adapter_Namesilo extends Registrar_AdapterAbstract
                     'description'=>'Namesilo API key',
                     'renderPassword' => true,
                 ),
+            ),
+                'Payment_ID' => array('Payment_ID', array(
+                    'label' => 'Payment ID',
+                    'description'=>'Payment ID',
+                    'required'=> false,
                 ),
-			'Payment_ID' => array('Payment_ID', array(
-                            'label' => 'Payment ID',
-                            'description'=>'Payment ID',
-                            'required'=> false,
-                    ),
-                 ),
-        ),
-		);
+            ),
+            ),
+        );
     }
 
     public function getTlds()
@@ -213,16 +213,16 @@ class Registrar_Adapter_Namesilo extends Registrar_AdapterAbstract
         foreach ($result->nameservers->nameserver as $ns)
         {
             if ($i == 1){
-                $domain->setNs1($ns);
+                $domain->setNs1((string) $ns);
             }
             if ($i == 2){
-                $domain->setNs2($ns);
+                $domain->setNs2((string) $ns);
             }
             if ($i == 3){
-                $domain->setNs3($ns);
+                $domain->setNs3((string) $ns);
             }
             if ($i == 4){
-                $domain->setNs4($ns);
+                $domain->setNs4((string) $ns);
             }
             $i++;
         }
