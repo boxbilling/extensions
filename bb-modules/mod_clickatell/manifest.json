@@ -1,0 +1,8 @@
+{
+    "id":           "clickatell",
+	"type":         "mod",
+    "name":         "Clickatell",
+    "description":  "Send SMS via Clickatell service",
+    "icon_url":     "icon.png",
+    "version":      "1.0.0"
+}

@@ -1,0 +1,6 @@
+{% extends request.ajax ? "layout_blank.phtml" : "layout_default.phtml" %}
+{% set active_menu = 'system' %}
+{% block meta_title %}PHP Mini MySQL Admin{% endblock %}
+{% block content %}
+<iframe src="{{ constant('BB_URL') }}/bb-modules/mod_phpminiadmin/phpminiadmin.php" style="width: 100%; border:0; height: 800px;"/>
+{% endblock %}

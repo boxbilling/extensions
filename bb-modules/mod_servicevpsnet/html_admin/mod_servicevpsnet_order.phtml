@@ -1,0 +1,40 @@
+    <div class="rowElem">
+        <label>{% trans 'Import existing' %}:</label>
+        <div class="formRight">
+            <input type="radio" name="config[import]" value="1"/><label>Yes</label>
+            <input type="radio" name="config[import]" value="0" checked="checked" /><label>No</label>
+        </div>
+        <div class="fix"></div>
+    </div>
+
+    <div class="rowElem existing">
+        <label>{% trans 'Existing VPS ID' %}:</label>
+        <div class="formRight">
+            <input type="text" name="config[vid]" value="" placeholder="VPS ID"/>
+        </div>
+        <div class="fix"></div>
+    </div>
+
+    <div class="rowElem">
+        <label>{% trans 'Hostname' %}:</label>
+        <div class="formRight">
+            <input type="text" name="config[hostname]" value="" placeholder="VPS hostname"/>
+        </div>
+        <div class="fix"></div>
+    </div>
+
+    <div class="rowElem">
+        <label>{% trans 'Template ID' %}</label>
+        <div class="formRight">
+            <input type="text" name="config[template_id]" value="" placeholder="VPS template ID"/>
+        </div>
+        <div class="fix"></div>
+    </div>
+
+{#
+<script type="text/javascript">
+$(function() {
+    
+});
+</script>
+#}

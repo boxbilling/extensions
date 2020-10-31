@@ -1,0 +1,242 @@
+{% extends request.ajax ? "layout_blank.phtml" : "layout_default.phtml" %}
+{% import "macro_functions.phtml" as mf %}
+{% block meta_title %}Required params for client{% endblock %}
+{% set active_menu = 'extensions' %}
+
+{% block content %}
+
+<div class="widget first">
+    <div class="head">
+        <h5 class="iCog">{% trans 'Braunstein extension settings' %}</h5>
+    </div>
+    
+    <div class="help">
+        <h3>{% trans 'Required fields for client' %}</h3>
+        <p>{% trans 'Select which fields are required to be filled up by client on signup form' %}</p>
+    </div>
+    
+{% set params = admin.extension_config_get({"ext":"mod_braunstein"}) %}
+
+<form method="post" action="admin/extension/config_save" class="mainForm api-form" data-api-msg="{% trans 'Configuration updated' %}">
+    
+    <fieldset>
+        <div class="rowElem">
+            <label class="">{% trans 'Last name' %}:</label>
+            <div class="formRight">
+                <input type="hidden" name="required[last_name]" value="0"/>
+                <input type="checkbox" name="required[last_name]" value="1" {% if params.required.last_name %}checked="checked"{% endif %}/>
+            </div>
+            <div class="fix"></div>
+        </div>
+        
+        <div class="rowElem">
+            <label class="">{% trans 'Company name' %}:</label>
+            <div class="formRight">
+                <input type="hidden" name="required[company]" value="0"/>
+                <input type="checkbox" name="required[company]" value="1" {% if params.required.company %}checked="checked"{% endif %}/>
+            </div>
+            <div class="fix"></div>
+        </div>
+        
+        <div class="rowElem">
+            <label class="">{% trans 'Gender' %}:</label>
+            <div class="formRight">
+                <input type="hidden" name="required[gender]" value="0"/>
+                <input type="checkbox" name="required[gender]" value="1" {% if params.required.gender %}checked="checked"{% endif %}/>
+            </div>
+            <div class="fix"></div>
+        </div>
+        
+
+        
+        <div class="rowElem">
+            <label class="">{% trans 'Birthday' %}:</label>
+            <div class="formRight">
+                <input type="hidden" name="required[birthday]" value="0"/>
+                <input type="checkbox" name="required[birthday]" value="1" {% if params.required.birthday %}checked="checked"{% endif %}/>
+            </div>
+            <div class="fix"></div>
+        </div>
+    </fieldset>
+    
+    <fieldset>
+        <legend>{% trans 'Address details' %}</legend>
+        <div class="rowElem">
+            <label class="">{% trans 'Country' %}:</label>
+            <div class="formRight">
+                <input type="hidden" name="required[country]" value="0"/>
+                <input type="checkbox" name="required[country]" value="1" {% if params.required.country %}checked="checked"{% endif %}/>
+            </div>
+            <div class="fix"></div>
+        </div>
+        
+        <div class="rowElem">
+            <label class="">{% trans 'City' %}:</label>
+            <div class="formRight">
+                <input type="hidden" name="required[city]" value="0"/>
+                <input type="checkbox" name="required[city]" value="1" {% if params.required.city %}checked="checked"{% endif %}/>
+            </div>
+            <div class="fix"></div>
+        </div>
+        
+        <div class="rowElem">
+            <label class="">{% trans 'State' %}:</label>
+            <div class="formRight">
+                <input type="hidden" name="required[state]" value="0"/>
+                <input type="checkbox" name="required[state]" value="1" {% if params.required.state %}checked="checked"{% endif %}/>
+            </div>
+            <div class="fix"></div>
+        </div>
+        
+        <div class="rowElem">
+            <label class="">{% trans 'Address line 1' %}:</label>
+            <div class="formRight">
+                <input type="hidden" name="required[address_1]" value="0"/>
+                <input type="checkbox" name="required[address_1]" value="1" {% if params.required.address_1 %}checked="checked"{% endif %}/>
+            </div>
+            <div class="fix"></div>
+        </div>
+        
+        <div class="rowElem">
+            <label class="">{% trans 'Address line 2' %}:</label>
+            <div class="formRight">
+                <input type="hidden" name="required[address_2]" value="0"/>
+                <input type="checkbox" name="required[address_2]" value="1" {% if params.required.address_2 %}checked="checked"{% endif %}/>
+            </div>
+            <div class="fix"></div>
+        </div>
+        
+        <div class="rowElem">
+            <label class="">{% trans 'Postcode/Zip' %}:</label>
+            <div class="formRight">
+                <input type="hidden" name="required[postcode]" value="0"/>
+                <input type="checkbox" name="required[postcode]" value="1" {% if params.required.postcode %}checked="checked"{% endif %}/>
+            </div>
+            <div class="fix"></div>
+        </div>
+        
+        <div class="rowElem">
+            <label class="">{% trans 'Phone Country Code' %}:</label>
+            <div class="formRight">
+                <input type="hidden" name="required[phone_cc]" value="0"/>
+                <input type="checkbox" name="required[phone_cc]" value="1"  {% if params.required.phone_cc %}checked="checked"{% endif %}/>
+            </div>
+            <div class="fix"></div>
+        </div>
+        
+        <div class="rowElem">
+            <label class="">{% trans 'Phone' %}:</label>
+            <div class="formRight">
+                <input type="hidden" name="required[phone]" value="0"/>
+                <input type="checkbox" name="required[phone]" value="1"  {% if params.required.phone %}checked="checked"{% endif %}/>
+            </div>
+            <div class="fix"></div>
+        </div>
+    {#
+    </fieldset>
+   
+    <fieldset>
+        
+        <legend>{% trans 'Other details' %}</legend>
+        
+        <div class="rowElem">
+            <label class="">{% trans 'Custom 1' %}:</label>
+            <div class="formRight">
+                <input type="hidden" name="required[custom_1]" value="0"/>
+                <input type="checkbox" name="required[custom_1]" value="1"  {% if params.required.custom_1 %}checked="checked"{% endif %}/>
+            </div>
+            <div class="fix"></div>
+        </div>
+        
+        <div class="rowElem">
+            <label class="">{% trans 'Custom 2' %}:</label>
+            <div class="formRight">
+                <input type="hidden" name="required[custom_2]" value="0"/>
+                <input type="checkbox" name="required[custom_2]" value="1"  {% if params.required.custom_2 %}checked="checked"{% endif %}/>
+            </div>
+            <div class="fix"></div>
+        </div>
+        
+        <div class="rowElem">
+            <label class="">{% trans 'Custom 3' %}:</label>
+            <div class="formRight">
+                <input type="hidden" name="required[custom_3]" value="0"/>
+                <input type="checkbox" name="required[custom_3]" value="1"  {% if params.required.custom_3 %}checked="checked"{% endif %}/>
+            </div>
+            <div class="fix"></div>
+        </div>
+        
+        <div class="rowElem">
+            <label class="">{% trans 'Custom 4' %}:</label>
+            <div class="formRight">
+                <input type="hidden" name="required[custom_4]" value="0"/>
+                <input type="checkbox" name="required[custom_4]" value="1"  {% if params.required.custom_4 %}checked="checked"{% endif %}/>
+            </div>
+            <div class="fix"></div>
+        </div>
+        
+        <div class="rowElem">
+            <label class="">{% trans 'Custom 5' %}:</label>
+            <div class="formRight">
+                <input type="hidden" name="required[custom_5]" value="0"/>
+                <input type="checkbox" name="required[custom_5]" value="1"  {% if params.required.custom_5 %}checked="checked"{% endif %}/>
+            </div>
+            <div class="fix"></div>
+        </div>
+        
+        <div class="rowElem">
+            <label class="">{% trans 'Custom 6' %}:</label>
+            <div class="formRight">
+                <input type="hidden" name="required[custom_6]" value="0"/>
+                <input type="checkbox" name="required[custom_6]" value="1"  {% if params.required.custom_6 %}checked="checked"{% endif %}/>
+            </div>
+            <div class="fix"></div>
+        </div>
+        
+        <div class="rowElem">
+            <label class="">{% trans 'Custom 7' %}:</label>
+            <div class="formRight">
+                <input type="hidden" name="required[custom_7]" value="0"/>
+                <input type="checkbox" name="required[custom_7]" value="1"  {% if params.required.custom_7 %}checked="checked"{% endif %}/>
+            </div>
+            <div class="fix"></div>
+        </div>
+        
+        <div class="rowElem">
+            <label class="">{% trans 'Custom 8' %}:</label>
+            <div class="formRight">
+                <input type="hidden" name="required[custom_8]" value="0"/>
+                <input type="checkbox" name="required[custom_8]" value="1"  {% if params.required.custom_8 %}checked="checked"{% endif %}/>
+            </div>
+            <div class="fix"></div>
+        </div>
+        
+        <div class="rowElem">
+            <label class="">{% trans 'Custom 9' %}:</label>
+            <div class="formRight">
+                <input type="hidden" name="required[custom_9]" value="0"/>
+                <input type="checkbox" name="required[custom_9]" value="1"  {% if params.required.custom_9 %}checked="checked"{% endif %}/>
+            </div>
+            <div class="fix"></div>
+        </div>
+        
+        <div class="rowElem">
+            <label class="">{% trans 'Custom 10' %}:</label>
+            <div class="formRight">
+                <input type="hidden" name="required[custom_10]" value="0"/>
+                <input type="checkbox" name="required[custom_10]" value="1"  {% if params.required.custom_10 %}checked="checked"{% endif %}/>
+            </div>
+            <div class="fix"></div>
+        </div>
+        #}
+        <input type="submit" value="{% trans 'Update' %}" class="greyishBtn submitForm" />
+        <input type="hidden" name="ext" value="mod_braunstein" />
+    </fieldset>
+</form>
+
+    <div class="body">
+        <a href="{{ 'extension'|alink }}"  title="" class="btnIconLeft mr10"><img src="images/icons/dark/arrowLeft.png" alt="" class="icon"><span>{% trans 'Back to extensions' %}</span></a>
+    </div>
+</div>
+
+{% endblock %}

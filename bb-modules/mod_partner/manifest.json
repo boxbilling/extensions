@@ -1,0 +1,11 @@
+{
+    "id":           "partner",
+	"type":         "mod",
+    "name":         "Partners program",
+    "description":  "Make clients partners and sell boxbilling licenses",
+    "homepage_url": "http://github.com/boxbilling/",
+    "author":       "BoxBilling",
+    "author_url":   "http://extensions.boxbilling.com/",
+    "license":      "http://www.boxbilling.com/license.txt",
+    "version":      "2.0.0"
+}

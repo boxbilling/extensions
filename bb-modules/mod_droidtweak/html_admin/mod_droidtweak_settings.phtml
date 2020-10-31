@@ -1,0 +1,141 @@
+{% extends request.ajax ? "layout_blank.phtml" : "layout_default.phtml" %}
+{% import "macro_functions.phtml" as mf %}
+{% block meta_title %}DroidTweak settings{% endblock %}
+{% set active_menu = 'extensions' %}
+
+{% block content %}
+
+<div class="widget first">
+    <div class="head">
+        <h5 class="iCog">{% trans 'Droid Tweak settings' %}</h5>
+    </div>
+
+    <div class="help">
+        <h3>{% trans 'IPB Forum API' %}</h3>
+        <p>To utilize this capability, first you must login to your ACP and go to System Settings -> Advanced -> XML-RPC API.  Ensure 'Enable XML-RPC API system' is enabled.  Next you must create an API user.  Navigate to Tools & Settings -> API Users and create a new API user. </p>
+    </div>
+    
+{% set params = admin.extension_config_get({"ext":"mod_droidtweak"}) %}
+
+<form method="post" action="admin/extension/config_save" class="mainForm api-form" data-api-msg="{% trans 'Configuration updated' %}">
+    
+    <fieldset>
+        <div class="rowElem noborder">
+            <label>{% trans 'Payment gateway' %}</label>
+            <div class="formRight">
+                {{ mf.selectbox('gateway', admin.invoice_gateway_get_pairs, params.gateway) }}
+            </div>
+            <div class="fix"></div>
+        </div>
+    
+        <div class="rowElem">
+            <label>{% trans 'Review text' %}:</label>
+            <div class="formRight">
+                <textarea name="review_text" placeholder="{% trans 'Review By: http://DroidTweak.com' %}" rows="3"/>{{params.review_text}}</textarea>
+            </div>
+            <div class="fix"></div>
+        </div>
+    </fieldset>
+    
+    <fieldset>
+        <legend>Ticket settings</legend>
+        <div class="rowElem">
+            <label>{% trans 'Default Help desk' %}:</label>
+            <div class="formRight">
+                    {{ mf.selectbox('ticket_helpdesk_id', admin.support_helpdesk_get_pairs, request.ticket_helpdesk_id) }}
+            </div>
+            <div class="fix"></div>
+        </div>
+        
+        <div class="rowElem">
+            <label>{% trans 'Default Ticket subject' %}</label>
+            <div class="formRight">
+                <input type="text" name="ticket_subject" value="{{params.ticket_subject}}" placeholder="{% trans 'Default ticket subject' %}"/>
+            </div>
+            <div class="fix"></div>
+        </div>
+        
+        <div class="rowElem">
+            <label>{% trans 'Ticket content' %}</label>
+            <div class="formRight">
+                <textarea name="ticket_content" placeholder="{% trans 'Ticket content' %}" rows="20"/>{% if params.ticket_content %}{{params.ticket_content}}{%else%}{% raw %}
+{% filter markdown %}
+Hi {{ first_name }} {{ last_name }},
+
+Email: {{ email }}     
+Company: {{ company }}      
+Company URL: {{ company_url }}     
+App Name: {{ app_name }}      
+Market URL: {{ market_url }}     
+Video URL: {{ video_url }}    
+How heard: {{ how_heard }}    
+Comments: 
+
+{{ comments }}
+
+Service: {{ product.title }}    
+
+
+{{ product.description }}
+
+{% endfilter %}
+
+            {% endraw %}{%endif%}</textarea>
+            </div>
+            <div class="fix"></div>
+        </div>
+    </fieldset>
+    
+    <fieldset>
+        <legend>IPB Forum settings</legend>
+        <div class="rowElem">
+            <label>{% trans 'API Url' %}:</label>
+            <div class="formRight">
+                <input type="text" value="{{params.ipb_endpoint|default('http://droidtweak.com/interface/board/index.php')}}" name="ipb_endpoint" />
+            </div>
+            <div class="fix"></div>
+        </div>
+        
+        <div class="rowElem">
+            <label>{% trans 'API key' %}:</label>
+            <div class="formRight">
+                <input type="password" value="{{params.ipb_api_key}}" name="ipb_api_key" />
+            </div>
+            <div class="fix"></div>
+        </div>
+        
+        <div class="rowElem">
+            <label>{% trans 'Forum member email' %}:</label>
+            <div class="formRight">
+                <input type="email" value="{{params.ipb_member_email}}" name="ipb_member_email" />
+            </div>
+            <div class="fix"></div>
+        </div>
+        
+        <div class="rowElem">
+            <label>{% trans 'Forum ID' %}:</label>
+            <div class="formRight">
+                <input type="text" value="{{params.ipb_forum_id}}" name="ipb_forum_id" />
+            </div>
+            <div class="fix"></div>
+        </div>
+        
+        <div class="rowElem">
+            <label>{% trans 'Topic title' %}:</label>
+            <div class="formRight">
+                <input type="text" value="{{params.ipb_topic_title}}" name="ipb_topic_title" />
+            </div>
+            <div class="fix"></div>
+        </div>
+        
+        <input type="submit" value="{% trans 'Update' %}" class="greyishBtn submitForm" />
+        <input type="hidden" name="ext" value="mod_droidtweak" />
+    </fieldset>
+</form>
+
+    <div class="body">
+        <a href="{{ 'extension'|alink }}"  title="" class="btnIconLeft mr10"><img src="images/icons/dark/arrowLeft.png" alt="" class="icon"><span>{% trans 'Back to extensions' %}</span></a>
+    </div>
+</div>
+
+{% endblock %}

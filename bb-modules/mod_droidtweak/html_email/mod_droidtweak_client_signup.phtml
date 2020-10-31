@@ -1,0 +1,19 @@
+{% block subject %}[{{ guest.system_company.name }}] Welcome {{ c.first_name }}{% endblock %}
+{% block content %}
+{% filter markdown %}
+Hello {{ c.first_name }} {{ c.last_name }},
+
+Thank you for signing up with us. Your new account has been setup and you can now login to our client area using the details below.
+
+
+Email: {{c.email}}    
+Password: {{password}}
+
+
+To login, visit {{ 'login'|link }}?email={{c.email}}      
+Edit your profile at {{'me'|link}}
+
+{{ guest.system_company.signature }}
+
+{% endfilter %}
+{% endblock %}

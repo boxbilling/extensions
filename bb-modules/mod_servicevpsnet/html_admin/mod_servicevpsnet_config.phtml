@@ -1,0 +1,103 @@
+<div class="help">
+    <h5>{% trans 'VPS.net configuration' %}</h5>
+</div>
+
+<form method="post" action="admin/product/update_config" class="mainForm api-form save" data-api-msg="Configuration updated">
+<fieldset>
+    <div class="rowElem">
+        <label>{% trans 'RAM Memory in MB' %}:</label>
+        <div class="formRight">
+            <input type="text" name="config[memory]" value="{{product.config.memory}}" placeholder="Set 1024 for 1GB"/>
+        </div>
+        <div class="fix"></div>
+    </div>
+    
+    <div class="rowElem">
+        <label>{% trans 'Number of CPU cores' %}:</label>
+        <div class="formRight">
+            <input type="text" name="config[cpus]" value="{{product.config.cpus}}" placeholder="From 1 to 8"/>
+        </div>
+        <div class="fix"></div>
+    </div>
+    
+    <div class="rowElem">
+        <label>{% trans 'CPU limit %' %}:</label>
+        <div class="formRight">
+            <input type="text" name="config[cpu_limit]" value="{{product.config.cpu_limit}}" placeholder="100 - if 2 CPUs with 100 cpu limit means 2 cores for 50%"/>
+        </div>
+        <div class="fix"></div>
+    </div>
+    
+    <div class="rowElem">
+        <label>{% trans 'Disk space in MB' %}:</label>
+        <div class="formRight">
+            <input type="text" name="config[diskspace]" value="{{product.config.diskspace}}" placeholder="5120 = 5GB"/>
+        </div>
+        <div class="fix"></div>
+    </div>
+    
+    <div class="rowElem">
+        <label>{% trans 'Rate Limit in Mbps' %}:</label>
+        <div class="formRight">
+            <input type="text" name="config[rate_limit]" value="{{product.config.rate_limit}}" placeholder="From 1 - 100"/>
+        </div>
+        <div class="fix"></div>
+    </div>
+    
+    <div class="rowElem">
+        <label>{% trans 'Nameserver 1' %}:</label>
+        <div class="formRight">
+            <input type="text" name="config[ns1]" value="{{product.config.ns1}}" placeholder="ns1.vps.me"/>
+        </div>
+        <div class="fix"></div>
+    </div>
+</fieldset>
+    
+<fieldset>
+    <legend>Slider information. Set values to be displayed for client on order page</legend>
+    
+    <div class="rowElem">
+        <label>{% trans 'Dedicated CPU' %}:</label>
+        <div class="formRight">
+            <input type="text" name="config[slider_cpu]" value="{{product.config.slider_cpu}}" placeholder="4.2GHz"/>
+        </div>
+        <div class="fix"></div>
+    </div>
+    
+    <div class="rowElem">
+        <label>{% trans 'Dedicated RAM' %}:</label>
+        <div class="formRight">
+            <input type="text" name="config[slider_ram]" value="{{product.config.slider_ram}}" placeholder="1504MB"/>
+        </div>
+        <div class="fix"></div>
+    </div>
+    
+    <div class="rowElem">
+        <label>{% trans 'Disk space' %}:</label>
+        <div class="formRight">
+            <input type="text" name="config[slider_hdd]" value="{{product.config.slider_hdd}}" placeholder="40GB"/>
+        </div>
+        <div class="fix"></div>
+    </div>
+    
+    <div class="rowElem">
+        <label>{% trans 'Network transfer' %}:</label>
+        <div class="formRight">
+            <input type="text" name="config[slider_bandwidth]" value="{{product.config.slider_bandwidth}}" placeholder="4TB"/>
+        </div>
+        <div class="fix"></div>
+    </div>
+    
+    <div class="rowElem">
+        <label>{% trans 'Description' %}:</label>
+        <div class="formRight">
+            <textarea name="config[slider_desc]" placeholder="Very simple description, like: Perfect for WordPress hosting">{{product.config.slider_bandwidth}}</textarea>
+        </div>
+        <div class="fix"></div>
+    </div>
+    
+    <input type="submit" value="{% trans 'Update' %}" class="greyishBtn submitForm" />
+</fieldset>
+    
+<input type="hidden" name="id" value="{{ product.id }}" />
+</form>

@@ -1,0 +1,7 @@
+{
+    "id":           "phoneconfirmation",
+	"type":         "mod",
+    "name":         "Phone confirmation for clients",
+    "description":  "Enables option to validate clients phone number",
+    "version":      "1.0.0"
+}

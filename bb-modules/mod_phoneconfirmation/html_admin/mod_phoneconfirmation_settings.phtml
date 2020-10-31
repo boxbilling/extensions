@@ -1,0 +1,35 @@
+{% extends request.ajax ? "layout_blank.phtml" : "layout_default.phtml" %}
+{% import "macro_functions.phtml" as mf %}
+{% block meta_title %}Phone verification settings{% endblock %}
+{% set active_menu = 'system' %}
+
+{% block content %}
+
+<div class="widget first">
+    <div class="head">
+        <h5 class="iCog">{% trans 'Phone verification settings' %}</h5>
+    </div>
+
+    {% set params = admin.extension_config_get({"ext":"mod_phoneconfirmation"}) %}
+
+    <form method="post" action="admin/extension/config_save" class="mainForm api-form" data-api-msg="{% trans 'Configuration updated' %}">
+        <fieldset>
+            <div class="rowElem noborder">
+                <label class="topLabel">{% trans 'Verification message text. Use {{code}} in text' %}</label>
+                <div class="formBottom">
+                    <textarea name="sms" cols="5" rows="3" placeholder="Activation code {% filter raw %}{{code}}{% endfilter %} Thank you for registering an account with us" />{{ params.sms }}</textarea>
+                </div>
+                <div class="fix"></div>
+            </div>
+
+            <input type="submit" value="{% trans 'Update' %}" class="greyishBtn submitForm" />
+            <input type="hidden" name="ext" value="mod_phoneconfirmation" />
+        </fieldset>
+    </form>
+
+    <div class="body">
+        <a href="{{ 'system'|alink }}"  title="" class="btnIconLeft mr10"><img src="images/icons/dark/arrowLeft.png" alt="" class="icon"><span>{% trans 'Back to settings' %}</span></a>
+    </div>
+
+</div>
+{% endblock %}

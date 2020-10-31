@@ -1,0 +1,113 @@
+{% extends request.ajax ? "layout_blank.phtml" : "layout_default.phtml" %}
+{% import "macro_functions.phtml" as mf %}
+{% block meta_title %}Invites settings{% endblock %}
+{% set active_menu = 'system' %}
+
+{% block content %}
+
+<div class="widget simpleTabs nomargin">
+
+    <ul class="tabs">
+        <li><a href="#tab-index">{% trans 'Invites settings' %}</a></li>
+        <li><a href="#tab-issue" id="open-index-tab">{% trans 'Issue invitation' %}</a></li>
+    </ul>
+
+    <div class="tabs_container">
+        <div class="fix"></div>
+        
+        <div class="tab_content nopadding" id="tab-index">
+
+        {% set params = admin.extension_config_get({"ext":"mod_invite"}) %}
+
+        <form method="post" action="admin/extension/config_save" class="mainForm api-form" data-api-msg="{% trans 'Configuration updated' %}">
+
+            <fieldset>
+                <legend>General</legend>
+                <div class="rowElem">
+                    <label>{% trans 'Invite only registration' %}</label>
+                    <div class="formRight">
+                        <input type="radio" name="invite_only" value="1" {% if params.invite_only %}checked{% endif %}/><label>Yes</label>
+                        <input type="radio" name="invite_only" value="0" {% if not params.invite_only %}checked{% endif %}/><label>No</label>
+                    </div>
+                    <div class="fix"></div>
+                </div>
+                <div class="rowElem">
+                    <div class="moreFields">
+                        <ul>
+                            <li class="sep txt">Give</li>
+                            <li style="width: 50px"><input type="text" name="invites_for_registration" value="{{ params.invites_for_registration|default(1) }}" placeholder="1"></li>
+                            <li class="sep txt"> invite(s) after registration</li>
+                        </ul>
+                    </div> 
+                    <div class="fix"></div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Select product(s) for which invites are issued</legend>
+                <div class="rowElem">
+                    <div class="moreFields">
+                        <ul>
+                            <li class="sep txt">Give</li>
+                            <li style="width: 50px"><input type="text" name="invites_for_activation" value="{{ params.invites_for_activation|default(1) }}" placeholder="1"></li>
+                            <li class="sep txt"> invite(s) for </li>
+                            <li style="width: 300px">
+                                <select multiple="multiple" class="multiple" style="height:100px;width:300px;" name="products[]">
+                                {% for c,cn in admin.product_get_pairs %}
+                                <option value="{{c}}" {% if c in params.products %}selected{% endif %}>{{ cn }}</option>
+                                {% endfor %}
+                                </select>
+                            </li>
+                            <li class="sep txt">activation</li>
+                        </ul>
+                    </div> 
+                    <div class="fix"></div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Default invitation message settings</legend>
+
+                <div class="rowElem">
+                    <label class="topLabel">{% trans 'Invite mail message. Full email message is configured in Email templates management page' %}</label>
+                    <div class="formBottom">
+                        <textarea name="message" placeholder="" cols="5" rows="10">{{params.message}}</textarea>
+                    </div>
+                    <div class="fix"></div>
+                </div>
+
+                <input type="submit" value="{% trans 'Update' %}" class="greyishBtn submitForm" />
+                <input type="hidden" name="ext" value="mod_invite" />
+            </fieldset>
+
+        </form>
+
+            <div class="body">
+                <a href="{{ 'system'|alink }}"  title="" class="btnIconLeft mr10"><img src="images/icons/dark/arrowLeft.png" alt="" class="icon"><span>{% trans 'Back to settings' %}</span></a>
+            </div>
+        </div>
+        
+        <div class="tab_content nopadding" id="tab-issue">
+            <form method="post" action="admin/invite/issue" class="mainForm api-form" data-api-msg="{% trans 'Invitations issued' %}">
+
+            <fieldset>
+                <legend>Issue invitation for client</legend>
+                <div class="rowElem">
+                    <div class="moreFields">
+                        <ul>
+                            <li class="sep txt">Give</li>
+                            <li style="width: 50px"><input type="text" name="amount" value="1" placeholder="1"></li>
+                            <li class="sep txt"> invite(s) for client</li>
+                            <li style="width: 100px"><input type="text" name="client_id" value="" placeholder="Enter client id"></li>
+                        </ul>
+                    </div> 
+                    <div class="fix"></div>
+                </div>
+                <input type="submit" value="{% trans 'Issue' %}" class="greyishBtn submitForm" />
+            </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

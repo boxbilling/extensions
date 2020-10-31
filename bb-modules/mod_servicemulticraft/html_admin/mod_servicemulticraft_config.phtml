@@ -1,0 +1,468 @@
+<div class="help">
+    <h5>{% trans 'Multicraft product settings' %}</h5>
+</div>
+
+<form method="post" action="admin/product/update_config" class="mainForm api-form save" data-api-msg="Settings updated">
+    <fieldset>
+
+        <div class="rowElem">
+            <label>{% trans 'Minecraft server name' %}</label>
+            <div class="formRight">
+                <input type="text" name="config[name]" value="{{ product.config.name }}" placeholder=""/>
+            </div>
+            <div class="fix"></div>
+        </div>
+        
+        <div class="rowElem">
+            <label>{% trans 'players' %}</label>
+            <div class="formRight">
+                <input type="text" name="config[players]" value="{{ product.config.players }}" placeholder=""/>
+            </div>
+            <div class="fix"></div>
+        </div>
+        
+        <div class="rowElem">
+            <label>{% trans 'Server IP' %}</label>
+            <div class="formRight">
+                <input type="text" name="config[ip]" value="{{ product.config.ip }}" placeholder="Empty for default value"/>
+            </div>
+            <div class="fix"></div>
+        </div>
+        
+        <div class="rowElem">
+            <label>{% trans '' %}</label>
+            <div class="formRight">
+                <input type="text" name="config[]" value="{{ product.config. }}" placeholder=""/>
+            </div>
+            <div class="fix"></div>
+        </div>
+        
+        <div class="rowElem">
+            <label>{% trans '' %}</label>
+            <div class="formRight">
+                <input type="text" name="config[]" value="{{ product.config. }}" placeholder=""/>
+            </div>
+            <div class="fix"></div>
+        </div>
+        
+        <div class="rowElem">
+            <label>{% trans '' %}</label>
+            <div class="formRight">
+                <input type="text" name="config[]" value="{{ product.config. }}" placeholder=""/>
+            </div>
+            <div class="fix"></div>
+        </div>
+        
+        <div class="rowElem">
+            <label>{% trans '' %}</label>
+            <div class="formRight">
+                <input type="text" name="config[]" value="{{ product.config. }}" placeholder=""/>
+            </div>
+            <div class="fix"></div>
+        </div>
+        
+        <div class="rowElem">
+            <label>{% trans '' %}</label>
+            <div class="formRight">
+                <input type="text" name="config[]" value="{{ product.config. }}" placeholder=""/>
+            </div>
+            <div class="fix"></div>
+        </div>
+        
+        <div class="rowElem">
+            <label>{% trans '' %}</label>
+            <div class="formRight">
+                <input type="text" name="config[]" value="{{ product.config. }}" placeholder=""/>
+            </div>
+            <div class="fix"></div>
+        </div>
+        
+        <div class="rowElem">
+            <label>{% trans 'Minecraft server slots' %}</label>
+            <div class="formRight">
+                <input type="text" name="config[template]" value="{{ product.config.template }}" placeholder="Enter the name of the Centova Cast account template to use for this package"/>
+            </div>
+            <div class="fix"></div>
+        </div>
+
+        <div class="rowElem">
+            <label>{% trans 'Minecraft server slots' %}</label>
+            <div class="formRight">
+                <input type="text" name="config[template]" value="{{ product.config.template }}" placeholder="Enter the name of the Centova Cast account template to use for this package"/>
+            </div>
+            <div class="fix"></div>
+        </div>
+
+        <div class="rowElem">
+            <label>{% trans 'Max clients' %}</label>
+            <div class="formRight">
+                <input type="text" name="config[maxclients]" value="{{ product.config.maxclients }}" placeholder="Specify the maximum number simultaneous listeners for this stream"/>
+            </div>
+            <div class="fix"></div>
+        </div>
+
+        <div class="rowElem">
+            <label>{% trans 'Max bitrate' %}</label>
+            <div class="formRight">
+                <input type="text" name="config[maxbitrate]" value="{{ product.config.maxbitrate }}" placeholder="Specify the maximum bit rate (in kbps) for this stream"/>
+            </div>
+            <div class="fix"></div>
+        </div>
+
+        <div class="rowElem">
+            <label>{% trans 'Transfer limit' %}</label>
+            <div class="formRight">
+                <input type="text" name="config[transferlimit]" value="{{ product.config.transferlimit }}" placeholder="Specify a custom data transfer limit (in MB per month)"/>
+            </div>
+            <div class="fix"></div>
+        </div>
+
+        <div class="rowElem">
+            <label>{% trans 'Disk quota' %}</label>
+            <div class="formRight">
+                <input type="text" name="config[diskquota]" value="{{ product.config.diskquota }}" placeholder="Specify the disk quota for this stream"/>
+            </div>
+            <div class="fix"></div>
+        </div>
+
+        <div class="rowElem">
+            <label>{% trans 'Autostart' %}</label>
+            <div class="formRight">
+                <input type="text" name="config[autostart]" value="{{ product.config.autostart }}" placeholder="Set this to '1' to automatically start the server after provisioning"/>
+            </div>
+            <div class="fix"></div>
+        </div>
+
+        <input type="submit" value="{% trans 'Update' %}" class="greyishBtn submitForm" />
+        <input type="hidden" name="id" value="{{ product.id }}" />
+    </fieldset>
+</form>
+
+
+<table class="detail-view" id="yw0">
+<tbody>
+<tr class="titlerow odd">
+	<th>
+		Server Settings
+	</th>
+	<td colspan="2">
+	</td>
+</tr>
+<tr class="even">
+	<th>
+		<label for="Server_name">Name</label>
+	</th>
+	<td>
+		<input name="Server[name]" id="Server_name" type="text">
+	</td>
+	<td class="hintRow">
+	</td>
+</tr>
+<tr class="odd">
+	<th>
+		<label for="Server_players">Players</label>
+	</th>
+	<td>
+		<input name="Server[players]" id="Server_players" type="text">
+	</td>
+	<td class="hintRow">
+	</td>
+</tr>
+<tr class="even">
+	<th>
+		Assign to user
+	</th>
+	<td>
+		<select name="user-assign" id="user-assign">
+			<option value="0">None</option>
+			<option value="1">admin</option>
+		</select>
+	</td>
+	<td class="hintRow">
+	</td>
+</tr>
+<tr class="odd">
+	<th>
+		<label for="Server_ip">IP</label>
+	</th>
+	<td>
+		<input name="Server[ip]" id="Server_ip" type="text" value="">
+	</td>
+	<td class="hintRow">
+		<div class="hint">
+			<img class="hintIcon" src="/multicraft/images/icons/hint.png" alt=""><span class="hintText">Empty for default value</span>
+		</div>
+	</td>
+</tr>
+<tr class="even">
+	<th>
+		<label for="ServerConfig_display_ip">Displayed IP</label>
+	</th>
+	<td>
+		<input name="ServerConfig[display_ip]" id="ServerConfig_display_ip" type="text" value="">
+	</td>
+	<td class="hintRow">
+		<div class="hint">
+			<img class="hintIcon" src="/multicraft/images/icons/hint.png" alt=""><span class="hintText">Displayed on banner and in server view. Empty for same as IP</span>
+		</div>
+	</td>
+</tr>
+<tr class="odd">
+	<th>
+		<label for="Server_port">Port</label>
+	</th>
+	<td>
+		<input name="Server[port]" id="Server_port" type="text" value="">
+	</td>
+	<td class="hintRow">
+		<div class="hint">
+			<img class="hintIcon" src="/multicraft/images/icons/hint.png" alt=""><span class="hintText" style="display: none; ">Empty to select automatically</span>
+		</div>
+	</td>
+</tr>
+<tr class="even">
+	<th>
+		<label for="Server_memory">Memory</label>
+	</th>
+	<td>
+		<input name="Server[memory]" id="Server_memory" type="text" value="">
+	</td>
+	<td class="hintRow">
+		<div class="hint">
+			<img class="hintIcon" src="/multicraft/images/icons/hint.png" alt=""><span class="hintText" style="display: none; ">In MB. Empty for default amount</span>
+		</div>
+	</td>
+</tr>
+<tr class="odd">
+	<th>
+	</th>
+	<td>
+		<select name="jar-select" id="jar-select">
+			<option value="" selected="selected">Default</option>
+			<option value="minecraft_server.jar">Default Minecraft Server</option>
+			<option value="craftbukkit.jar">Mod: Craftbukkit</option>
+			<option value="craftbukkit_beta.jar">Mod: Craftbukkit Beta</option>
+			<option value="minecraft_optimized.jar">Optimized Minecraft Server</option>
+		</select>
+	</td>
+	<td class="hintRow">
+		<div class="hint">
+			<img class="hintIcon" src="/multicraft/images/icons/hint.png" alt=""><span class="hintText" style="display: none; ">JAR file selection</span>
+		</div>
+	</td>
+</tr>
+<tr class="even">
+	<th>
+		<label for="Server_jarfile">JAR File</label>
+	</th>
+	<td>
+		<input name="Server[jarfile]" id="Server_jarfile" type="text" value="">
+	</td>
+	<td class="hintRow">
+		<div class="hint">
+			<img class="hintIcon" src="/multicraft/images/icons/hint.png" alt=""><span class="hintText" style="display: none; ">Empty for default file.</span>
+		</div>
+	</td>
+</tr>
+<tr class="odd">
+	<th>
+		<label for="ServerConfig_user_jar">Owner selectable JAR</label>
+	</th>
+	<td>
+		<input id="ytServerConfig_user_jar" type="hidden" value="0" name="ServerConfig[user_jar]"><input name="ServerConfig[user_jar]" id="ServerConfig_user_jar" value="1" type="checkbox">
+	</td>
+	<td class="hintRow">
+	</td>
+</tr>
+<tr class="even">
+	<th>
+		<label for="ServerConfig_user_name">Owner can set Name</label>
+	</th>
+	<td>
+		<input id="ytServerConfig_user_name" type="hidden" value="0" name="ServerConfig[user_name]"><input name="ServerConfig[user_name]" id="ServerConfig_user_name" value="1" checked="checked" type="checkbox">
+	</td>
+	<td class="hintRow">
+	</td>
+</tr>
+<tr class="odd">
+	<th>
+		<img id="advImg" src="/multicraft/images/icons/open.png" alt="">
+	</th>
+	<td>
+		<a id="advTxt" onclick="return checkAdv()" href="#">Hide Advanced Options</a>
+	</td>
+	<td class="hintRow">
+	</td>
+</tr>
+<tr class="adv even" style="display: table-row; ">
+	<th>
+		<label for="Server_world">World</label>
+	</th>
+	<td>
+		<input name="Server[world]" id="Server_world" type="text" value="">
+	</td>
+	<td class="hintRow">
+		<div class="hint">
+			<img class="hintIcon" src="/multicraft/images/icons/hint.png" alt=""><span class="hintText" style="display: none; ">Leave empty for "world"</span>
+		</div>
+	</td>
+</tr>
+<tr class="adv odd" style="display: table-row; ">
+	<th>
+		<label for="Server_dir">Base directory</label>
+	</th>
+	<td>
+		<input name="Server[dir]" id="Server_dir" type="text">
+	</td>
+	<td class="hintRow">
+		<div class="hint">
+			<img class="hintIcon" src="/multicraft/images/icons/hint.png" alt=""><span class="hintText" style="display: none; ">Contains all files for this server</span>
+		</div>
+	</td>
+</tr>
+<tr class="adv even" style="display: table-row; ">
+	<th>
+		<label for="Server_start_memory">Startup Memory</label>
+	</th>
+	<td>
+		<input name="Server[start_memory]" id="Server_start_memory" type="text" value="">
+	</td>
+	<td class="hintRow">
+		<div class="hint">
+			<img class="hintIcon" src="/multicraft/images/icons/hint.png" alt=""><span class="hintText" style="display: none; ">In MB. Empty for same as Max. Memory</span>
+		</div>
+	</td>
+</tr>
+<tr class="adv odd" style="display: table-row; ">
+	<th>
+		<label for="Server_autostart">Autostart</label>
+	</th>
+	<td>
+		<input id="ytServer_autostart" type="hidden" value="0" name="Server[autostart]"><input name="Server[autostart]" id="Server_autostart" value="1" checked="checked" type="checkbox">
+	</td>
+	<td class="hintRow">
+		<div class="hint">
+			<img class="hintIcon" src="/multicraft/images/icons/hint.png" alt=""><span class="hintText" style="display: none; ">Start this server automatically when Multicraft restarts</span>
+		</div>
+	</td>
+</tr>
+<tr class="adv even" style="display: table-row; ">
+	<th>
+		<label for="ServerConfig_user_schedule">Owner Scheduled Tasks</label>
+	</th>
+	<td>
+		<input id="ytServerConfig_user_schedule" type="hidden" value="0" name="ServerConfig[user_schedule]"><input name="ServerConfig[user_schedule]" id="ServerConfig_user_schedule" value="1" checked="checked" type="checkbox">
+	</td>
+	<td class="hintRow">
+		<div class="hint">
+			<img class="hintIcon" src="/multicraft/images/icons/hint.png" alt=""><span class="hintText" style="display: none; ">Owner can create scheduled tasks and change the autosave setting</span>
+		</div>
+	</td>
+</tr>
+<tr class="adv odd" style="display: table-row; ">
+	<th>
+		<label for="ServerConfig_user_ftp">Owner managed FTP</label>
+	</th>
+	<td>
+		<input id="ytServerConfig_user_ftp" type="hidden" value="0" name="ServerConfig[user_ftp]"><input name="ServerConfig[user_ftp]" id="ServerConfig_user_ftp" value="1" type="checkbox">
+	</td>
+	<td class="hintRow">
+		<div class="hint">
+			<img class="hintIcon" src="/multicraft/images/icons/hint.png" alt=""><span class="hintText">Owner can give FTP access to other users</span>
+		</div>
+	</td>
+</tr>
+<tr class="adv even" style="display: table-row; ">
+	<th>
+		<label for="ServerConfig_user_visibility">Owner set Visibility</label>
+	</th>
+	<td>
+		<input id="ytServerConfig_user_visibility" type="hidden" value="0" name="ServerConfig[user_visibility]"><input name="ServerConfig[user_visibility]" id="ServerConfig_user_visibility" value="1" checked="checked" type="checkbox">
+	</td>
+	<td class="hintRow">
+		<div class="hint">
+			<img class="hintIcon" src="/multicraft/images/icons/hint.png" alt=""><span class="hintText" style="display: none; ">Owner can change the server visibility and Default Role</span>
+		</div>
+	</td>
+</tr>
+<tr class="adv odd" style="display: table-row; ">
+	<th>
+		<label for="ServerConfig_user_players">Owner set Player Count</label>
+	</th>
+	<td>
+		<input id="ytServerConfig_user_players" type="hidden" value="0" name="ServerConfig[user_players]"><input name="ServerConfig[user_players]" id="ServerConfig_user_players" value="1" type="checkbox">
+	</td>
+	<td class="hintRow">
+	</td>
+</tr>
+<tr class="adv even" style="display: table-row; ">
+	<th>
+		<label for="Server_jardir">Look for JARs in</label>
+	</th>
+	<td>
+		<select name="Server[jardir]" id="Server_jardir">
+			<option value="daemon" selected="selected">Daemon JAR directory</option>
+			<option value="server">Server JAR directory*</option>
+			<option value="server_base">Server base directory*</option>
+		</select>
+	</td>
+	<td class="hintRow">
+		<div class="hint">
+			<img class="hintIcon" src="/multicraft/images/icons/hint.png" alt=""><span class="hintText" style="display: none; ">(* Warning: Be sure to run Multicraft in "multiuser" mode with this!)</span>
+		</div>
+	</td>
+</tr>
+<tr class="adv odd" style="display: table-row; ">
+	<th>
+		<label for="Server_kick_delay">Unauthorized Kick Delay</label>
+	</th>
+	<td>
+		<input name="Server[kick_delay]" id="Server_kick_delay" type="text" value="3000">
+	</td>
+	<td class="hintRow">
+		<div class="hint">
+			<img class="hintIcon" src="/multicraft/images/icons/hint.png" alt=""><span class="hintText" style="display: none; ">After how many milliseconds to kick players without access</span>
+		</div>
+	</td>
+</tr>
+<tr class="adv even" style="display: table-row; ">
+	<th>
+		<label for="Server_autosave">Autosave</label>
+	</th>
+	<td>
+		<input id="ytServer_autosave" type="hidden" value="0" name="Server[autosave]"><input name="Server[autosave]" id="Server_autosave" value="1" checked="checked" type="checkbox">
+	</td>
+	<td class="hintRow">
+		<div class="hint">
+			<img class="hintIcon" src="/multicraft/images/icons/hint.png" alt=""><span class="hintText" style="display: none; ">Regularly save the world to the disk</span>
+		</div>
+	</td>
+</tr>
+<tr class="adv odd" style="display: table-row; ">
+	<th>
+		<label for="Server_announce_save">Announce World Save</label>
+	</th>
+	<td>
+		<input id="ytServer_announce_save" type="hidden" value="0" name="Server[announce_save]"><input name="Server[announce_save]" id="Server_announce_save" value="1" checked="checked" type="checkbox">
+	</td>
+	<td class="hintRow">
+		<div class="hint">
+			<img class="hintIcon" src="/multicraft/images/icons/hint.png" alt=""><span class="hintText" style="display: none; ">Inform the players when the world has been saved</span>
+		</div>
+	</td>
+</tr>
+<tr class="adv even" style="display: table-row; ">
+	<th>
+		Chunkster
+	</th>
+	<td>
+		<input name="chunkster" type="submit" value="Run Chunkster" id="chunkster">
+	</td>
+	<td class="hintRow">
+		<div class="hint">
+			<img class="hintIcon" src="/multicraft/images/icons/hint.png" alt=""><span class="hintText" style="display: none; ">Chunkster is a tool that can fix corrupted worlds. Use it at your own risk and create a backup first.</span>
+		</div>
+	</td>
+</tr>
+</tbody>
+</table>

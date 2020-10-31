@@ -1,0 +1,10 @@
+{
+    "id":           "braunstein",
+	"type":         "mod",
+    "name":         "J. Csárdi-Braunstein module",
+    "description":  "Exclusive module for J. Csárdi-Braunstein",
+    "homepage_url": "http://www.boxbilling.com/",
+    "author":       "BoxBilling",
+    "author_url":   "http://www.boxbilling.com/",
+    "version":      "1.0.0"
+}

@@ -1,0 +1,7 @@
+{
+    "id":           "mailchimp",
+	"type":         "mod",
+    "name":         "MailChimp.com",
+    "description":  "Keeps clients synced with MailChimp",
+    "version":      "1.0.0"
+}

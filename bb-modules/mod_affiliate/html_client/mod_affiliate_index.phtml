@@ -1,0 +1,137 @@
+{% extends request.ajax ? "layout_blank.phtml" : "layout_default.phtml" %}
+
+{% block meta_title %}{%trans 'Affiliates'%}{% endblock %}
+
+{% block content %}
+
+<div class="h-block" >
+    <div class="h-block-header">
+        <h2>{% trans 'Affiliates' %}</h2>
+        <p>Refer {{ guest.system_company.name }} to Your Friends & Earn Commission</p>
+    </div>
+    
+    <div class="block">
+            
+        {% if client %}
+        
+            {% if not client.affiliate_is_registered %}
+
+            <div class="grid_12 alpha omega">
+                <a href="client/affiliate/signup" class="bb-button bb-button-submit bb-button-big api-link" data-api-redirect="affiliate/stats">Signup</a>
+            </div>
+
+            {% else %}
+
+            {% set affiliate_link = client.affiliate_link %}
+            <div class="grid_12 alpha omega">
+            <h3>Your BoxBilling Referral Link</h3>
+            <span>Below is your unique referral link. Simply share this link with your network to drive visitors to the BoxBilling website. This link will track visitors to the website and you get paid for those users who subscribe for the paid account. </span>
+
+            <h3>Your Unique Referral Link:</h3>
+                <strong class="very">{{ affiliate_link }}</strong>
+            </div>
+            
+            <div class="grid_12 alpha omega">
+                <a href="{{ 'affiliate/stats'|link }}" class="bb-button bb-button-submit bb-button-big">Statistics</a>
+            </div>
+            
+            <div class="grid_12 alpha omega">
+                <h3>Refer BoxBilling to Your Friends &amp; Earn 25% Recurring Commission For Life Time*</h3>
+                <p>No investment, no marketing gimmick and no sales pitch. If you believe BoxBilling will benefit your business partners, friends, colleagues or anyone you know, then refer BoxBilling with them and get a chance to win 25% recurring commission for lifetime.</p>
+                <div class="social_links"><a href="{{ 'affiliate/invite'|link }}" class="email bb-button bb-button-white">Send Email</a>
+                    <a href="http://twitter.com/home?status=Billing and invoice software. Check Out BoxBilling at {{affiliate_link}}" target="_blank" class="twitter bb-button bb-button-white">Share on Twitter</a>
+                    <a target="_blank" href="http://www.facebook.com/share.php?u={{affiliate_link}}" class="facebook bb-button bb-button-white">Share on Facebook</a>
+                </div>
+            </div>
+            {% endif %}
+        
+        <div class="grid_6 alpha ">
+            <h3>Three reasons to join us today:</h3>
+            <ul>
+                <li><strong>Free to join</strong> - You don't have to pay anything to join our refer &amp; earn program. Just sign up and start rolling.</li>
+                <li><strong>Refer Once and Earn for Life Time</strong> - When a customer signs up to any of our paid plans through your referral link, you'll earn 25% of their first month's payment and then 25% of their future monthly payments for their lifetime as long as they hold on to this.  As you refer more and more customers, your automatic recurring revenue can really begin to add up.</li>
+                <li><strong>Relationships matter</strong> - We intend to have great relationships with our partners and we strive to bring forth an application that offers online invoicing of the highest degree. Tell others how much we value you like nobody else does.</li>
+            </ul>
+        </div>
+        
+        <div class="grid_6  omega">
+        <h3>Wondering how to get more referrals?</h3>
+        <span>There are a number of ways you can get more referrals from your friends, peers and business partners. Some of them are: </span>
+        <ul>
+            <li>You can put our banner ads or text ads on your website, blog etc using your referral link.</li>
+            <li>Refer your friends by sending referral mail through our Send Email link</li>
+            <li>You can tweet about us and share us on Facebook and can ask your friends to do so.</li>
+            <li>You can publish BoxBilling reviews on your blogs/websites and use your referral link there</li>
+        </ul>
+        </div>
+        <div class="clearfix"></div>
+        
+        {% else %}
+        
+        <div style="margin: 10px">
+        <h3>Conditions</h3>
+        <p> BoxBilling's Refer n Earn program makes it possible to earn money 
+            with minimal efforts! Making money on Internet has never been so easy. 
+            It is just about referring people and getting cash!
+        </p>
+        <p>For all referrals who buy a paid plan or upgrade their free plan to a
+            paid plan, you get a 25% commission. What's more this is not a one-off
+            commission you get paid till the referral continues using the paid plan.
+        </p>
+        
+        <h3>How to get started?</h3>
+        <p>
+            It's simple. <a href="{{'login'|link}}" target="_blank">Login</a> 
+            to your BoxBilling account (You need to have an BoxBilling account 
+            if you don't already have one!). Once you login, you'll see a refer 
+            n earn link towards the bottom of the page. Click this link and you 
+            are directed to a page where a unique referral URL is mentioned. 
+            All you need to do is circulate this referral link among your friends
+            and you get paid for every paid subscription that comes through this 
+            unique referral link. 
+        </p>
+        
+        <h3>Using BoxBilling Banners</h3>
+        <p>We have also provided banners of our application for those who are 
+            interested in using our banners to refer people. It is extremely simple. 
+            Select any banner which you want to use and upload it on your blog, 
+            e-mail signature, web page, etc and that's it. Watch your earnings grow!</p>
+        
+        <h3>Earnings and Commission</h3>
+        <p>
+        To view how much you have earned, <a href="{{ 'login'|link }}">login to your BoxBilling account</a> 
+        and click on view your earnings link. Here you get to see all the people 
+        that you have referred and how many paid subscriptions have been 
+        sold through your referral link. For each paid subscription that 
+        happens through your referral link, you earn a commission of 25%. 
+        This is not all, we have more to offer, you will also earn 25% on all 
+        the renewals done by your referred subscribers till they are active on 
+        BoxBilling. So you all need to do is refer BoxBilling to your friends, 
+        business contacts etc and get a chance to win <strong>25% recurring commission for life time!</strong>
+        </p>
+        
+        <h3>Terms and Conditions:</h3>
+        <ul>
+            <li>You must be an active BoxBilling user in order to become our affiliate. </li>
+            <li>You must adhere strictly to our Terms of Service (TOS) Agreement and Anti-Spamming Policies.</li>
+            <li>A withdrawal request will only be processed if the total referral amount is greater than or equal to US$ 50.</li>
+            <li>Affiliates are entitled to payment each time the payment threshold of US$ 50 is reached.  </li>
+            <li>If you are interested in becoming an Affiliate, please <a href="{{ 'login'|link }}" target="_blank">login</a> 
+                to BoxBilling and click on <strong>'Refer &amp; Earn'</strong> on your home page. 
+                If you do not already subscribe to BoxBilling, <a href="{{ 'login'|link }}">sign up</a> now and start earning!</li>
+        </ul>
+        
+        <h3>Points to Remember:</h3>
+        <ul>
+            <li>BoxBilling refer and earn program is meant for BoxBilling affiliates 
+                to refer individuals to become BoxBilling subscribers. As per our 
+                affiliate terms and conditions, BoxBilling will pay you once 
+                your earnings are more than or equal to minimum cash out limit $50. </li>
+            <li>BoxBilling affiliate is eligible to 25% of the subscription fee that BoxBilling receives from the referrals. </li>
+            <li>The commission will continue to be earned by the affiliate till a referred account is cancelled by the subscriber.</li>
+        </ul>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

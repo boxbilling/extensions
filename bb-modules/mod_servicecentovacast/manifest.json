@@ -1,0 +1,7 @@
+{
+    "id":           "servicecentovacast",
+	"type":         "mod",
+    "name":         "CentovaCast",
+    "description":  "Sell CentovaCast services",
+    "version":      "1.0.0"
+}

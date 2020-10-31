@@ -1,0 +1,8 @@
+{
+    "id":           "rivile",
+	"type":         "mod",
+    "name":         "Rivile tools",
+    "description":  "Export invoices to Rivile",
+    "homepage_url": "http://www.boxbilling.com",
+    "version":      "1.0.0"
+}

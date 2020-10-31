@@ -1,0 +1,24 @@
+{% block subject %}{{c.first_name}} {{c.last_name}} invites you to join {{ guest.system_company.name }}{% endblock %}
+{% block content %}
+{% filter markdown %}
+
+{{c.first_name}} {{c.last_name}} invited you to {{ guest.system_company.name }}
+
+If you do not know this person, please ignore this email.
+
+Message:
+
+---
+
+{{message}}
+
+---
+
+
+To confirm your invitation you must visit the link below:
+
+{{'invite/confirm'|link}}/{{invite.hash}}
+
+{% endfilter %}
+
+{% endblock %}

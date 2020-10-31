@@ -1,0 +1,8 @@
+{
+    "id":           "invite",
+	"type":         "mod",
+    "name":         "Invitations",
+    "description":  "Ability to give invites for clients",
+    "icon_url":     "icon.png",
+    "version":      "1.1.0"
+}

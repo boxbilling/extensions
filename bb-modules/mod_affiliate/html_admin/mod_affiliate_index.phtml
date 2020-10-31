@@ -1,0 +1,150 @@
+{% extends request.ajax ? "layout_blank.phtml" : "layout_default.phtml" %}
+{% import "macro_functions.phtml" as mf %}
+{% block meta_title %}Affiliates{% endblock %}
+{% set active_menu = 'order' %}
+
+{% block top_content %}
+
+<hr>
+{% set counter = admin.affiliate_get_statuses %}
+<div class="stats">
+    <ul>
+        <li><a href="{{ 'affiliate'|alink }}?status=pending" class="count green" title="">{{ counter.pending }}</a><span>{% trans 'Pending approval' %}</span></li>
+        <li><a href="{{ 'affiliate'|alink }}?status=approved" class="count blue" title="">{{ counter.approved }}</a><span>{% trans 'Approved' %}</span></li>
+        <li class="last"><a href="{{ 'affiliate'|alink }}" class="count grey" title="">{{ counter.total }} </a><span>{% trans 'Total' %}</span></li>
+    </ul>
+    <div class="fix"></div>
+</div>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="widget simpleTabs nomargin">
+    <ul class="tabs">
+        <li><a href="#tab-index">{% trans 'Affiliates' %}</a></li>
+        <li><a href="#tab-settings">{% trans 'Settings' %}</a></li>
+    </ul>
+
+    <div class="tabs_container">
+        <div class="fix"></div>
+        <div class="tab_content nopadding" id="tab-index">
+        {{ mf.table_search }}
+        <table class="tableStatic wide">
+            <thead>
+                <tr>
+                    <td style="width: 63%">{% trans 'Name' %}</td>
+                    <td>{% trans 'Clicks' %}</td>
+                    <td>{% trans 'Joined at' %}</td>
+                    <td style="width: 5%">&nbsp;</td>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% set affs = admin.affiliate_get_list({"per_page":30, "page":request.page}|merge(request)) %}
+                {% for i, aff in affs.list %}
+                <tr>
+                    <td><a href="{{ 'affiliate'|alink }}/{{ aff.id }}">{{ aff.first_name }} {{ aff.last_name }}</a></td>
+                    <td>{{ aff.clicks }}</td>
+                    <td>{{ aff.created_at|date }}</td>
+                    <td class="actions">
+                        <a class="bb-button btn14" href="{{ 'affiliate'|alink }}/{{aff.id}}"><img src="images/icons/dark/pencil.png" alt=""></a>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="4">{% trans 'The list is empty' %}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+            {% if affs.pages > 1 %}
+            <tfoot>
+                <tr>
+                    <td colspan="4">
+                        {% include "partial_pagination.phtml" with {'list': affs, 'url':'affiliate'} %}
+                    </td>
+                </tr>
+            </tfoot>
+            {% endif %}
+        </table>
+        </div>
+    </div>
+    
+    <div class="tab_content nopadding" id="tab-new">
+
+    </div>
+    
+    <div class="tab_content nopadding" id="tab-settings">
+        <div class="help">
+            <h3>{% trans 'Affiliate module settings' %}</h3>
+            <p>{% trans 'Offer your clients become affiliates of your services.' %}</p>
+        </div>
+        
+        {% set params = admin.extension_config_get({"ext":"mod_affiliate"}) %}
+        <form method="post" action="admin/extension/config_save" class="mainForm api-form" data-api-msg="{% trans 'Configuration updated' %}">
+            <fieldset>
+                <div class="rowElem">
+                    <label class="">{% trans 'Commission from order' %}:</label>
+                    <div class="formRight moreFields">
+                        <ul>
+                            <li><input type="text" value="{{params.commission|default('10')}}" name="commission" placeholder="Amount"/></li>
+                            <li class="sep"></li>
+                            <li>
+                                <select name="commission_type">
+                                    <option value="percent" {{ params.commission_type == 'percent' ? 'selected' : '' }}>Percent</option>
+                                    <option value="fixed" {{ params.commission_type == 'fixed' ? 'selected' : '' }}>Fixed</option>
+                                </select>
+                            </li>
+                            {#
+                            <li>
+                                <input type="radio" name="commission_type" value="percent" {{ params.commission_type == 'percent' ? 'selected' : '' }}>Percent</option>
+                                <input type="radio" name="commission_type" {{ params.commission_type == 'fixed' ? 'selected' : '' }}>Fixed</option>
+                            </li>
+                            #}
+                        </ul>
+                    </div>
+                    <div class="fix"></div>
+                </div>
+
+                <div class="rowElem">
+                    <label class="topLabel">{% trans 'Days from order activation to admit commission' %}:</label>
+                    <div class="formBottom">
+                        <input type="text" value="{{params.wait_days|default('31')}}" name="wait_days" placeholder="Affiliate gets commision if order stays active for x number of days"/>
+                    </div>
+                    <div class="fix"></div>
+                </div>
+
+                <div class="rowElem">
+                    <label class="topLabel">{% trans 'Bonus amount for becoming affiliate in' %} {{ admin.currency_get_default.code }}:</label>
+                    <div class="formBottom">
+                        <input type="text" value="{{params.bonus_amount|default('5')}}" name="bonus_amount" placeholder="Fixed amount of money in your main currency {{ admin.currency_get_default.code }}"/>
+                    </div>
+                    <div class="fix"></div>
+                </div>
+
+                <div class="rowElem">
+                    <label class="topLabel">{% trans 'Minimum withdraw amount.' %}:</label>
+                    <div class="formBottom">
+                        <input type="text" value="{{params.min_withdraw_amount|default('50')}}" name="min_withdraw_amount" placeholder="Minimum amount of {{ admin.currency_get_default.code }}"/>
+                    </div>
+                    <div class="fix"></div>
+                </div>
+
+                <div class="rowElem">
+                    <label class="topLabel">{% trans 'Redirect Url. Where is your client redirected after visiting refferal link' %}:</label>
+                    <div class="formBottom">
+                        <input type="text" value="{{params.redirect_to|default('/')}}" name="redirect_to" placeholder="Redirect client to this page after visiting affiliate link. Example: http://www.google.com/ or /order"/>
+                    </div>
+                    <div class="fix"></div>
+                </div>
+
+                <input type="submit" value="{% trans 'Update' %}" class="greyishBtn submitForm" />
+                <input type="hidden" name="ext" value="mod_affiliate" />
+            </fieldset>
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}

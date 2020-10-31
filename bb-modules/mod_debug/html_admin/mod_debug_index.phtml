@@ -1,0 +1,69 @@
+{% extends request.ajax ? "layout_blank.phtml" : "layout_default.phtml" %}
+{% set active_menu = 'extensions' %}
+{% block meta_title %}Debug information{% endblock %}
+
+{% block content %}
+<div class="widget simpleTabs nomargin">
+
+    <ul class="tabs">
+        <li><a href="#tab-index">{% trans 'Environment' %}</a></li>
+        <li><a href="#tab-phpinfo">{% trans 'Php info' %}</a></li>
+        <li><a href="#tab-logs">{% trans 'Error log' %}</a></li>
+        <li><a href="#tab-changelog">{% trans 'Change log' %}</a></li>
+    </ul>
+
+    <div class="tabs_container">
+        <div class="fix"></div>
+        
+        <div class="tab_content nopadding" id="tab-index">
+            <table class="tableStatic wide">
+                <thead>
+                    <tr>
+                        <th>{% trans 'Variable' %}</th>
+                        <th>{% trans 'Value' %}</th>
+                    </tr>
+                </thead>
+                
+                <tbody>
+                {% for k,var in admin.system_env %}
+                    {% if var|keys|length > 0 %}
+                    {% for subkey,subvalue in var %}
+
+                        <tr>
+                            <td>{{ k }}.{{subkey}}</td>
+                            <td>{{ subvalue }}</td>
+                        </tr>
+                    {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td>{{ k }}</td>
+                            <td>{{ var }}</td>
+                        </tr>
+                    {% endif %}
+
+                    {% else %}
+                    <tr>
+                        <td colspan="2">{% trans 'This template does not receive any parameters' %}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="tab_content nopadding" id="tab-logs">
+            <iframe src="{{ 'debug/errors'|alink }}" width="100%" height="650px"></iframe>
+            <div class="body">
+                <a href="admin/debug/clear_error_log"  title="" class="mr10 api-link" data-api-msg="Log file cleared">{% trans 'Clear log file' %}</a>
+            </div>
+        </div>
+        
+        <div class="tab_content nopadding" id="tab-phpinfo">
+            <iframe src="{{ 'debug/phpinfo'|alink }}" width="100%" height="650px"></iframe>
+        </div>
+        
+        <div class="tab_content nopadding" id="tab-changelog">
+            <iframe src="{{ 'debug/changelog'|alink }}" width="100%" height="650px"></iframe>
+        </div>
+    </div>
+</div>
+{% endblock %}

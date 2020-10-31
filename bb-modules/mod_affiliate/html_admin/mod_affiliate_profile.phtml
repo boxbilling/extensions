@@ -1,0 +1,98 @@
+{% extends request.ajax ? "layout_blank.phtml" : "layout_default.phtml" %}
+{% import "macro_functions.phtml" as mf %}
+{% block meta_title %}Affiliate details{% endblock %}
+{% set active_menu = 'order' %}
+
+{% block content %}
+<div class="widget first">
+    <div class="head">
+        <h5>{{ aff.first_name }} {{ aff.last_name }}</h5>
+    </div>
+    
+    {% set aff_stats = admin.affiliate_stats({"id":aff.id}) %}
+    <table class="tableStatic wide">
+        <tbody>
+            <tr class="noborder">
+                <td style="width: 30%">{% trans 'Pending approval amount' %}</td>
+                <td>{{ guest.currency_format({"price":aff_stats.total_pending }) }}</td>
+            </tr>
+
+            <tr>
+                <td>{% trans 'Total approved amount' %}</td>
+                <td>{{ guest.currency_format({"price":aff_stats.total_earned}) }}</td>
+            </tr>
+
+            <tr>
+                <td>{% trans 'Total paid amount' %}</td>
+                <td>{{ guest.currency_format({"price":aff_stats.total_paid}) }}</td>
+            </tr>
+
+            <tr>
+                <td>{% trans 'Balance amount' %}</td>
+                <td>{{ guest.currency_format({"price":aff_stats.total_unpaid}) }}</td>
+            </tr>
+            
+            <tr>
+                <td>{% trans 'Total clicks' %}</td>
+                <td>{{ aff_stats.clicks }}</td>
+            </tr>
+            
+            <tr>
+                <td>{% trans 'Unique clicks' %}</td>
+                <td>{{ aff_stats.unique_clicks }}</td>
+            </tr>
+
+        </tbody>
+    </table>
+    
+    
+</div>
+
+
+<div class="widget">
+    <div class="head">
+        <h5>{% trans 'Commisions' %}</h5>
+    </div>
+    
+    <table class="tableStatic wide">
+        <thead>
+            <tr>
+                <th>{% trans 'Title' %}</th>
+                <th>{% trans 'Amount' %}</th>
+                <th>{% trans 'Status' %}</th>
+                <th>{% trans 'Date' %}</th>
+                <th style="width: 5%">{% trans 'Actions' %}</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% set refs = admin.affiliate_get_commissions({"aff_id":aff.id,"per_page":50, "page":request.page}|merge(request)) %}
+            {% for i, ref in refs.list %}
+            <tr>
+                <td>{{ ref.title }}</td>
+                <td>{{ guest.currency_format({"price":ref.amount}) }}</td>
+                <td>{{ ref.status|title }}</td>
+                <td>{{ ref.created_at|bb_date }}</td>
+                <td class="actions">
+                    <a class="bb-button btn14" href="{{ 'affiliate'|alink }}/{{aff.id}}"><img src="images/icons/dark/trash.png" alt=""></a>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="4">{% trans 'The list is empty' %}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+
+        {% if refs.pages > 1 %}
+        <tfoot>
+            <tr>
+                <td colspan="4">
+                    {% include "partial_pagination.phtml" with {'list': refs, 'url':'affiliate/'~aff.id} %}
+                </td>
+            </tr>
+        </tfoot>
+        {% endif %}
+    </table>
+</div>
+{% endblock %}

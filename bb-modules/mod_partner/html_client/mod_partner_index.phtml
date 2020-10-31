@@ -1,0 +1,328 @@
+{% extends request.ajax ? "layout_blank.phtml" : "layout_default.phtml" %}
+{% block meta_title %}Partners program{% endblock %}
+{% block meta_description %}Resell BoxBilling licenses and earn money{% endblock %}
+{% block meta_keywords %}resell boxbilling, partner, partners program, earn money{% endblock %}
+
+{# set title = 'Partner' %}
+{% set subtitle = 'Earn money reselling BoxBilling licenses.' %}
+{% set breadcrumb %}
+Partner
+{% endset #}
+
+{% block content %}
+
+{% set partner_controls %}
+    {% if client %}
+        {% if client.partner_is_partner %}
+        <p>Contratulations, You are a BoxBilling partner. <a href="{{ 'partner'|link }}#profile-update">Manage profile</a></p>
+        {% else %}
+        <p>You are now only on step away of becoming BoxBilling partner.</p>
+        <a class="button btnGreen api-link" href="client/partner/signup?agree=1" data-api-reload="1">{% trans 'Become Partner' %}</a>
+        {% endif %}
+    {% else %}
+    <p>Login in to the Client area and click on "Become Partner". If you have any questions then please contact BoxBilling Sales. </p>
+    <a class="button btnGreen" href="{{ 'login'|link }}?redirect={{ 'partner'|link }}">{% trans 'Login and become partner' %}</a>
+    {% endif %}
+    
+    <br/>
+    <div class="cl"></div>
+    <br/>
+{% endset %}
+
+<section class="middle_content">
+    
+    <div class="entry">
+        <h1 class="cntr_text">BoxBilling Partners</h1>
+        <br/>
+        <div class="divider"></div>
+    </div>
+
+{% if client.partner_is_partner %}
+{% set partner = client.partner_profile %}
+<div class="one_half">
+    <form method="post" action="client/partner/profile_update" class="api-form" data-api-msg="Profile updated" id="profile-update">
+        <h2>{% trans 'Manage profile' %}</h2>
+        <div class="block">
+            <fieldset>
+                <p>
+                    <label>{% trans 'Allow to be listed in partners list' %}: </label>
+                    <input type="radio" name="public" value="1" {% if partner.public %} checked="checked"{% endif %}/> Yes
+                    <input type="radio" name="public" value="0" {% if not partner.public %} checked="checked"{% endif %}/> No
+                </p>
+                <p>
+                    <label>{% trans 'Your website where you sell BoxBilling licenses' %}: </label>
+                    <input type="text" name="website" value="{{ partner.website }}" required="required" placeholder="http://www.yourwebsite.com/">
+                </p>
+                <p>
+                    <label>{% trans 'URL to your logo' %}: </label>
+                    <input type="text" name="logo" value="{{ partner.logo }}" required="required" placeholder="http://www.yourwebsite.com/logo.png">
+                </p>
+                <input class="bb-button bb-button-submit" type="submit" value="{% trans 'Update partner information' %}">
+            </fieldset>
+        </div>
+    </form>
+</div>
+
+<div class="one_half last">
+<h2>{% trans 'Public profile' %}</h2>
+{% if not partner.public %}
+    Your profile is not visible in public partners list. You must have at least one active sale to be listed in public page.
+{% else %}
+    Your profile is listed public partners list.
+{% endif %}
+<table class="table">
+    <tbody>
+        <tr>
+            <td><a href="{{ partner.website }}" target="_blank">{{ partner.company }}</a></td>
+        </tr>
+        <tr>
+            <td>
+                {{ partner.address_1 }} <br/>
+                {{ partner.state }} {{ guest.system_countries[partner.country] }}
+                 <br/>
+                Phone No. : {{ partner.phone_cc }} {{ partner.phone }}
+            </td>
+        </tr>
+    </tbody>
+    {% if partner.logo %}
+    <tfoot>
+        <tr>
+            <td style="text-align: center;">
+                <img src="{{ partner.logo }}" alt="{{ partner.company }}" title="{{ partner.company }}" style="max-width: 200px; max-height: 100px;">
+            </td>
+        </tr>
+    </tfoot>
+    {% endif %}
+</table>
+</div>
+<br/>
+<div class="divider"></div>
+
+<div class="block">
+    <a class="button api-link" href="client/partner/order_create" data-api-msg="New license was purchased">{% trans 'Purchase License' %}</a>
+</div>
+<br/>
+<div class="divider"></div>
+{% endif %}
+
+<h3>Who should become a Partner ?</h3>
+{#<figure class="caption alignright">
+    <a href="images/screenshots/scr1.jpg" rel="prettyPhoto" title="BoxBilling Admin Area">
+    <img src="images/screenshots/scr1_t.jpg" alt="" title="BoxBilling Admin Area" />
+    </a>
+    <figcaption>BoxBilling Partners</figcaption>
+</figure>
+#}
+<div class="widget_links">
+{% filter markdown %}
+If you just wish to purchase more than 5 licenses then please opt in for this Program. The Partner Program is best suited for Large Web Hosts, VPS Providers, Dedicated Server Providers, software licenses distributors, web designers, software development companies and individual resellers. {# Please have a look at our [Partner Partners List](/partner/list).#} 
+{% endfilter %}
+</div>
+
+<div class="cl"></div>
+<br />
+
+<div class="divider"></div>
+
+<h3>What are the benefits ?</h3>
+{#
+<figure class="caption alignright">
+    <a href="images/screenshots/scr1.jpg" rel="prettyPhoto" title="BoxBilling Admin Area">
+    <img src="images/screenshots/scr1_t.jpg" alt="" title="BoxBilling Admin Area" />
+    </a>
+    <figcaption>BoxBilling Partners</figcaption>
+</figure>
+#}
+<div class="widget_links">
+{% filter markdown %}
+
+When you become a Partner, you will gain access to a Partner Panel. You can Purchase New / Renew licenses in seconds and the payment will be made in the invoice generated on the 1st of every month. Some benefits include:
+
+* Purchase New / Renew licenses in seconds
+* API to link with your billing system
+* Credit is given as payments are made on the 1st of every month
+* Edit Licenses
+* Detailed Invoicing - View every transaction of an invoice
+* Auto Renewals of licenses
+* Every Partner also gets a BoxBilling Partner Seal
+
+{% endfilter %}
+</div>
+
+<div class="cl"></div>
+<br />
+<div class="divider"></div>
+
+<h3 id="signup">How to become a Partner ?</h3>
+<div class="widget_links">
+{% filter markdown %}
+To become a Partner you will have to deposit $50. This $50 will be an Advance and will be set off against the licenses you Purchase / Renew. So when you pay this $50 a Balance will be shown in your account.
+{% endfilter %}
+
+{{ partner_controls }}
+
+You can start reselling BoxBilling licenses using BoxBilling itself. You only need to enable "BoxBilling license" extension in your admin area and setup product with your prices.
+</div>
+
+<div class="cl"></div>
+<br />
+
+<h3>How is billing done ?</h3>
+<div class="widget_links">
+{% filter markdown %}
+
+A Partner is billed on the 1st of every month for all activities and an invoice will be raised. Advances if any will be settled against the Invoices.
+
+{% endfilter %}
+</div>
+
+<div class="cl"></div>
+<br />
+
+<div class="divider"></div>
+
+<h3>What are the Partner Rates ?</h3>
+<div class="widget_links">
+    
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Package</th>
+            <th>Your cost</th>
+        </tr>      
+        </thead>
+
+        <tbody>
+        <tbody>
+            <tr>
+                <td>Less than equal to 5 license</td>
+                <td>$5.95/month</td>
+            </tr>
+            <tr>
+                <td>Above 5 license</td>
+                <td>$4.95/month</td>
+            </tr>
+            <tr>
+                <td>Above 10 license</td>
+                <td>$3.95/month</td>
+            </tr>
+            <tr>
+                <td>Above 50 license</td>
+                <td>$2.95/month</td>
+            </tr>
+            <tr>
+                <td>Above 100 license</td>
+                <td>$1.95/month</td>
+            </tr>
+        </tbody>
+    </table>
+    
+</div>
+
+<div class="cl"></div>
+<br />
+
+<div class="divider"></div>
+    
+<h3>Your logo in our Partner List</h3>
+{#  
+<figure class="caption alignright">
+    <a href="images/screenshots/scr1.jpg" rel="prettyPhoto" title="BoxBilling Admin Area">
+    <img src="images/screenshots/scr1_t.jpg" alt="" title="BoxBilling Admin Area" />
+    </a>
+    <figcaption>BoxBilling Partners</figcaption>
+</figure>
+#}
+<div class="widget_links">
+{% filter markdown %}   
+After you become a Partner, your Logo and Company Details will be displayed in our Partner List (if you permit us to do so) :
+Partner Partners
+This list displays Partners as per the number of license they have with BoxBilling. 
+{% endfilter %}
+</div>
+
+<div class="cl"></div>
+<br />
+
+<div class="divider"></div>
+
+<h3>How can I sell licenses with other billing system ?</h3>
+<div class="widget_links">
+{% filter markdown %}   
+If you are not using BoxBilling to sell licenses then you can integrate it to any other 
+billing system to manage orders.
+
+For PHP implementation download [BoxBilling API service](https://gist.github.com/1808649) file and read <a href="#" onclick="$('#api-docs').slideToggle(); return false;">partners API documentation</a> for detailed specification.
+
+If you need any help with integration process, please open support ticket.
+{% endfilter %}
+<div id="api-docs" style="display: none;">
+{% filter markdown %}   
+#### Partners API documentation
+
+All methods requires authentication and requires API key. Generate it at [Profile page](/me)
+
+    require_once 'BoxBillingApi.php';
+    $config = array(
+        'api_url'   =>  'http://www.boxbilling.com/api',   
+        'api_role'  =>  'client',   
+        'api_token' =>  'API key from boxbilling.com/me page',   
+    );
+    $api = new Service_BoxBilling($config);
+
+#### partner_order_create
+
+You have received payment from client and now you need to activate BoxBilling license
+
+    $order_id = $api->partner_order_create();
+    //save this $order_id to your database, we will need it later
+    
+#### partner_order_get
+
+Get order details, when order was activated, expires and other information
+
+    $details = $api->partner_order_get(array('order_id'=>$order_id));
+
+#### partner_order_suspend
+
+Suspend active order
+
+    $api->partner_order_suspend(array('order_id'=>$order_id));
+    
+#### partner_order_unsuspend
+
+Unsuspend suspended order
+
+    $api->partner_order_unsuspend(array('order_id'=>$order_id));
+    
+#### partner_order_delete
+
+Completely remove order
+
+    $api->partner_order_delete(array('order_id'=>$order_id));
+    
+#### partner_order_reset
+
+Reset license details. Used when client changes IP.
+
+    $api->partner_order_reset(array('order_id'=>$order_id));
+
+
+{% endfilter %}
+</div>
+
+</div>
+
+<div class="cl"></div>
+<br />
+
+<div class="divider"></div>
+
+<h3>Ok I am interested</h3>
+<div class="widget_links">
+    {{ partner_controls }}
+</div>
+
+<div class="cl"></div>
+
+{% endblock %}

@@ -1,0 +1,7 @@
+{
+    "id":           "disableregistration",
+	"type":         "mod",
+    "name":         "Disable registration",
+    "description":  "Disables new user registrations",
+    "version":      "1.0.0"
+}

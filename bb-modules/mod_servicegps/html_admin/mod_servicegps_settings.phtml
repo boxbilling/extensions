@@ -1,0 +1,50 @@
+{% extends request.ajax ? "layout_blank.phtml" : "layout_default.phtml" %}
+{% import "macro_functions.phtml" as mf %}
+{% block meta_title %}GPS tracker{% endblock %}
+{% set active_menu = 'extensions' %}
+
+{% block content %}
+
+<div class="widget first">
+    <div class="head">
+        <h5 class="iCog">{% trans 'GPS tracker settings' %}</h5>
+    </div>
+
+{% set params = admin.extension_config_get({"ext":"mod_servicegps"}) %}
+
+<form method="post" action="admin/extension/config_save" class="mainForm api-form" data-api-msg="{% trans 'Configuration updated' %}">
+    
+    <div class="help">
+        <h3>{% trans 'GPS tracker settings' %}</h3>
+    </div>
+    
+    <fieldset>
+        <div class="rowElem noborder">
+            <label>{% trans 'API username' %}</label>
+            <div class="formRight">
+                <input type="text" name="api_username" value="{{params.api_username}}"/>
+            </div>
+            <div class="fix"></div>
+        </div>
+
+        <div class="rowElem">
+            <label>{% trans 'API password' %}</label>
+            <div class="formRight">
+                <input type="password" name="api_password" value="{{params.api_password}}"/>
+            </div>
+            <div class="fix"></div>
+        </div>
+    
+        <input type="submit" value="{% trans 'Update' %}" class="greyishBtn submitForm" />
+        <input type="hidden" name="ext" value="mod_servicegps" />
+    </fieldset>
+</form>
+
+    <div class="body">
+        <a href="{{ 'extension'|alink }}"  title="" class="btnIconLeft mr10"><img src="images/icons/dark/arrowLeft.png" alt="" class="icon"><span>{% trans 'Back to extensions' %}</span></a>
+        <a href="admin/servicegps/test_connection"  title="" class="btnIconLeft mr10 api-link" data-api-msg="Succesfully connected"><img src="images/icons/dark/wifi.png" alt="" class="icon"><span>{% trans 'Test connection' %}</span></a>
+        <a href="{{'product'|alink}}?type=gps&title=GPS Tracker#tab-new" target="_blank" class="btnIconLeft mr10"><img src="images/icons/dark/play.png" alt="" class="icon"><span>{% trans 'Create GPS tracker product' %}</span></a>
+    </div>
+</div>
+
+{% endblock %}

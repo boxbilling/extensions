@@ -1,0 +1,22 @@
+{% set cp = guest.comment_params %}
+
+{% if cp.facebook_enabled %}
+<script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>
+<fb:comments href="{{ guest.system_current_url }}" num_posts="{{cp.facebook_num_posts|default(20)}}" width="{{cp.facebook_width|default(940)}}"></fb:comments>
+{% endif %}
+
+
+{% if cp.disqus_enabled %}
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://{{cp.disqus_shortname}}.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+{% endif %}
+
+{% if cp.custom_enabled %}
+{{ cp.custom_script|raw }}
+{% endif %}

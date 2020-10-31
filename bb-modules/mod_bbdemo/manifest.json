@@ -1,0 +1,7 @@
+{
+    "id":           "bbdemo",
+	"type":         "mod",
+    "name":         "demo.boxbilling.com module ",
+    "description":  "Disables sections in BoxBilling",
+    "version":      "1.0.0"
+}

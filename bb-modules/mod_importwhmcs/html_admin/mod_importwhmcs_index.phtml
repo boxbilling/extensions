@@ -1,0 +1,120 @@
+{% extends request.ajax ? "layout_blank.phtml" : "layout_default.phtml" %}
+{% set active_menu = 'extensions' %}
+{% block meta_title %}Whmcs data importer{% endblock %}
+
+{% block content %}
+<div class="widget simpleTabs nomargin">
+
+    <ul class="tabs">
+        <li><a href="#tab-start">{% trans 'Whmcs importer' %}</a></li>
+        <li><a href="#tab-index" id="open-index-tab">{% trans 'API configuration' %}</a></li>
+    </ul>
+
+    <div class="tabs_container">
+        <div class="fix"></div>
+        
+        <div class="tab_content nopadding" id="tab-start">
+            <div class="help">
+                <h5>{% trans 'Whmcs import wizard' %}</h5>
+                <p>{% trans 'This guide will help you to import data from whmcs to BoxBilling.' %}</p>
+            </div>
+            
+            <div class="body">
+                <h2>{% trans '1. Create WHMCS database backup' %}</h2>
+                <p>Create whmcs database backup</p>
+            </div>
+            
+            <div class="body">
+                <h2>{% trans '2. Connect to WHMCS database' %}</h2>
+                <p>Make sure BoxBilling is able to <a href="" onclick="$('#open-index-tab').click(); return false;">connect to whmcs database</a></p>
+                <p>Add this IP: IPP to mysql database user as allowed ip.</p>
+            </div>
+            
+            <form method="post" action="admin/importwhmcs/database_update" class="mainForm api-form" data-api-msg="{% trans 'Configuration updated' %}">
+                <fieldset>
+                    <div class="rowElem noborder">
+                        <label>{% trans 'Username' %}:</label>
+                        <div class="formRight">
+                            <input type="text" name="username" value="{{params.username}}" required="required" placeholder=""/>
+                        </div>
+                        <div class="fix"></div>
+                    </div>
+                    
+                    <div class="rowElem">
+                        <label>{% trans 'Password' %}:</label>
+                        <div class="formRight">
+                            <input type="password" name="key" value="{{params.password}}" required="required" placeholder=""/>
+                        </div>
+                        <div class="fix"></div>
+                    </div>
+                    
+                    <div class="rowElem">
+                        <label>{% trans 'Hostname' %}:</label>
+                        <div class="formRight">
+                            <input type="text" name="host" value="{{params.host}}" placeholder="localhost"/>
+                        </div>
+                        <div class="fix"></div>
+                    </div>
+                    
+                    <div class="rowElem">
+                        <label>{% trans 'Db name' %}:</label>
+                        <div class="formRight">
+                            <input type="text" name="host" value="{{params.host}}" placeholder="localhost"/>
+                        </div>
+                        <div class="fix"></div>
+                    </div>
+                    
+                    <input type="button" value="2. {% trans 'Test connection' %}" class="greyishBtn submitForm" id="testconnection"/>
+                    <input type="submit" value="1. {% trans 'Update' %}" class="greyishBtn submitForm" />
+                    
+                </fieldset>
+            </form>
+
+            
+        </div>
+        
+        <div class="tab_content nopadding" id="tab-index">
+            <div class="help">
+                <h5>{% trans 'Connect to Whmcs database' %}</h5>
+                <p>{% trans 'Provide information to connect to whmcs database.' %}</p>
+            </div>
+            
+            <form method="post" action="admin/importwhmcs/cluster_config_update" class="mainForm api-form" data-api-msg="{% trans 'Configuration updated' %}">
+                <fieldset>
+                    <div class="rowElem noborder">
+                        <label>{% trans 'Hostname' %}:</label>
+                        <div class="formRight">
+                            <input type="text" name="host" value="{{params.host}}" required="required" placeholder="localhost"/>
+                        </div>
+                        <div class="fix"></div>
+                    </div>
+                    
+                    <div class="rowElem">
+                        <label>{% trans 'Username' %}:</label>
+                        <div class="formRight">
+                            <input type="text" name="username" value="{{params.username}}" required="required" placeholder=""/>
+                        </div>
+                        <div class="fix"></div>
+                    </div>
+                    
+                    <div class="rowElem">
+                        <label>{% trans 'Password' %}:</label>
+                        <div class="formRight">
+                            <input type="password" name="key" value="{{params.password}}" required="required" placeholder=""/>
+                        </div>
+                        <div class="fix"></div>
+                    </div>
+                   
+                    <input type="button" value="2. {% trans 'Test connection' %}" class="greyishBtn submitForm" id="testconnection"/>
+                    <input type="submit" value="1. {% trans 'Update' %}" class="greyishBtn submitForm" />
+                    
+                </fieldset>
+            </form>
+
+            <div class="fix"></div>
+
+        </div>
+
+    </div>
+</div>
+{% endblock %}

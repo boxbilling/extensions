@@ -1,0 +1,71 @@
+{% extends request.ajax ? "layout_blank.phtml" : "layout_default.phtml" %}
+{% import "macro_functions.phtml" as mf %}
+{% block meta_title %}MultiCraft settings{% endblock %}
+{% set active_menu = 'extensions' %}
+
+{% block content %}
+
+<div class="widget first">
+    <div class="head">
+        <h5 class="iCog">{% trans 'MultiCraft' %}</h5>
+    </div>
+    
+    <div class="help">
+        <h3>{% trans 'MultiCraft panel settings' %}</h3>
+    </div>
+
+    {% set params = admin.extension_config_get({"ext":"mod_servicemulticraft"}) %}
+    <form method="post" action="admin/extension/config_save" class="mainForm api-form" data-api-msg="{% trans 'Configuration updated' %}">
+
+        <fieldset>
+            <div class="rowElem noborder">
+                <label>{% trans 'Panel URL' %}</label>
+                <div class="formRight">
+                    <input type="text" name="url" value="{{ params.url }}" placeholder="Enter the complete URL to your MultiCraft installation, for example: http://example.com/multicraft/"/>
+                </div>
+                <div class="fix"></div>
+            </div>
+
+            <div class="rowElem">
+                <label>{% trans 'Username' %}</label>
+                <div class="formRight">
+                    <input type="text" name="username" value="{{ params.username }}" placeholder="Multicraft panel username, for example: admin"/>
+                </div>
+                <div class="fix"></div>
+            </div>
+
+            <div class="rowElem">
+                <label>{% trans 'API key' %}</label>
+                <div class="formRight">
+                    <input type="text" name="api_key" value="{{ params.api_key }}" placeholder="Multicraft user API key you have generated in panel, for example: 337508bddb0119218c62"/>
+                </div>
+                <div class="fix"></div>
+            </div>
+
+            <input type="button" value="{% trans 'Test connection' %}" class="blackBtn submitForm" id="tc"/>
+            <input type="submit" value="{% trans 'Update' %}" class="greyishBtn submitForm" />
+            <input type="hidden" name="ext" value="mod_servicemulticraft" />
+        </fieldset>
+    </form>
+
+    <div class="body">
+        <a href="{{ 'extension'|alink }}"  title="" class="btnIconLeft mr10"><img src="images/icons/dark/arrowLeft.png" alt="" class="icon"><span>{% trans 'Back to extensions' %}</span></a>
+        <a href="{{'product'|alink}}?type=multicraft&title=MultiCraft Server#tab-new" target="_blank" class="btnIconLeft mr10"><img src="images/icons/dark/play.png" alt="" class="icon"><span>{% trans 'Create MultiCraft product' %}</span></a>
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block js %}
+<script type="text/javascript">
+$(function() {
+    $('#tc').click(function() {
+        bb.post('admin/servicemulticraft/test_connection', {}, function(result){
+            bb.msg('Successfully connected');
+        });
+        return false;
+    });
+});
+</script>
+{% endblock %}

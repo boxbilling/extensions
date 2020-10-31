@@ -1,0 +1,100 @@
+{% extends request.ajax ? "layout_blank.phtml" : "layout_default.phtml" %}
+{% import "macro_functions.phtml" as mf %}
+{% block meta_title %}Comment settings{% endblock %}
+{% set active_menu = 'extensions' %}
+
+{% block content %}
+
+<div class="widget first">
+    <div class="head">
+        <h5 class="iCog">{% trans 'Comment settings' %}</h5>
+    </div>
+    
+    <div class="body">
+        Copy and paste the code below to your template to enable comments block on any page
+        <pre style="padding: 5px; background-color: white; border: 1px dashed rgb(128, 128, 128); overflow: auto;">{% raw %} {% if guest.extension_is_on({"mod":"comment"}) %}{% include "mod_comment_block.phtml" %}{% endif %} {% endraw %}</pre>
+    </div>
+    
+    {% set params = admin.extension_config_get({"ext":"mod_comment"}) %}
+    <form method="post" action="admin/extension/config_save" class="mainForm api-form" data-api-msg="Settings updated">
+        <fieldset>
+            <legend>Facebook</legend>
+            
+            <div class="rowElem">
+                <label>{% trans 'Enable' %}</label>
+                <div class="formRight">
+                    <input type="radio" name="facebook_enabled" value="1" {% if params.facebook_enabled == "1" %}checked="checked"{% endif %}/><label>{% trans 'Yes' %}</label>
+                    <input type="radio" name="facebook_enabled" value="0" {% if not params.facebook_enabled %}checked="checked"{% endif %}/><label>{% trans 'No' %}</label>
+                </div>
+                <div class="fix"></div>
+            </div>
+
+            <div class="rowElem">
+                <label>{% trans 'Number of posts' %}</label>
+                <div class="formRight">
+                    <input type="text" name="facebook_num_posts" value="{{params.facebook_num_posts|default(20)}}"/>
+                </div>
+                <div class="fix"></div>
+            </div>
+            
+            <div class="rowElem">
+                <label>{% trans 'Block width' %}</label>
+                <div class="formRight">
+                    <input type="text" name="facebook_width" value="{{params.facebook_width|default(940)}}"/>
+                </div>
+                <div class="fix"></div>
+            </div>
+        </fieldset>
+        
+        <fieldset>
+            <legend>Disqus</legend>
+            
+            <div class="rowElem">
+                <label>{% trans 'Enable' %}</label>
+                <div class="formRight">
+                    <input type="radio" name="disqus_enabled" value="1" {% if params.disqus_enabled == "1" %}checked="checked"{% endif %}/><label>{% trans 'Yes' %}</label>
+                    <input type="radio" name="disqus_enabled" value="0" {% if not params.disqus_enabled %}checked="checked"{% endif %}/><label>{% trans 'No' %}</label>
+                </div>
+                <div class="fix"></div>
+            </div>
+
+            <div class="rowElem">
+                <label>{% trans 'Shortname' %}</label>
+                <div class="formRight">
+                    <input type="text" name="disqus_shortname" value="{{params.disqus_shortname}}"/>
+                </div>
+                <div class="fix"></div>
+            </div>
+        </fieldset>
+        
+        <fieldset>
+            <legend>Custom widget</legend>
+            
+            <div class="rowElem">
+                <label>{% trans 'Enable' %}</label>
+                <div class="formRight">
+                    <input type="radio" name="custom_enabled" value="1" {% if params.custom_enabled == "1" %}checked="checked"{% endif %}/><label>{% trans 'Yes' %}</label>
+                    <input type="radio" name="custom_enabled" value="0" {% if not params.custom_enabled %}checked="checked"{% endif %}/><label>{% trans 'No' %}</label>
+                </div>
+                <div class="fix"></div>
+            </div>
+
+            <div class="rowElem">
+                <label>{% trans 'Widget code' %}</label>
+                <div class="formRight">
+                    <textarea name="custom_script" cols="5" rows="5">{{params.custom_script}}</textarea>
+                </div>
+                <div class="fix"></div>
+            </div>
+            
+            <input type="hidden" name="ext" value="mod_comment" />
+            <input type="submit" value="{% trans 'Update settings' %}" class="greyishBtn submitForm" />
+        </fieldset>
+    </form>
+        
+    <div class="body">
+        <a href="{{ 'setting'|alink }}"  title="" class="btnIconLeft mr10"><img src="images/icons/dark/arrowLeft.png" alt="" class="icon"><span>{% trans 'Back to settings' %}</span></a>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,123 @@
+{% extends request.ajax ? "layout_blank.phtml" : "layout_default.phtml" %}
+{% set active_menu = 'system' %}
+{% block meta_title %}Partner {{ partner.first_name }} {{ partner.last_name }}{% endblock %}
+{% block content %}
+
+<div class="widget simpleTabs nomargin">
+
+    <ul class="tabs">
+        <li><a href="#tab-index">Partner {{ partner.first_name }} {{ partner.last_name }} {% trans 'Orders' %}</a></li>
+        <li><a href="#tab-config">{% trans 'Configuration' %}</a></li>
+    </ul>
+
+    <div class="tabs_container">
+        <div class="fix"></div>
+        
+        <div class="tab_content nopadding" id="tab-index">
+                <table class="tableStatic wide">
+                    <thead>
+                        <tr>
+                            <td>{% trans 'ID' %}</td>
+                            <td>{% trans 'Title' %}</td>
+                            <td>{% trans 'Date' %}</td>
+                            <td style="width: 13%">&nbsp;</td>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                    {% set orders = admin.partner_orders({"client_id":partner.client_id,"per_page":10, "page":request.page}|merge(request)) %}
+                    {% for i, order in orders.list %}
+                    <tr>
+                        <td>{{ order.id }}</td>
+                        <td>{{ order.title }}</td>
+                        <td>{{ order.created_at|date('Y-m-d H:i') }}</td>
+                        <td class="actions">
+                            <a class="btn14" href="{{ 'order/manage'|alink }}/{{ order.id }}"><img src="images/icons/dark/pencil.png" alt=""></a>
+                        </td>
+                    </tr>
+                    </tbody>
+
+                    {% else %}
+                    <tbody>
+                        <tr>
+                            <td colspan="4">
+                                {% trans 'The list is empty' %}
+                            </td>
+                        </tr>
+                    </tbody>
+                    {% endfor %}
+
+                    {% if partners.total > 1 %}
+                    <tfoot>
+                        <tr>
+                            <td colspan="4">
+                                {% include "partial_pagination.phtml" with {'list': partners, 'url':'partner'} %}
+                            </td>
+                        </tr>
+                    </tfoot>
+                    {% endif %}
+                </table>
+
+        </div>
+        
+        <div class="tab_content nopadding" id="tab-config">
+            <form method="post" action="admin/partner/profile_update" class="mainForm api-form" data-api-msg="{% trans 'Profile updated' %}">
+                <fieldset>
+                    <div class="rowElem">
+                        <label>{% trans 'Listed in public' %}:</label>
+                        <div class="formRight">
+                            <input type="radio" name="public" value="1" {% if partner.public == "1" %}checked="checked"{% endif %}/><label>{% trans 'Yes' %}</label>
+                            <input type="radio" name="public" value="0" {% if not partner.public %}checked="checked"{% endif %}/><label>{% trans 'No' %}</label>
+                        </div>
+                        <div class="fix"></div>
+                    </div>
+
+                    <div class="rowElem">
+                        <label class="">{% trans 'Partner status' %}</label>
+                        <div class="formRight">
+                            {{ mf.selectbox('status', {"active":"Active", "disabled":"Disabled"}, partner.status, 1) }}
+                        </div>
+                        <div class="fix"></div>
+                    </div>
+
+                    <div class="rowElem">
+                        <label class="">{% trans 'Partner product' %}</label>
+                        <div class="formRight">
+                            {{ mf.selectbox('product_id', admin.product_get_pairs({"active_only":false}), partner.product_id, 0, 'Use default partners product') }}
+                        </div>
+                        <div class="fix"></div>
+                    </div>
+
+                    <div class="rowElem">
+                        <label class="">{% trans 'Override price' %}</label>
+                        <div class="formRight">
+                            <input type="text" name="price" value="{{partner.price}}" placeholder="Current price: {{partner.selling_price}}"/>
+                        </div>
+                        <div class="fix"></div>
+                    </div>
+
+                    <div class="rowElem">
+                        <label class="">{% trans 'Logo URL' %}</label>
+                        <div class="formRight">
+                            <input type="text" name="logo" value="{{partner.logo}}"/>
+                        </div>
+                        <div class="fix"></div>
+                    </div>
+
+                    <div class="rowElem">
+                        <label class="">{% trans 'Website URL' %}</label>
+                        <div class="formRight">
+                            <input type="text" name="website" value="{{partner.website}}"/>
+                        </div>
+                        <div class="fix"></div>
+                    </div>
+
+                    <input type="submit" value="{% trans 'Update' %}" class="greyishBtn submitForm" />
+                    <input type="hidden" value="{{ partner.client_id }}" name="client_id" />
+                </fieldset>
+            </form>
+        </div>
+    </div>
+    
+</div>
+{% endblock %}

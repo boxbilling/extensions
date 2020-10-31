@@ -1,0 +1,7 @@
+{
+    "id":           "servicevpsnet",
+	"type":         "mod",
+    "name":         "VPS.net",
+    "description":  "Sell VPS.net vpses",
+    "version":      "1.0.0"
+}

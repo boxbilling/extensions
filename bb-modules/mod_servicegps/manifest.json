@@ -1,0 +1,7 @@
+{
+    "id":           "servicegps",
+	"type":         "mod",
+    "name":         "Service: GPS",
+    "description":  "Sell gps tracker services",
+    "version":      "1.0.0"
+}

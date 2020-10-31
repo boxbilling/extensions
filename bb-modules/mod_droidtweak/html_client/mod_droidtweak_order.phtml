@@ -1,0 +1,214 @@
+{% extends request.ajax ? "layout_blank.phtml" : "layout_default.phtml" %}
+{% import "macro_functions.phtml" as mf %}
+{% block meta_title %}{% trans 'DroidTweak Media Project, Android App Review' %}{% endblock %}
+
+{% block head %}
+
+<style>
+    
+#dtform label{
+    display: inline-block;
+    width: 150px;
+}
+#dtform input[type=email],
+#dtform input[type=text],
+#dtform select {
+    width: 500px;
+}
+
+#dtform input[type=radio] {
+}
+
+#dtform .services .sl {
+    margin-left: 150px;
+}
+#dtform .services .sl label{
+    width: auto;
+}
+#dtform .com{
+    margin: 10px 0;
+}
+
+#dtform .bb-button-submit {
+    float: right;
+}
+.form-required {
+    color: red;
+    font-weight: bold;
+}
+</style>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="h-block">
+    <div class="h-block-header">
+        <div class="icon"><span class="number">1</span></div>
+        <h2>{% trans 'DroidTweak Media Project, Android App Review' %}</h2>
+    </div>
+    <div class="block">
+        <form action="" method="post" id="dtform">
+            <fieldset>
+
+                <p>
+                    <label>{% trans 'Full name' %} <span class="form-required">*</span></label>
+                    
+                    <input type="text" name="first_name" value="{{ request.first_name }}" required="required" style="width: 240px;" placeholder="First name"/>
+                    <input type="text" name="last_name" value="{{ request.last_name }}" required="required" style="width: 245px;" placeholder="Last name"/>
+                </p>
+                
+                <p>
+                    <label>{% trans 'Email' %} <span class="form-required">*</span></label>
+                    
+                    <input type="email" name="email" value="{{ request.email }}" required="required" placeholder="example@gmail.com"/>
+                </p>
+                
+                <p>
+                    <label>{% trans 'Company name' %} </label>
+                    <input type="text" name="company" value="{{ request.company }}" placeholder="My company"/>
+                </p>
+                
+                <p>
+                    <label>{% trans 'Company URL' %} </label>
+                    <input type="text" name="company_url" value="{{ request.company_url }}" placeholder="http://www.mycompany.com"/>
+                </p>
+                
+                <p>
+                    <label>{% trans 'App Name' %} </label>
+                    <input type="text" name="app_name" value="{{ request.app_name }}" placeholder="My App name"/>
+                </p>
+                
+                <p>
+                    <label>{% trans 'Market url' %} <span class="form-required">*</span></label>
+                    
+                    <input type="text" name="market_url" value="" required="required"  placeholder="http://www.mycompany.com/landingpage"/>
+                </p>
+                
+                <p>
+                    <label>{% trans 'Video url' %} </label>
+                    <input type="text" name="video_url" value="{{ request.video_url }}"  placeholder="http://www.youtube.com/vs1231sf"/>
+                </p>
+
+                <p>
+                    <label>{% trans 'How you hear of DT' %}</label>
+                    <select name="how_heard">
+                        <option>  </option>
+                        <option selected="selected" value="Promotional Email"> Promotional Email </option>
+                        <option value="Facebook"> Facebook </option>
+                        <option value="Twitter"> Twitter </option>
+                        <option value="Google Adwords"> Google Adwords </option>
+                        <option value="Google Search"> Google Search </option>
+                        <option value="Friend"> Friend </option>
+                        <option value="Other"> Other </option>
+                    </select>
+                </p>
+
+
+                <div class="services">
+                    <div class="label">Services</div>
+                    <div class="sl">
+                        {% for product in guest.product_get_list({"show_hidden":0}).list %}
+                        <label>
+                        <input type="radio" name="product_id" value="{{product.id}}" {% if loop.first %}checked="checked"{% endif %} />
+                        {{ product.title }} {{ product.pricing.once.price }}
+                        </label>
+                        <div class="clear"></div>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <div class="clear"></div>
+                
+                <p class="com">
+                    <textarea name="content" cols="5" rows="5" placeholder="Review"></textarea>
+                </p>
+                
+                <p class="com">
+                    <textarea name="comments" cols="5" rows="5" placeholder="Any comments or suggestions"></textarea>
+                </p>
+                                
+                <div id="text_17" class="form-html">
+                    <p><span style="font-size: xx-small;">*<span style="color: #ff0000;"><strong>
+                            Full Service
+                        </strong></span>
+                        =&nbsp;<span style="text-decoration: underline;"><strong>
+                            1 week
+                        </strong></span>
+                        Sponsorship ad,<span style="text-decoration: underline;"><strong>
+                            1 week
+                        </strong></span>
+                        <strong>
+                        </strong>
+                        Pin to top on DroidTweak Review section
+                        <strong>
+                        ,<span style="text-decoration: underline;">1 week</span>
+                        </strong>
+                        PIN on FB (fb.com/AndroidFans),&nbsp;<span style="text-decoration: underline;"><strong>
+                            1 week
+                        </strong></span>
+                        &nbsp;Bump&nbsp;(repost on fb.com/androidfans) after 7days.<span style="text-decoration: underline;"><strong>
+                            <br>
+                        </strong></span>
+                        <strong>
+                        ***************************************************
+                        </strong><span style="text-decoration: underline;"><strong>
+                            <br>
+                        </strong></span>
+                        *
+                        <strong>
+                        Review
+                        </strong>
+                        = Our own positive words of your app</span>
+                    <br><span style="font-size: xx-small;">*
+                        <strong>
+                        Promotion
+                        </strong>
+                        = Copy &amp; Paste from what we see from the market url</span>
+                    <br><span style="font-size: xx-small;">*
+                        <strong>
+                        Bump
+                        </strong>
+                        =&nbsp;Repost on fb.com/androidfans&nbsp;anytime after 7 days</span>
+                    <br><span style="font-size: xx-small;">*
+                        <strong>
+                        Waiting List
+                        </strong>
+                        &nbsp;(only for budget service) = Released anytime within 45days (max waiting is 45days)</span>
+                    </p>
+                </div>
+
+                <img src="http://www.jotform.com/uploads/maxboost/form_files/2co.gif" style="width: 232px;"/>
+                <input class="bb-button bb-button-big bb-button-submit" type="submit" value="{% trans 'Order' %}">
+                <div id="gateway-html-container"></div>
+            </fieldset>
+        </form>
+
+        
+    <div class="clear"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block sidebar2 %}
+    {% include 'partial_currency.phtml' %}
+{% endblock %}
+
+
+{% block js %}
+{% autoescape true js %}
+<script type="text/javascript">
+$(function() {
+    $('#dtform').submit(function(){
+        bb.post('guest/droidtweak/order', $(this).serialize(), function(result){
+            var link = "{{ '/banklink'|link }}/" + result.hash + "/" + result.gateway_id;
+            bb.msg('Redirecting to payment gateway ...');
+            $('#gateway-html-container').load(link);
+        });
+        return false;
+    });
+});
+</script>
+{% endautoescape %}
+{% endblock %}

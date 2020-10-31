@@ -1,0 +1,19 @@
+{% if client %}
+
+{% set invite = client.invite_info %}
+
+    {% if invite.inviter %}
+    You were invited by {{invite.inviter}}
+    {% endif %}
+    
+    {{invite.invitations}} invitations left
+    
+    {% if invite.invitations %}
+        <form action="client/invite/send" method="post" class="api-form" data-api-msg="Invitation was sent">
+            <input type="email" name="email" placeholder="Friend email"/>
+            <textarea name="message" cols="2" rows="5" style="width: 170px" placeholder="Message to friend+">{{ invite.message }}</textarea>
+            <input type="submit" value="Send invitation" />
+        </form>
+    {% endif %}
+    
+{% endif %}

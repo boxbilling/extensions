@@ -1,0 +1,112 @@
+{% if order.status == 'active' %}
+<div class="widget simpleTabs tabsRight">
+    <div class="head">
+        <h2 class="dark-icon i-services">{% trans 'GPS tracker' %}</h2>
+    </div>
+
+    <ul class="tabs">
+        <li><a href="#tab-map">{% trans 'Map' %}</a></li>
+        <li><a href="#tab-manage">{% trans 'Manage' %}</a></li>
+    </ul>
+
+    <div class="tabs_container">
+
+        <div class="tab_content" id="tab-map">
+            <div id="map_canvas" style="width:100%; height:600px"></div>
+            <table>
+                <tfoot>
+                    <tr>
+                        <td colspan="2">
+                            <a href="client/servicegps/last_position?order_id={{order.id}}" data-api-jsonp="onLastPositionGet" class="bb-button bb-button-submit api-link" id="last-position">Last Position</a>
+                            <form action="client/servicegps/data_tracker" class="api-form" data-api-jsonp="onDateUpdate" style="float: right;">
+                                <input type="text" name="date_from" value="{{request.date_from}}" placeholder="From {{ 'yesterday'|date('Y-m-d') }}"/>-
+                                <input type="text" name="date_to" value="{{request.date_to}}" placeholder="To {{ 'now'|date('Y-m-d') }}"/>
+                                <input type="hidden" name="order_id" value="{{order.id}}"/>
+                                <input type="submit" value="By date" class="bb-button bb-button-submit"/>
+                            </form>
+                        </td>   
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        
+        <div class="tab_content" id="tab-manage">
+            <table>
+                <tbody>
+                    <tr>
+                        <td>{% trans 'IMEI' %}:</td>
+                        <td>{{ service.imei }}</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="2">
+                            &nbsp;
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        
+    </div>
+</div>
+
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?&sensor=false"></script>
+<script type="text/javascript">
+    
+$(function() {
+    $('#last-position').click();
+});
+
+function onLastPositionGet(result)
+{
+    var myOptions = {
+        center: new google.maps.LatLng(result.latitude_degrees, result.longitude_degrees),
+        zoom: 12,
+        mapTypeId: google.maps.MapTypeId.HYBRID
+    };
+    var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+    new google.maps.Marker({
+        position: new google.maps.LatLng(result.latitude_degrees, result.longitude_degrees),
+        map: map,
+        title:"Last position"
+    });
+}
+
+function onDateUpdate(data)
+{
+    if(data.length == 0) {
+        bb.msg('No records found for selected period');
+        return;
+    }
+    
+    var myOptions = {
+        center: new google.maps.LatLng(data[data.length-1].latitude_degrees, data[data.length-1].longitude_degrees),
+        zoom: 12,
+        mapTypeId: google.maps.MapTypeId.HYBRID
+    };
+    var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+    var flightPlanCoordinates = [];
+    for (cord in data){
+        flightPlanCoordinates.push(new google.maps.LatLng(data[cord].latitude_degrees, data[cord].longitude_degrees));
+    }
+    var flightPath = new google.maps.Polyline({
+        path: flightPlanCoordinates,
+        strokeColor: "#FF0000",
+        strokeOpacity: 1.0,
+        strokeWeight: 3
+    });
+    flightPath.setMap(map);
+    
+    new google.maps.Marker({
+        position: new google.maps.LatLng(data[0].latitude_degrees, data[0].longitude_degrees),
+        map: map,
+    });
+    new google.maps.Marker({
+        position: new google.maps.LatLng(data[data.length-1].latitude_degrees, data[data.length-1].longitude_degrees),
+        map: map,
+    });
+}
+
+</script>
+{% endif %}

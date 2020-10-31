@@ -1,0 +1,161 @@
+{% extends request.ajax ? "layout_blank.phtml" : "layout_default.phtml" %}
+{% set active_menu = 'system' %}
+{% block meta_title %}Partners program{% endblock %}
+{% block content %}
+
+<div class="widget simpleTabs nomargin">
+
+    <ul class="tabs">
+        <li><a href="#tab-index">{% trans 'Partners list' %}</a></li>
+        <li><a href="#tab-config" id="open-index-tab">{% trans 'Configuration' %}</a></li>
+    </ul>
+
+    <div class="tabs_container">
+        <div class="fix"></div>
+        
+        <div class="tab_content nopadding" id="tab-index">
+
+                <table class="tableStatic wide">
+                    <thead>
+                        <tr>
+                            <td>{% trans 'Logo' %}</td>
+                            <td>{% trans 'Name' %}</td>
+                            <td>{% trans 'Sales' %}</td>
+                            <td>{% trans 'Price' %}</td>
+                            <td>{% trans 'Status' %}</td>
+                            <td>{% trans 'Signup Date' %}</td>
+                            <td style="width: 13%">&nbsp;</td>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                    {% set partners = admin.partner_get_list({"per_page":10, "page":request.page}|merge(request)) %}
+                    {% for i, partner in partners.list %}
+                    <tr>
+                        <td>{% if partner.logo %}
+                            {% if partner.website %}
+                            <a href="{{ partner.website }}" target="_blank"><img src="{{ partner.logo }}" style="max-height: 50px; max-width: 100px;"/></a>
+                            {% else %}
+                            <img src="{{ partner.logo }}" style="max-height: 50px; max-width: 100px;"/>
+                            {% endif %}
+                            {% else %}
+                            -
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{{ 'client/manage'|alink }}/{{partner.client_id}}">{{ partner.first_name }} {{ partner.last_name }}</a>
+                        </td>
+                        <td>{{ partner.sales }}</td>
+                        <td>{% if partner.price and partner.price != partner.selling_price %}<del>{{ mf.currency_format( partner.selling_price) }}</del> {{ mf.currency_format( partner.price) }}{% else %}{{ mf.currency_format( partner.selling_price) }}{% endif %}</td>
+                        <td>
+                            <span style="background-color: {{ partner.public ? 'green' : 'red' }};" title="Visibility">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            {{ partner.status|title }}
+                        </td>
+                        <td>{{ partner.created_at|date('Y-m-d H:i') }}</td>
+                        <td class="actions">
+                            <a class="btn14" href="{{ 'partner/'|alink }}/{{ partner.client_id }}"><img src="images/icons/dark/pencil.png" alt=""></a>
+                            <a class="bb-button btn14 bb-rm-tr api-link" data-api-confirm="{% trans 'Are you sure?' %}" data-api-redirect="partner" href="admin/partner/delete?client_id={{partner.client_id}}"><img src="images/icons/dark/trash.png" alt=""></a>
+                        </td>
+                    </tr>
+                    </tbody>
+
+                    {% else %}
+                    <tbody>
+                        <tr>
+                            <td colspan="6">
+                                {% trans 'The list is empty' %}
+                            </td>
+                        </tr>
+                    </tbody>
+                    {% endfor %}
+
+                    {% if partners.total > 1 %}
+                    <tfoot>
+                        <tr>
+                            <td colspan="6">
+                                {% include "partial_pagination.phtml" with {'list': partners, 'url':'partner'} %}
+                            </td>
+                        </tr>
+                    </tfoot>
+                    {% endif %}
+                </table>
+
+        </div>
+        
+        <div class="tab_content nopadding" id="tab-config">
+            
+            {% set params = admin.extension_config_get({"ext":"mod_partner"}) %}
+
+            <form method="post" action="admin/extension/config_save" class="mainForm api-form" data-api-msg="{% trans 'Configuration updated' %}">
+                <fieldset>
+                    <legend>{% trans 'Global partners limits and settings' %}</legend>
+                    {#
+                    <div class="rowElem">
+                        <label>{% trans 'Program enabled' %}:</label>
+                        <div class="formRight">
+                            <input type="radio" name="enabled" value="1" {% if params.enabled == "1" %}checked="checked"{% endif %}/><label>{% trans 'Yes' %}</label>
+                            <input type="radio" name="enabled" value="0" {% if not params.enabled %}checked="checked"{% endif %}/><label>{% trans 'No' %}</label>
+                        </div>
+                        <div class="fix"></div>
+                    </div>
+                    #}
+                    <div class="rowElem">
+                        <label class="topLabel">{% trans 'Default product which partners are reselling.' %}:</label>
+                        <div class="formBottom">
+                            {{ mf.selectbox('lid', admin.product_get_pairs, params.lid, 0, 'Select product') }}
+                        </div>
+                        <div class="fix"></div>
+                    </div>
+
+                    <div class="rowElem">
+                        <label class="topLabel">{% trans 'Default order limit for partner per day. Used to prevent API abuse' %}</label>
+                        <div class="formBottom">
+                            <input type="text" name="orders_limit" value="{{params.orders_limit}}" placeholder="Leave blank to disable limits checking"/>
+                        </div>
+                        <div class="fix"></div>
+                    </div>
+
+                </fieldset>
+                
+                <fieldset>
+                    <legend>{% trans 'Optional rules for becoming partner' %}</legend>
+
+                    <div class="rowElem noborder">
+                        <label class="topLabel">{% trans 'Product which must be ordered before becoming partner' %}:</label>
+                        <div class="formBottom">
+                            {{ mf.selectbox('pid', admin.product_get_pairs, params.pid, 0, 'Product not required') }}
+                        </div>
+                        <div class="fix"></div>
+                    </div>
+                    
+                    <div class="rowElem">
+                        <label>{% trans 'Check partners balance before creating new order for available amount' %}:</label>
+                        <div class="formRight">
+                            <input type="radio" name="check_balance" value="1" {% if params.check_balance == "1" %}checked="checked"{% endif %}/><label>{% trans 'Yes' %}</label>
+                            <input type="radio" name="check_balance" value="0" {% if not params.check_balance %}checked="checked"{% endif %}/><label>{% trans 'No' %}</label>
+                        </div>
+                        <div class="fix"></div>
+                    </div>
+
+                    <div class="rowElem">
+                        <label class="topLabel">{% trans 'How much money must be on clients balance to become a partner' %}</label>
+                        <div class="formBottom">
+                            <input type="text" name="required_balance" value="{{params.required_balance}}" placeholder="Leave blank to skip this check"/>
+                        </div>
+                        <div class="fix"></div>
+                    </div>
+                    
+                    <input type="submit" value="{% trans 'Update' %}" class="greyishBtn submitForm" />
+                    <input type="hidden" name="ext" value="mod_partner" />
+                </fieldset>
+            </form>
+            
+            <div class="body">
+                <a href="{{'partner'|link}}" class="btnIconLeft mr10 mt10" target="_blank"><span>Open client area</span></a>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+{% endblock %}

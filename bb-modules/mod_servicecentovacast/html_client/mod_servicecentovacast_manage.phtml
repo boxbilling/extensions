@@ -1,0 +1,88 @@
+{% if order.status == 'active' %}
+<div class="widget simpleTabs tabsRight">
+    <div class="head">
+        <h2 class="dark-icon i-services">{% trans 'Centova Cast server' %}</h2>
+    </div>
+
+    <ul class="tabs">
+        <li><a href="#tab-index">{% trans 'Details' %}</a></li>
+        <li><a href="#tab-status">{% trans 'Status' %}</a></li>
+        <li><a href="#tab-songs">{% trans 'Recent tracks' %}</a></li>
+    </ul>
+
+    <div class="tabs_container">
+
+        <div class="tab_content" id="tab-index">
+            <table>
+                <tbody>
+                    <tr>
+                        <td>{% trans 'Username' %}:</td>
+                        <td>{{ service.username }}</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>{% trans 'Password' %}:</td>
+                        <td>{{ service.pass }}</td>
+                    </tr>
+                </tbody>
+
+                <tfoot>
+                    <tr>
+                        <td colspan="2">
+                            <a href="{{client.servicecentovacast_control_panel_url({'order_id':order.id, 'try':1}) }}" target="_blank" class="bb-button bb-button-red">Open Control panel</a>
+                            <a href="client/servicecentovacast/start?order_id={{order.id}}" data-api-msg="Started" class="bb-button bb-button-submit api-link">Start</a>
+                            <a href="client/servicecentovacast/stop?order_id={{order.id}}" data-api-msg="Stoped" class="bb-button bb-button-submit api-link">Stop</a>
+                            <a href="client/servicecentovacast/restart?order_id={{order.id}}" data-api-msg="Restarted" class="bb-button bb-button-submit api-link">Restart</a>
+                            <a href="client/servicecentovacast/reload?order_id={{order.id}}" data-api-msg="Reloaded" class="bb-button bb-button-submit api-link">Reload</a>
+                        </td>   
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        
+        <div class="tab_content" id="tab-status">
+            <table>
+                <tbody>
+                {% for k,var in client.servicecentovacast_getstatus({"order_id":order.id, "try":1}) %}
+                    {% if var|keys|length > 0 %}
+                    {# for subkey,subvalue in var %}
+                    <tr>
+                        <td>{{ k }}.{{subkey}}</td>
+                        <td>{{ subvalue }}</td>
+                    </tr>
+                    {% endfor #}
+                    {% else %}
+                    <tr>
+                        <td>{{ k|title }}</td>
+                        <td>{{ var }}</td>
+                    </tr>
+                    {% endif %}
+                {% else %}
+                    <tr>
+                        <td>{% trans 'Unable to connect to server' %}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="tab_content" id="tab-songs">
+            <table>
+                <tbody>
+                {% for song in client.servicecentovacast_getsongs({"order_id":order.id, "try":1}) %}
+                    <tr>
+                        <td>{{ song.title }}</td>
+                        <td>{{ song.time|date('Y-m-d H:i:s') }}</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td>{% trans 'No recent tracks are available' %}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+    </div>
+</div>
+{% endif %}

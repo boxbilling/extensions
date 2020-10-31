@@ -1,0 +1,76 @@
+{% extends request.ajax ? "layout_blank.phtml" : "layout_default.phtml" %}
+{% import "macro_functions.phtml" as mf %}
+{% block meta_title %}Clickatell settings{% endblock %}
+{% set active_menu = 'system' %}
+
+{% block content %}
+
+<div class="widget first">
+    <div class="head">
+        <h5 class="iCog">{% trans 'Clickatell settings' %}</h5>
+    </div>
+
+    {% set params = admin.extension_config_get({"ext":"mod_clickatell"}) %}
+
+    <form method="post" action="admin/extension/config_save" class="mainForm api-form" data-api-msg="{% trans 'Configuration updated' %}">
+
+        <fieldset>
+            <div class="rowElem noborder">
+                <label>{% trans 'Clickatell username' %}</label>
+                <div class="formRight">
+                    <input type="text" name="user" value="{{ params.user }}" />
+                </div>
+                <div class="fix"></div>
+            </div>
+
+            <div class="rowElem">
+                <label>{% trans 'Clickatell password' %}</label>
+                <div class="formRight">
+                    <input type="password" name="password" value="{{ params.password }}" />
+                </div>
+                <div class="fix"></div>
+            </div>
+            
+            <div class="rowElem">
+                <label>{% trans 'API ID' %}</label>
+                <div class="formRight">
+                    <input type="text" name="api_id" value="{{ params.api_id }}" />
+                </div>
+                <div class="fix"></div>
+            </div>
+
+            <input type="submit" value="{% trans 'Update' %}" class="greyishBtn submitForm" />
+            <input type="hidden" name="ext" value="mod_clickatell" />
+        </fieldset>
+    </form>
+    
+    <form method="post" action="admin/clickatell/send" class="mainForm api-form" data-api-msg="{% trans 'SMS was successfuly sent' %}">
+
+        <fieldset>
+            <legend>Send test message</legend>
+            <div class="rowElem noborder">
+                <label>{% trans 'Phone number' %}</label>
+                <div class="formRight">
+                    <input type="text" name="to" value="" placeholder="37112312345 - Phone number only digits and no spaces" />
+                </div>
+                <div class="fix"></div>
+            </div>
+
+            <div class="rowElem">
+                <label>{% trans 'Message' %}</label>
+                <div class="formRight">
+                    <input type="text" name="text" value="" placeholder="SMS text message"/>
+                </div>
+                <div class="fix"></div>
+            </div>
+            
+            <input type="submit" value="{% trans 'Send' %}" class="greyishBtn submitForm" />
+        </fieldset>
+    </form>
+
+    <div class="body">
+        <a href="{{ 'system'|alink }}"  title="" class="btnIconLeft mr10"><img src="images/icons/dark/arrowLeft.png" alt="" class="icon"><span>{% trans 'Back to settings' %}</span></a>
+    </div>
+
+</div>
+{% endblock %}

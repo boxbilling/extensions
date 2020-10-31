@@ -1,0 +1,7 @@
+{
+    "id":           "affiliate",
+	"type":         "mod",
+    "name":         "Affiliates",
+    "description":  "Simple Affiliate module",
+    "version":      "1.0.0"
+}

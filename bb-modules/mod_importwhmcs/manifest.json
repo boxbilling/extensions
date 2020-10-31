@@ -1,0 +1,7 @@
+{
+    "id":           "importwhmcs",
+	"type":         "mod",
+    "name":         "Import Whmcs database",
+    "description":  "Tool to import data from whmcs database",
+    "version":      "1.0.0"
+}

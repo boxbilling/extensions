@@ -1,0 +1,7 @@
+{
+    "id":           "debug",
+	"type":         "mod",
+    "name":         "Debug BoxBilling",
+    "description":  "Administrator tools for BoxBilling",
+    "version":      "1.0.0"
+}

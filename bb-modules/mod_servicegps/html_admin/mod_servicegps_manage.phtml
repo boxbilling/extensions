@@ -1,0 +1,18 @@
+<div class="help">
+    <h2>{% trans 'GPS management' %}</h2>
+</div>
+
+<form method="post" action="admin/servicegps/update" class="mainForm api-form save" data-api-msg="Updated">
+    <fieldset>
+        <div class="rowElem noborder">
+            <label>{% trans 'IMEI' %}:</label>
+            <div class="formRight">
+                <input type="text" name="imei" value="{{service.imei}}" placeholder="IMEI number"/>
+            </div>
+            <div class="fix"></div>
+        </div>
+
+        <input type="hidden" name="order_id" value="{{ order.id }}" />
+        <input type="submit" value="{% trans 'Update' %}" class="greyishBtn submitForm" />
+    </fieldset>
+</form>

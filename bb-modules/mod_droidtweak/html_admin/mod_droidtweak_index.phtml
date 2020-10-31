@@ -1,0 +1,58 @@
+{% extends request.ajax ? "layout_blank.phtml" : "layout_default.phtml" %}
+{% import "macro_functions.phtml" as mf %}
+{% block meta_title %}DroidTweak{% endblock %}
+{% set active_menu = 'order' %}
+
+{% block content %}
+
+<div class="widget first">
+    <div class="head">
+        <h5 class="iCog">{% trans 'Droid Tweak' %}</h5>
+    </div>
+
+    <table class="tableStatic wide">
+        <thead>
+            <tr>
+                <th colspan="2">{% trans 'Client' %}</th>
+                <th style="width:30%">{% trans 'Service' %}</th>
+                <th>{% trans 'Status' %}</th>
+                <th>{% trans 'Date' %}</th>
+                <th style="width:5%">&nbsp;</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        {% set orders = admin.droidtweak_get_list(request) %}
+        {% for order in orders.list %}
+            <tr>
+                <td><a href="{{ 'client/manage'|alink }}/{{ order.client.id }}"><img src="{{ order.client.email|gravatar }}?size=20" alt="{{ order.client.id }}" /></a></td>
+                <td>{{ order.client.first_name|truncate('10') }} {{ order.client.last_name|truncate(15) }}</td>
+                <td>{{ order.product.title }}</td>
+                <td>{{ order.status }}</td>
+                <td>{{ order.created_at|date }}</td>
+                <td class="actions">
+                    <a class="bb-button btn14" href="{{ '/droidtweak/review'|alink }}/{{order.id}}"><img src="images/icons/dark/pencil.png" alt=""></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">
+                    {% trans 'The list is empty' %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        
+        {% if orders.pages > 1 %}
+        <tfoot>
+            <tr>
+                <td colspan="8">
+                    {% include "partial_pagination.phtml" with {'list': orders, 'url':'droidtweak'} %}
+                </td>
+            </tr>
+        </tfoot>
+        {% endif %}
+    </table>
+</div>
+
+{% endblock %}

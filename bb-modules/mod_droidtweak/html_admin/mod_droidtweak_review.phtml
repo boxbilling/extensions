@@ -1,0 +1,121 @@
+{% extends request.ajax ? "layout_blank.phtml" : "layout_default.phtml" %}
+{% import "macro_functions.phtml" as mf %}
+{% block meta_title %}DroidTweak review{% endblock %}
+{% set active_menu = 'order' %}
+
+{% block content %}
+
+<div class="widget first">
+    <div class="head">
+        <h5 class="iCog">{% trans 'Droid Tweak review' %}</h5>
+    </div>
+    
+    <table class="tableStatic wide">
+        <tbody>
+            <tr class="noborder">
+                <td style="width: 30%">{% trans 'ID' %}</td>
+                <td><b>#{{review.id}}</b></td>
+            </tr>
+
+            <tr>
+                <td>{% trans 'Client' %}</td>
+                <td><a href="{{ 'client/manage'|alink }}/{{ review.client.id }}">{{review.client.first_name}} {{review.client.last_name}}</a></td>
+            </tr>
+
+            <tr>
+                <td>{% trans 'Service' %}</td>
+                <td>{{ review.product.title }}</td>
+            </tr>
+            
+            <tr>
+                <td>{% trans 'Status' %}</td>
+                <td>{{ mf.status_name(review.status) }}</td>
+            </tr>
+
+            <tr>
+                <td>{% trans 'Company' %}</td>
+                <td>{{ review.company|default('-') }} <a href="{{ review.company_url|default('#') }}" target="_blank">{{ review.company_url }}</a></td>
+            </tr>
+
+            <tr>
+                <td>{% trans 'App name' %}</td>
+                <td>{{ review.app_name|default('-') }}</td>
+            </tr>
+
+            <tr>
+                <td>{% trans 'Market URL' %}</td>
+                <td><a href="{{ review.market_url|default('#') }}" target="_blank">{{ review.market_url|default('-') }}</a></td>
+            </tr>
+
+            <tr>
+                <td>{% trans 'Video URL' %}</td>
+                <td><a href="{{ review.video_url|default('#') }}" target="_blank">{{ review.video_url|default('-') }}</a></td>
+            </tr>
+
+            <tr>
+                <td>{% trans 'How heard' %}</td>
+                <td>{{ review.how_heard }}</td>
+            </tr>
+            
+            <tr>
+                <td>{% trans 'Created at' %}</td>
+                <td>{{review.created_at|date('l, d F Y')}}</td>
+            </tr>
+            
+            {% if review.comments %}
+            <tr>
+                <td>{% trans 'Comments' %}</td>
+                <td><strong>{{ review.comments|default('-') }}</strong></td>
+            </tr>
+            {% endif %}
+            </tbody>
+
+            <tfoot>
+                <tr>
+                    <td colspan="2">
+                    <div class="aligncenter">
+                        <a href="#" class="btn55 mr10" id="capprove"><img src="images/icons/middlenav/play2.png" alt=""><span>Approve</span></a>
+                    </div>
+                    </td>
+                </tr>
+            </tfoot>
+    </table>
+    
+    <form method="post" action="admin/droidtweak/review_update" class="mainForm save api-form" data-api-msg="{% trans 'Review updated' %}">
+        <fieldset>
+            <textarea cols="5" rows="20" name="content" class="bb-textarea">{{ review.content }}</textarea>
+            
+            <div class="body" style="float: right;">
+                <input type="submit" value="{% trans 'Update' %}" class="greyishBtn" />
+            </div>
+            
+            <input type="hidden" name="id" value="{{ review.id }}"/>
+        </fieldset>
+    </form>
+
+    <div class="body">
+        <a href="{{ 'droidtweak'|alink }}"  title="" class="btnIconLeft mr10"><img src="images/icons/dark/arrowLeft.png" alt="" class="icon"><span>{% trans 'Back to orders' %}</span></a>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block head %}{{ mf.bb_editor('.bb-textarea') }}{% endblock %}
+
+{% block js %}
+
+<script>
+$('#capprove').click(function(){
+    jPrompt('Forum topic title', '', 'Topic title', function(r){
+       if(!r) {
+           return;
+       }
+       bb.post('admin/droidtweak/review_approve', {id:{{review.id}}, title:r}, function(){
+           bb.msg('Forum topic posted');
+       });
+    });
+    return false;
+});
+</script>
+
+{% endblock %}

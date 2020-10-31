@@ -1,0 +1,10 @@
+{
+    "id":           "invoiceoptions",
+	"type":         "mod",
+    "name":         "Invoice options",
+    "description":  "Do not allow clients remove invoices",
+    "homepage_url": "http://www.boxbilling.com/",
+    "author":       "BoxBilling",
+    "author_url":   "http://www.boxbilling.com/",
+    "version":      "1.0.0"
+}

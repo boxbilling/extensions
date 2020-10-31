@@ -1,0 +1,7 @@
+{
+    "id":           "servicemulticraft",
+	"type":         "mod",
+    "name":         "Multicraft",
+    "description":  "Sell Minecraft servers",
+    "version":      "1.0.0"
+}

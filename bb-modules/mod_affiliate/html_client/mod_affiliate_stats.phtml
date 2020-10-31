@@ -1,0 +1,118 @@
+{% extends request.ajax ? "layout_blank.phtml" : "layout_default.phtml" %}
+
+{% block meta_title %}{%trans 'Affiliate statistics'%}{% endblock %}
+
+{% set aff_stats = client.affiliate_stats %}
+
+{% block content %}
+
+<div class="h-block" >
+    <div class="h-block-header">
+        <h2>{% trans 'Affiliate statistics' %}</h2>
+    </div>
+    
+    <div class="block">
+        <div class="grid_12 alpha omega">
+            <h3>Your Unique Referral Link:</h3>
+            <strong class="very">{{ client.affiliate_link }}</strong>
+        </div>
+        
+        <div class="grid_6 alpha">
+            <h3>Statistics</h3>
+            <div class="pricing">
+                Pending Approval Amount: {{ guest.currency_format({"price":aff_stats.total_pending }) }}<br/>
+                Total Approved Amount: {{ guest.currency_format({"price":aff_stats.total_earned}) }}<br/>
+                Total Paid Amount: {{ guest.currency_format({"price":aff_stats.total_paid}) }}<br/>
+                Balance Amount: {{ guest.currency_format({"price":aff_stats.total_unpaid}) }}<br/>
+            </div>
+        </div>        
+    
+        
+        <div class="grid_6 omega">
+            <h3>Next payment</h3>
+            <div class="pricing">
+                <em>{{ guest.currency_format({"price":aff_stats.total_unpaid}) }}</em> 
+                <p>Upcoming payment on {{aff_stats.next_payment_date|bb_date}}</p>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        
+        <div class="grid_6 alpha">
+            
+            <h3>Upcoming payments</h3>
+            <p>Payments are made on the last day of each month
+                at the end of the day (U.S Pacific time), for purchases made 
+                more than 14 days prior.</p>
+
+        </div>        
+    
+        
+        <div class="grid_6 omega">
+            
+            <h3>Minimal Payment</h3>
+            
+            <p>A payment can be initiated only if it exceed the sum of {{ guest.currency_format({"price":aff_stats.min_withdraw_amount}) }}. 
+                in case the fee do not exceed the sum of {{ guest.currency_format({"price":aff_stats.min_withdraw_amount}) }}, it will be accumulated 
+                with the following next payment and paid when it reaches the sum 
+                of at least {{ guest.currency_format({"price":aff_stats.min_withdraw_amount}) }}.</p>
+        </div>
+        <div class="clearfix"></div>
+        
+        <table>
+            <caption>Payment history</caption>
+            <thead>
+                <tr>
+                    <th>{% trans '#' %}</th>
+                    <th>{% trans 'Amount' %}</th>
+                    <th>{% trans 'Transaction ID' %}</th>
+                    <th>{% trans 'Transaction Date' %}</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for i, pmt in client.affiliate_get_payments %}
+                <tr class="{{ cycle(['odd', 'even'], i) }}">
+                    <td>{{ pmt.id }}</td>
+                    <td>{{ guest.currency_format({"price":pmt.amount}) }}</td>
+                    <td>{{ pmt.transaction_id }}</td>
+                    <td>{{ pmt.created_at|bb_date }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="4">{% trans 'The list is empty' %}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        <table>
+            <caption>My Earnings</caption>
+            <thead>
+                <tr>
+                    <th>{% trans 'Title' %}</th>
+                    <th>{% trans 'Amount' %}</th>
+                    <th>{% trans 'Status' %}</th>
+                    <th>{% trans 'Date' %}</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for i, ref in client.affiliate_earnings %}
+                <tr class="{{ cycle(['odd', 'even'], i) }}">
+                    <td>{{ ref.title }}</td>
+                    <td>{{ guest.currency_format({"price":ref.amount}) }}</td>
+                    <td>{{ ref.status|title }}</td>
+                    <td>{{ ref.created_at|bb_date }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="4">{% trans 'The list is empty' %}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            
+        </table>
+        
+    </div>
+</div>
+{% endblock %}

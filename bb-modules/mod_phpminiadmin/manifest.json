@@ -1,0 +1,11 @@
+{
+    "id":           "phpminiadmin",
+	"type":         "mod",
+    "name":         "PHP Mini MySQL Admin",
+    "description":  "Extremely lightweight alternative to heavy phpMyAdmin for quick and easy access MySQL databases.",
+    "homepage_url": "http://phpminiadmin.sourceforge.net",
+    "author":       "Oleg Savchuk",
+    "author_url":   "http://osalabs.com",
+    "license":      "(c) Oleg Savchuk",
+    "version":      "1.0.0"
+}

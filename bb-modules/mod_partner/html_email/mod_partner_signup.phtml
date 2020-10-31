@@ -1,0 +1,81 @@
+{% block subject %}[{{ guest.system_company.name }}] Partners program{% endblock %}
+{% block content %}
+{% filter markdown %}
+Hi {{ c.first_name }} {{ c.last_name }},
+
+**Congratulations** on becoming BoxBilling **partner**.
+
+Login details are the same as your client profile details:
+
+Email: **{{ c.email }}**    
+Password: ********    
+
+Login to members area at: {{ 'login'|link }}   
+Manage partners profile at: {{ 'partner'|link }}
+
+*Provide your Logo and Website details in partners management page if you want 
+to get listed on official partners list.*
+
+**Benefits you receive**
+
+* Purchase new licenses in seconds
+* API to link with your billing system
+* Manage Licenses even without billing software - from partners page
+* Use same BoxBilling client area which you are used to
+* Auto Renewals of licenses
+* Every Partner also gets listed in public Partners list
+* No payment in advance. To start selling for free.
+* You collect money from clients before we charge you
+
+**Does it mean I can now resell your system by becoming partner?**
+
+Yes. Now you can resell BoxBilling PRO licenses. Your clients will love using 
+BoxBilling and you will earn money. The more licenses you sell the lower the 
+price becomes.
+
+**What is my role? What is your role?**
+
+Your role is sell BoxBilling PRO licenses. Our role is to provide best quality 
+software and manage issued licenses.
+
+**What is the pricing for partners?**
+
+Prices depends on how many license you have sold. 
+
+<table style="width: 100%">
+    <tbody>
+        <tr>
+            <td>Less than or equal to 5 license</td>
+            <td>$5.95/month</td>
+        </tr>
+        <tr>
+            <td>Above 5 license</td>
+            <td>$4.95/month</td>
+        </tr>
+        <tr>
+            <td>Above 10 license</td>
+            <td>$3.95/month</td>
+        </tr>
+        <tr>
+            <td>Above 50 license</td>
+            <td>$2.95/month</td>
+        </tr>
+        <tr>
+            <td>Above 100 license</td>
+            <td>$1.95/month</td>
+        </tr>
+    </tbody>
+</table>
+
+**How do i promote myself ?**
+
+* Post a review about BoxBilling on your blog
+* Post on Twitter and Facebook
+* Refer your Friends
+* Write a complete review of BoxBilling.com and post it on all forums
+* Tell EVERYONE you know!
+
+{{ guest.system_company.signature }}
+
+{% endfilter %}
+{% endblock %}

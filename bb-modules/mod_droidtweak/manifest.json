@@ -1,0 +1,10 @@
+{
+    "id":           "droidtweak",
+	"type":         "mod",
+    "name":         "DroidTweak",
+    "description":  "Special",
+    "homepage_url": "http://home.droidtweak.com/",
+    "author":       "BoxBilling",
+    "author_url":   "http://www.boxbilling.com/",
+    "version":      "1.2.0"
+}

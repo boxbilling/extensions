@@ -1,0 +1,940 @@
+<?php
+/**
+ *
+ *   Copyright © 2010-2012 by http://www.xhost.ch (Daniel Hofer)
+ *
+ *   All rights reserved.
+ *
+ **/
+/**
+ * Sample Multicraft API implementation. Includes the Yii framework CJSON class for
+ * systems lacking the PHP JSON extension.
+ *
+ * For examples and function reference, please see:
+ * http://www.multicraft.org/site/page?view=api-doc
+ *
+ **/
+class MulticraftAPI
+{
+    private $key = '';
+    private $url = '';
+
+    private $lastResponse = '';
+
+    private $methods = array(
+            //User functions
+            'listUsers'                 => array(),
+            'findUsers'                 => array(array('name'=>'field', 'type'=>'array'), array('name'=>'value', 'type'=>'array')),
+            'getUser'                   => array('id'),
+            'updateUser'                => array('id', array('name'=>'field', 'type'=>'array'), array('name'=>'value', 'type'=>'array'), array('name'=>'send_mail', 'default'=>0)),
+            'createUser'                => array('name', 'email', 'password', array('name'=>'lang', 'default'=>''), array('name'=>'send_mail', 'default'=>0)),
+            'deleteUser'                => array('id'),
+            'getUserRole'               => array('user_id', 'server_id'),
+            'setUserRole'               => array('user_id', 'server_id', 'role'),
+            'getUserFtpAccess'          => array('user_id', 'server_id'),
+            'setUserFtpAccess'          => array('user_id', 'server_id', 'mode'),
+            'getUserId'                 => array('name'),
+            //Player functions
+            'listPlayers'               => array('server_id'),
+            'findPlayers'               => array('server_id', array('name'=>'field', 'type'=>'array'), array('name'=>'value', 'type'=>'array')),
+            'getPlayer'                 => array('id'),
+            'updatePlayer'              => array('id', array('name'=>'field', 'type'=>'array'), array('name'=>'value', 'type'=>'array')),
+            'createPlayer'              => array('server_id', 'name'),
+            'deletePlayer'              => array('id'),
+            'assignPlayerToUser'        => array('player_id', 'user_id'),
+            //Command functions
+            'listCommands'              => array('server_id'),
+            'findCommands'              => array('server_id', array('name'=>'field', 'type'=>'array'), array('name'=>'value', 'type'=>'array')),
+            'getCommand'                => array('id'),
+            'updateCommand'             => array('id', array('name'=>'field', 'type'=>'array'), array('name'=>'value', 'type'=>'array')),
+            'createCommand'             => array('server_id', 'name', 'role', 'chat', 'response', 'run'),
+            'deleteCommand'             => array('id'),
+            //Server functions
+            'listServers'               => array(),
+            'findServers'               => array(array('name'=>'field', 'type'=>'array'), array('name'=>'value', 'type'=>'array')),
+            'listServersByConnection'   => array('connection_id'),
+            'listServersByOwner'        => array('user_id'),
+            'getServer'                 => array('id'),
+            'updateServer'              => array('id', array('name'=>'field', 'type'=>'array'), array('name'=>'value', 'type'=>'array')),
+            'createServerOn'            => array(array('name'=>'daemon_id', 'default'=>0), array('name'=>'no_commands', 'default'=>0), array('name'=>'no_setup_script', 'default'=>0)),
+            'createServer'              => array(array('name'=>'name', 'default'=>''), array('name'=>'port', 'default'=>0), array('name'=>'base', 'default'=>''), array('name'=>'players', 'default'=>0), array('name'=>'no_commands', 'default'=>0), array('name'=>'no_setup_script', 'default'=>0)),
+            'suspendServer'             => array('id', array('name'=>'stop', 'default'=>1)),
+            'resumeServer'              => array('id', array('name'=>'start', 'default'=>1)),
+            'deleteServer'              => array('id', array('name'=>'delete_dir', 'default'=>'no')),
+            'getServerStatus'           => array('id', array('name'=>'player_list', 'default'=>0)),
+            'getServerOwner'            => array('server_id'),
+            'setServerOwner'            => array('server_id', 'user_id', array('name'=>'send_mail', 'default'=>0)),
+            'getServerConfig'           => array('id'),
+            'updateServerConfig'        => array('id', array('name'=>'field', 'type'=>'array'), array('name'=>'value', 'type'=>'array')),
+            'startServerBackup'         => array('id'),
+            'getServerBackupStatus'     => array('id'),
+            'startServer'               => array('id'),
+            'stopServer'                => array('id'),
+            'restartServer'             => array('id'),
+            'startAllServers'           => array(),
+            'stopAllServers'            => array(),
+            'restartAllServers'         => array(),
+            'sendConsoleCommand'        => array('server_id', 'command'),
+            'sendAllConsoleCommand'     => array('command'),
+            'runCommand'                => array('server_id', 'command_id', array('name'=>'run_for', 'default'=>0)),
+            'getServerLog'              => array('id'),
+            'clearServerLog'            => array('id'),
+            'getServerChat'             => array('id'),
+            'clearServerChat'           => array('id'),
+            'sendServerControl'         => array('id', 'command'),
+            //Daemon functions
+            'listConnections'           => array(),
+            'findConnections'           => array(array('name'=>'field', 'type'=>'array'), array('name'=>'value', 'type'=>'array')),
+            'getConnection'             => array('id'),
+            'removeConnection'          => array('id'),
+            'getConnectionStatus'       => array('id'),
+            'getConnectionMemory'       => array('id', array('name'=>'include_suspended', 'default'=>0)),
+            //Settings functions
+            'listSettings'              => array(),
+            'getSetting'                => array('key'),
+            'setSetting'                => array('key', 'value'),
+            'deleteSetting'             => array('key'),
+            //Schedule functions
+            'listSchedules'             => array('server_id'),
+            'findSchedules'             => array('server_id', array('name'=>'field', 'type'=>'array'), array('name'=>'value', 'type'=>'array')),
+            'getSchedule'               => array('id'),
+            'updateSchedule'            => array('id', array('name'=>'field', 'type'=>'array'), array('name'=>'value', 'type'=>'array')),
+            'createSchedule'            => array('server_id', 'name', 'ts', 'interval', 'cmd', 'status', 'for'),
+            'deleteSchedule'            => array('id'),
+        );
+
+    public function __construct($url, $user, $key)
+    {
+        $this->url = $url;
+        $this->user = $user;
+        $this->key = $key;
+    }
+
+    public function __call($function, $args)
+    {
+        $argnames = @$this->methods[$function];
+        if (!is_array($argnames))
+            return array('success'=>false, 'errors'=>array('Unknown API method "'.$function.'()"'), 'data'=>array());
+        $callargs = array();
+        $name = ''; $value = '';
+        for ($i = 0; $i < count($argnames); $i++)
+        {
+            if (is_array($argnames[$i]))
+                $name = $argnames[$i]['name'];
+            else
+                $name = $argnames[$i];
+
+            if ($i < count($args))
+            {
+                $value = $args[$i];
+            }
+            else if (is_array($argnames[$i]) && isset($argnames[$i]['default']))
+            {
+                if ($i >= count($args))
+                    $value = $argnames[$i]['default'];
+                else
+                    $value = $args[$i];
+            }
+            else
+                return array('success'=>false, 'errors'=>array('"'.$function.'()": Not enough arguments ('.count($args).')'), 'data'=>array());
+
+            if (is_array($argnames[$i]) && isset($argnames[$i]['type']))
+            {
+                if ($argnames[$i]['type'] == 'array')
+                    $value = CJSON::encode($value);
+            }
+            $callargs[$name] = $value;
+        }
+        return $this->call($function, $callargs);
+    }
+
+
+    public function call($method, $params = array())
+    {
+        if (!$this->url)
+            return array('success'=>false, 'errors'=>array('Invalid target URL'));
+        if (!$this->key)
+            return array('success'=>false, 'errors'=>array('Invalid API key'));
+            
+        $url = $this->url;
+        $query = '?';
+
+        $str = '';
+        if (!is_array($params))
+            $params = array($params=>$params);
+        $params['_MulticraftAPIMethod'] = $method;
+        $params['_MulticraftAPIUser'] = $this->user;
+        foreach ($params as $p)
+            $str .= $p;
+        $params['_MulticraftAPIKey'] = md5($this->key.$str);
+
+        foreach ($params as $k=>$v)
+            $query .= '&'.urlencode($k).'='.urlencode($v);
+
+        return $this->send($url, $query);
+    }
+
+    public function send($url, $query)
+    {
+        $response = '';
+        $error = '';
+        if (function_exists('curl_init'))
+        {
+            $curl = curl_init($url); 
+         
+            curl_setopt ($curl, CURLOPT_POST, true); 
+            curl_setopt ($curl, CURLOPT_POSTFIELDS, $query); 
+         
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);   
+         
+            $response = curl_exec($curl);
+            //echo $response;
+            $error = curl_error($curl);
+            curl_close($curl); 
+        }
+        else
+            $response = file_get_contents($url.$query);
+
+        if (!$response)
+        {
+            if (!$error)
+                $error = 'Empty response (wrong API URL or connection problem)';
+            return array('success'=>false, 'errors'=>array($error), 'data'=>'');
+        }
+        $this->lastResponse = $response;
+        $ret = CJSON::decode($response);
+        if (!is_array($ret))
+        {
+            return array('success'=>false, 'errors'=>array($ret), 'data'=>array());
+        }
+        return $ret;
+    }
+
+    public function rawResponse()
+    {
+        return $this->lastResponse;
+    }
+}
+/*?>
+<?php
+/**
+* JSON (JavaScript Object Notation) is a lightweight data-interchange
+* format. It is easy for humans to read and write. It is easy for machines
+* to parse and generate. It is based on a subset of the JavaScript
+* Programming Language, Standard ECMA-262 3rd Edition - December 1999.
+* This feature can also be found in  Python. JSON is a text format that is
+* completely language independent but uses conventions that are familiar
+* to programmers of the C-family of languages, including C, C++, C#, Java,
+* JavaScript, Perl, TCL, and many others. These properties make JSON an
+* ideal data-interchange language.
+*
+* This package provides a simple encoder and decoder for JSON notation. It
+* is intended for use with client-side Javascript applications that make
+* use of HTTPRequest to perform server communication functions - data can
+* be encoded into JSON notation for use in a client-side javascript, or
+* decoded from incoming Javascript requests. JSON format is native to
+* Javascript, and can be directly eval()'ed with no further parsing
+* overhead
+*
+* All strings should be in ASCII or UTF-8 format!
+*
+* LICENSE: Redistribution and use in source and binary forms, with or
+* without modification, are permitted provided that the following
+* conditions are met: Redistributions of source code must retain the
+* above copyright notice, this list of conditions and the following
+* disclaimer. Redistributions in binary form must reproduce the above
+* copyright notice, this list of conditions and the following disclaimer
+* in the documentation and/or other materials provided with the
+* distribution.
+*
+* THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED
+* WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+* MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN
+* NO EVENT SHALL CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+* INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+* BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS
+* OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+* ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR
+* TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
+* USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
+* DAMAGE.
+*
+* @author	  Michal Migurski <mike-json@teczno.com>
+* @author	  Matt Knapp <mdknapp[at]gmail[dot]com>
+* @author	  Brett Stimmerman <brettstimmerman[at]gmail[dot]com>
+* @copyright   2005 Michal Migurski
+* @license	 http://www.opensource.org/licenses/bsd-license.php
+* @link		http://pear.php.net/pepr/pepr-proposal-show.php?id=198
+*/
+
+/**
+ * CJSON converts PHP data to and from JSON format.
+ *
+ * @author	 Michal Migurski <mike-json@teczno.com>
+ * @author	 Matt Knapp <mdknapp[at]gmail[dot]com>
+ * @author	 Brett Stimmerman <brettstimmerman[at]gmail[dot]com>
+ * @version $Id: CJSON.php 2676 2010-11-24 03:58:17Z keyboard.idol@gmail.com $
+ * @package	system.web.helpers
+ * @since 1.0
+ */
+class CJSON
+{
+	/**
+	 * Marker constant for JSON::decode(), used to flag stack state
+	 */
+	const JSON_SLICE = 1;
+
+	/**
+	* Marker constant for JSON::decode(), used to flag stack state
+	*/
+	const JSON_IN_STR = 2;
+
+	/**
+	* Marker constant for JSON::decode(), used to flag stack state
+	*/
+	const JSON_IN_ARR = 4;
+
+	/**
+	* Marker constant for JSON::decode(), used to flag stack state
+	*/
+	const JSON_IN_OBJ = 8;
+
+	/**
+	* Marker constant for JSON::decode(), used to flag stack state
+	*/
+	const JSON_IN_CMT = 16;
+
+   /**
+	* Encodes an arbitrary variable into JSON format
+	*
+	* @param mixed $var any number, boolean, string, array, or object to be encoded.
+	*						   see argument 1 to JSON() above for array-parsing behavior.
+	*						   if var is a strng, note that encode() always expects it
+	*						   to be in ASCII or UTF-8 format!
+	*
+	* @return string JSON string representation of input var
+	*/
+	public static function encode($var)
+	{
+		switch (gettype($var)) {
+			case 'boolean':
+				return $var ? 'true' : 'false';
+
+			case 'NULL':
+				return 'null';
+
+			case 'integer':
+				return (int) $var;
+
+			case 'double':
+			case 'float':
+				return str_replace(',','.',(float)$var); // locale-independent representation
+
+			case 'string':
+				if (substr($var,0,3) == pack('CCC',0xEF,0xBB,0xBF)) 
+					$var = substr($var, 3); 
+				if (function_exists('json_encode'))
+				{
+					if (function_exists('iconv'))
+						return json_encode(iconv("UTF-8","UTF-8//IGNORE",$var));
+					else
+						return json_encode($var);
+				}
+
+				if (($enc=strtoupper(Yii::app()->charset))!=='UTF-8')
+					$var=iconv($enc, 'UTF-8', $var);
+
+				// STRINGS ARE EXPECTED TO BE IN ASCII OR UTF-8 FORMAT
+				$ascii = '';
+				$strlen_var = strlen($var);
+
+			   /*
+				* Iterate over every character in the string,
+				* escaping with a slash or encoding to UTF-8 where necessary
+				*/
+				for ($c = 0; $c < $strlen_var; ++$c) {
+
+					$ord_var_c = ord($var{$c});
+
+					switch (true) {
+						case $ord_var_c == 0x08:
+							$ascii .= '\b';
+							break;
+						case $ord_var_c == 0x09:
+							$ascii .= '\t';
+							break;
+						case $ord_var_c == 0x0A:
+							$ascii .= '\n';
+							break;
+						case $ord_var_c == 0x0C:
+							$ascii .= '\f';
+							break;
+						case $ord_var_c == 0x0D:
+							$ascii .= '\r';
+							break;
+
+						case $ord_var_c == 0x22:
+						case $ord_var_c == 0x2F:
+						case $ord_var_c == 0x5C:
+							// double quote, slash, slosh
+							$ascii .= '\\'.$var{$c};
+							break;
+
+						case (($ord_var_c >= 0x20) && ($ord_var_c <= 0x7F)):
+							// characters U-00000000 - U-0000007F (same as ASCII)
+							$ascii .= $var{$c};
+							break;
+
+						case (($ord_var_c & 0xE0) == 0xC0):
+							// characters U-00000080 - U-000007FF, mask 110XXXXX
+							// see http://www.cl.cam.ac.uk/~mgk25/unicode.html#utf-8
+							$char = pack('C*', $ord_var_c, ord($var{$c+1}));
+							$c+=1;
+							$utf16 =  self::utf8ToUTF16BE($char);
+							$ascii .= sprintf('\u%04s', bin2hex($utf16));
+							break;
+
+						case (($ord_var_c & 0xF0) == 0xE0):
+							// characters U-00000800 - U-0000FFFF, mask 1110XXXX
+							// see http://www.cl.cam.ac.uk/~mgk25/unicode.html#utf-8
+							$char = pack('C*', $ord_var_c,
+										 ord($var{$c+1}),
+										 ord($var{$c+2}));
+							$c+=2;
+							$utf16 = self::utf8ToUTF16BE($char);
+							$ascii .= sprintf('\u%04s', bin2hex($utf16));
+							break;
+
+						case (($ord_var_c & 0xF8) == 0xF0):
+							// characters U-00010000 - U-001FFFFF, mask 11110XXX
+							// see http://www.cl.cam.ac.uk/~mgk25/unicode.html#utf-8
+							$char = pack('C*', $ord_var_c,
+										 ord($var{$c+1}),
+										 ord($var{$c+2}),
+										 ord($var{$c+3}));
+							$c+=3;
+							$utf16 = self::utf8ToUTF16BE($char);
+							$ascii .= sprintf('\u%04s', bin2hex($utf16));
+							break;
+
+						case (($ord_var_c & 0xFC) == 0xF8):
+							// characters U-00200000 - U-03FFFFFF, mask 111110XX
+							// see http://www.cl.cam.ac.uk/~mgk25/unicode.html#utf-8
+							$char = pack('C*', $ord_var_c,
+										 ord($var{$c+1}),
+										 ord($var{$c+2}),
+										 ord($var{$c+3}),
+										 ord($var{$c+4}));
+							$c+=4;
+							$utf16 = self::utf8ToUTF16BE($char);
+							$ascii .= sprintf('\u%04s', bin2hex($utf16));
+							break;
+
+						case (($ord_var_c & 0xFE) == 0xFC):
+							// characters U-04000000 - U-7FFFFFFF, mask 1111110X
+							// see http://www.cl.cam.ac.uk/~mgk25/unicode.html#utf-8
+							$char = pack('C*', $ord_var_c,
+										 ord($var{$c+1}),
+										 ord($var{$c+2}),
+										 ord($var{$c+3}),
+										 ord($var{$c+4}),
+										 ord($var{$c+5}));
+							$c+=5;
+							$utf16 = self::utf8ToUTF16BE($char);
+							$ascii .= sprintf('\u%04s', bin2hex($utf16));
+							break;
+					}
+				}
+
+				return '"'.$ascii.'"';
+
+			case 'array':
+			   /*
+				* As per JSON spec if any array key is not an integer
+				* we must treat the the whole array as an object. We
+				* also try to catch a sparsely populated associative
+				* array with numeric keys here because some JS engines
+				* will create an array with empty indexes up to
+				* max_index which can cause memory issues and because
+				* the keys, which may be relevant, will be remapped
+				* otherwise.
+				*
+				* As per the ECMA and JSON specification an object may
+				* have any string as a property. Unfortunately due to
+				* a hole in the ECMA specification if the key is a
+				* ECMA reserved word or starts with a digit the
+				* parameter is only accessible using ECMAScript's
+				* bracket notation.
+				*/
+
+				// treat as a JSON object
+				if (is_array($var) && count($var) && (array_keys($var) !== range(0, sizeof($var) - 1))) {
+					return '{' .
+						   join(',', array_map(array('CJSON', 'nameValue'),
+											   array_keys($var),
+											   array_values($var)))
+						   . '}';
+				}
+
+				// treat it like a regular array
+				return '[' . join(',', array_map(array('CJSON', 'encode'), $var)) . ']';
+
+			case 'object':
+				if ($var instanceof Traversable)
+				{
+					$vars = array();
+					foreach ($var as $k=>$v)
+						$vars[$k] = $v;
+				}
+				else
+					$vars = get_object_vars($var);
+				return '{' .
+					   join(',', array_map(array('CJSON', 'nameValue'),
+										   array_keys($vars),
+										   array_values($vars)))
+					   . '}';
+
+			default:
+				return '';
+		}
+	}
+
+   /**
+	* array-walking function for use in generating JSON-formatted name-value pairs
+	*
+	* @param string $name  name of key to use
+	* @param mixed $value reference to an array element to be encoded
+	*
+	* @return   string  JSON-formatted name-value pair, like '"name":value'
+	* @access   private
+	*/
+	protected static function nameValue($name, $value)
+	{
+		return self::encode(strval($name)) . ':' . self::encode($value);
+	}
+
+   /**
+	* reduce a string by removing leading and trailing comments and whitespace
+	*
+	* @param string $str string value to strip of comments and whitespace
+	*
+	* @return string string value stripped of comments and whitespace
+	* @access   private
+	*/
+	protected static function reduceString($str)
+	{
+		$str = preg_replace(array(
+
+				// eliminate single line comments in '// ...' form
+				'#^\s*//(.+)$#m',
+
+				// eliminate multi-line comments in '/* ... */' form, at start of string
+				'#^\s*/\*(.+)\*/#Us',
+
+				// eliminate multi-line comments in '/* ... */' form, at end of string
+				'#/\*(.+)\*/\s*$#Us'
+
+			), '', $str);
+
+		// eliminate extraneous space
+		return trim($str);
+	}
+
+   /**
+	* decodes a JSON string into appropriate variable
+	*
+	* @param string $str  JSON-formatted string
+	* @param boolean $useArray  whether to use associative array to represent object data
+	*
+	* @return mixed   number, boolean, string, array, or object
+	*				   corresponding to given JSON input string.
+	*				   See argument 1 to JSON() above for object-output behavior.
+	*				   Note that decode() always returns strings
+	*				   in ASCII or UTF-8 format!
+	* @access   public
+	*/
+	public static function decode($str, $useArray=true)
+	{
+		if (substr($str,0,3) == pack('CCC',0xEF,0xBB,0xBF)) 
+			$str = substr($str,3); 
+		if (function_exists('json_decode'))
+		{
+			if (function_exists('iconv'))
+				return json_decode(iconv("UTF-8","UTF-8//IGNORE",$str),$useArray);
+			else
+				return json_decode($str,$useArray);
+		}
+
+		$str = self::reduceString($str);
+
+		switch (strtolower($str)) {
+			case 'true':
+				return true;
+
+			case 'false':
+				return false;
+
+			case 'null':
+				return null;
+
+			default:
+				if (is_numeric($str)) {
+					// Lookie-loo, it's a number
+
+					// This would work on its own, but I'm trying to be
+					// good about returning integers where appropriate:
+					// return (float)$str;
+
+					// Return float or int, as appropriate
+					return ((float)$str == (integer)$str)
+						? (integer)$str
+						: (float)$str;
+
+				} elseif (preg_match('/^("|\').+(\1)$/s', $str, $m) && $m[1] == $m[2]) {
+					// STRINGS RETURNED IN UTF-8 FORMAT
+					$delim = substr($str, 0, 1);
+					$chrs = substr($str, 1, -1);
+					$utf8 = '';
+					$strlen_chrs = strlen($chrs);
+
+					for ($c = 0; $c < $strlen_chrs; ++$c) {
+
+						$substr_chrs_c_2 = substr($chrs, $c, 2);
+						$ord_chrs_c = ord($chrs{$c});
+
+						switch (true) {
+							case $substr_chrs_c_2 == '\b':
+								$utf8 .= chr(0x08);
+								++$c;
+								break;
+							case $substr_chrs_c_2 == '\t':
+								$utf8 .= chr(0x09);
+								++$c;
+								break;
+							case $substr_chrs_c_2 == '\n':
+								$utf8 .= chr(0x0A);
+								++$c;
+								break;
+							case $substr_chrs_c_2 == '\f':
+								$utf8 .= chr(0x0C);
+								++$c;
+								break;
+							case $substr_chrs_c_2 == '\r':
+								$utf8 .= chr(0x0D);
+								++$c;
+								break;
+
+							case $substr_chrs_c_2 == '\\"':
+							case $substr_chrs_c_2 == '\\\'':
+							case $substr_chrs_c_2 == '\\\\':
+							case $substr_chrs_c_2 == '\\/':
+								if (($delim == '"' && $substr_chrs_c_2 != '\\\'') ||
+								   ($delim == "'" && $substr_chrs_c_2 != '\\"')) {
+									$utf8 .= $chrs{++$c};
+								}
+								break;
+
+							case preg_match('/\\\u[0-9A-F]{4}/i', substr($chrs, $c, 6)):
+								// single, escaped unicode character
+								$utf16 = chr(hexdec(substr($chrs, ($c+2), 2)))
+									   . chr(hexdec(substr($chrs, ($c+4), 2)));
+								$utf8 .= self::utf16beToUTF8($utf16);
+								$c+=5;
+								break;
+
+							case ($ord_chrs_c >= 0x20) && ($ord_chrs_c <= 0x7F):
+								$utf8 .= $chrs{$c};
+								break;
+
+							case ($ord_chrs_c & 0xE0) == 0xC0:
+								// characters U-00000080 - U-000007FF, mask 110XXXXX
+								//see http://www.cl.cam.ac.uk/~mgk25/unicode.html#utf-8
+								$utf8 .= substr($chrs, $c, 2);
+								++$c;
+								break;
+
+							case ($ord_chrs_c & 0xF0) == 0xE0:
+								// characters U-00000800 - U-0000FFFF, mask 1110XXXX
+								// see http://www.cl.cam.ac.uk/~mgk25/unicode.html#utf-8
+								$utf8 .= substr($chrs, $c, 3);
+								$c += 2;
+								break;
+
+							case ($ord_chrs_c & 0xF8) == 0xF0:
+								// characters U-00010000 - U-001FFFFF, mask 11110XXX
+								// see http://www.cl.cam.ac.uk/~mgk25/unicode.html#utf-8
+								$utf8 .= substr($chrs, $c, 4);
+								$c += 3;
+								break;
+
+							case ($ord_chrs_c & 0xFC) == 0xF8:
+								// characters U-00200000 - U-03FFFFFF, mask 111110XX
+								// see http://www.cl.cam.ac.uk/~mgk25/unicode.html#utf-8
+								$utf8 .= substr($chrs, $c, 5);
+								$c += 4;
+								break;
+
+							case ($ord_chrs_c & 0xFE) == 0xFC:
+								// characters U-04000000 - U-7FFFFFFF, mask 1111110X
+								// see http://www.cl.cam.ac.uk/~mgk25/unicode.html#utf-8
+								$utf8 .= substr($chrs, $c, 6);
+								$c += 5;
+								break;
+
+						}
+
+					}
+
+					return $utf8;
+
+				} elseif (preg_match('/^\[.*\]$/s', $str) || preg_match('/^\{.*\}$/s', $str)) {
+					// array, or object notation
+
+					if ($str{0} == '[') {
+						$stk = array(self::JSON_IN_ARR);
+						$arr = array();
+					} else {
+						if ($useArray) {
+							$stk = array(self::JSON_IN_OBJ);
+							$obj = array();
+						} else {
+							$stk = array(self::JSON_IN_OBJ);
+							$obj = new stdClass();
+						}
+					}
+
+					array_push($stk, array('what'  => self::JSON_SLICE,
+										   'where' => 0,
+										   'delim' => false));
+
+					$chrs = substr($str, 1, -1);
+					$chrs = self::reduceString($chrs);
+
+					if ($chrs == '') {
+						if (reset($stk) == self::JSON_IN_ARR) {
+							return $arr;
+
+						} else {
+							return $obj;
+
+						}
+					}
+
+					//print("\nparsing {$chrs}\n");
+
+					$strlen_chrs = strlen($chrs);
+
+					for ($c = 0; $c <= $strlen_chrs; ++$c) {
+
+						$top = end($stk);
+						$substr_chrs_c_2 = substr($chrs, $c, 2);
+
+						if (($c == $strlen_chrs) || (($chrs{$c} == ',') && ($top['what'] == self::JSON_SLICE))) {
+							// found a comma that is not inside a string, array, etc.,
+							// OR we've reached the end of the character list
+							$slice = substr($chrs, $top['where'], ($c - $top['where']));
+							array_push($stk, array('what' => self::JSON_SLICE, 'where' => ($c + 1), 'delim' => false));
+							//print("Found split at {$c}: ".substr($chrs, $top['where'], (1 + $c - $top['where']))."\n");
+
+							if (reset($stk) == self::JSON_IN_ARR) {
+								// we are in an array, so just push an element onto the stack
+								array_push($arr, self::decode($slice,$useArray));
+
+							} elseif (reset($stk) == self::JSON_IN_OBJ) {
+								// we are in an object, so figure
+								// out the property name and set an
+								// element in an associative array,
+								// for now
+								if (preg_match('/^\s*(["\'].*[^\\\]["\'])\s*:\s*(\S.*),?$/Uis', $slice, $parts)) {
+									// "name":value pair
+									$key = self::decode($parts[1],$useArray);
+									$val = self::decode($parts[2],$useArray);
+
+									if ($useArray) {
+										$obj[$key] = $val;
+									} else {
+										$obj->$key = $val;
+									}
+								} elseif (preg_match('/^\s*(\w+)\s*:\s*(\S.*),?$/Uis', $slice, $parts)) {
+									// name:value pair, where name is unquoted
+									$key = $parts[1];
+									$val = self::decode($parts[2],$useArray);
+
+									if ($useArray) {
+										$obj[$key] = $val;
+									} else {
+										$obj->$key = $val;
+									}
+								}
+
+							}
+
+						} elseif ((($chrs{$c} == '"') || ($chrs{$c} == "'")) && ($top['what'] != self::JSON_IN_STR)) {
+							// found a quote, and we are not inside a string
+							array_push($stk, array('what' => self::JSON_IN_STR, 'where' => $c, 'delim' => $chrs{$c}));
+							//print("Found start of string at {$c}\n");
+
+						} elseif (($chrs{$c} == $top['delim']) &&
+								 ($top['what'] == self::JSON_IN_STR) &&
+								 (($chrs{$c - 1} != "\\") ||
+								 ($chrs{$c - 1} == "\\" && $chrs{$c - 2} == "\\"))) {
+							// found a quote, we're in a string, and it's not escaped
+							array_pop($stk);
+							//print("Found end of string at {$c}: ".substr($chrs, $top['where'], (1 + 1 + $c - $top['where']))."\n");
+
+						} elseif (($chrs{$c} == '[') &&
+								 in_array($top['what'], array(self::JSON_SLICE, self::JSON_IN_ARR, self::JSON_IN_OBJ))) {
+							// found a left-bracket, and we are in an array, object, or slice
+							array_push($stk, array('what' => self::JSON_IN_ARR, 'where' => $c, 'delim' => false));
+							//print("Found start of array at {$c}\n");
+
+						} elseif (($chrs{$c} == ']') && ($top['what'] == self::JSON_IN_ARR)) {
+							// found a right-bracket, and we're in an array
+							array_pop($stk);
+							//print("Found end of array at {$c}: ".substr($chrs, $top['where'], (1 + $c - $top['where']))."\n");
+
+						} elseif (($chrs{$c} == '{') &&
+								 in_array($top['what'], array(self::JSON_SLICE, self::JSON_IN_ARR, self::JSON_IN_OBJ))) {
+							// found a left-brace, and we are in an array, object, or slice
+							array_push($stk, array('what' => self::JSON_IN_OBJ, 'where' => $c, 'delim' => false));
+							//print("Found start of object at {$c}\n");
+
+						} elseif (($chrs{$c} == '}') && ($top['what'] == self::JSON_IN_OBJ)) {
+							// found a right-brace, and we're in an object
+							array_pop($stk);
+							//print("Found end of object at {$c}: ".substr($chrs, $top['where'], (1 + $c - $top['where']))."\n");
+
+						} elseif (($substr_chrs_c_2 == '/*') &&
+								 in_array($top['what'], array(self::JSON_SLICE, self::JSON_IN_ARR, self::JSON_IN_OBJ))) {
+							// found a comment start, and we are in an array, object, or slice
+							array_push($stk, array('what' => self::JSON_IN_CMT, 'where' => $c, 'delim' => false));
+							$c++;
+							//print("Found start of comment at {$c}\n");
+
+						} elseif (($substr_chrs_c_2 == '*/') && ($top['what'] == self::JSON_IN_CMT)) {
+							// found a comment end, and we're in one now
+							array_pop($stk);
+							$c++;
+
+							for ($i = $top['where']; $i <= $c; ++$i)
+								$chrs = substr_replace($chrs, ' ', $i, 1);
+
+							//print("Found end of comment at {$c}: ".substr($chrs, $top['where'], (1 + $c - $top['where']))."\n");
+
+						}
+
+					}
+
+					if (reset($stk) == self::JSON_IN_ARR) {
+						return $arr;
+
+					} elseif (reset($stk) == self::JSON_IN_OBJ) {
+						return $obj;
+
+					}
+
+				}
+		}
+	}
+
+	/**
+	* This function returns any UTF-8 encoded text as a list of
+	* Unicode values:
+	* @param string $str string to convert
+	* @author Scott Michael Reynen <scott@randomchaos.com>
+	* @link   http://www.randomchaos.com/document.php?source=php_and_unicode
+	* @see	unicodeToUTF8()
+	*/
+	protected static function utf8ToUnicode( &$str )
+	{
+		$unicode = array();
+		$values = array();
+		$lookingFor = 1;
+
+		for ($i = 0; $i < strlen( $str ); $i++ )
+		{
+			$thisValue = ord( $str[ $i ] );
+			if ( $thisValue < 128 )
+				$unicode[] = $thisValue;
+			else
+			{
+				if ( count( $values ) == 0 )
+					$lookingFor = ( $thisValue < 224 ) ? 2 : 3;
+				$values[] = $thisValue;
+				if ( count( $values ) == $lookingFor )
+				{
+					$number = ( $lookingFor == 3 ) ?
+						( ( $values[0] % 16 ) * 4096 ) + ( ( $values[1] % 64 ) * 64 ) + ( $values[2] % 64 ):
+						( ( $values[0] % 32 ) * 64 ) + ( $values[1] % 64 );
+					$unicode[] = $number;
+					$values = array();
+					$lookingFor = 1;
+				}
+			}
+		}
+		return $unicode;
+	}
+
+	/**
+	* This function converts a Unicode array back to its UTF-8 representation
+	* @param string $str string to convert
+	* @author Scott Michael Reynen <scott@randomchaos.com>
+	* @link   http://www.randomchaos.com/document.php?source=php_and_unicode
+	* @see	utf8ToUnicode()
+	*/
+	protected static function unicodeToUTF8( &$str )
+	{
+		$utf8 = '';
+		foreach( $str as $unicode )
+		{
+			if ( $unicode < 128 )
+			{
+				$utf8.= chr( $unicode );
+			}
+			elseif ( $unicode < 2048 )
+			{
+				$utf8.= chr( 192 +  ( ( $unicode - ( $unicode % 64 ) ) / 64 ) );
+				$utf8.= chr( 128 + ( $unicode % 64 ) );
+			}
+			else
+			{
+				$utf8.= chr( 224 + ( ( $unicode - ( $unicode % 4096 ) ) / 4096 ) );
+				$utf8.= chr( 128 + ( ( ( $unicode % 4096 ) - ( $unicode % 64 ) ) / 64 ) );
+				$utf8.= chr( 128 + ( $unicode % 64 ) );
+			}
+		}
+		return $utf8;
+	}
+
+	/**
+	* UTF-8 to UTF-16BE conversion.
+	*
+	* Maybe really UCS-2 without mb_string due to utf8ToUnicode limits
+	* @param string $str string to convert
+	* @param boolean $bom whether to output BOM header
+	*/
+	protected static function utf8ToUTF16BE(&$str, $bom = false)
+	{
+		$out = $bom ? "\xFE\xFF" : '';
+		if(function_exists('mb_convert_encoding'))
+			return $out.mb_convert_encoding($str,'UTF-16BE','UTF-8');
+
+		$uni = self::utf8ToUnicode($str);
+		foreach($uni as $cp)
+			$out .= pack('n',$cp);
+		return $out;
+	}
+
+	/**
+	 * UTF-8 to UTF-16BE conversion.
+	 *
+	 * Maybe really UCS-2 without mb_string due to utf8ToUnicode limits
+	 * @param string $str string to convert
+	 */
+	protected static function utf16beToUTF8(&$str)
+	{
+		$uni = unpack('n*',$str);
+		return self::unicodeToUTF8($uni);
+	}
+}

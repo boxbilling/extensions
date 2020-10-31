@@ -1,0 +1,45 @@
+{% extends request.ajax ? "layout_blank.phtml" : "layout_default.phtml" %}
+{% import "macro_functions.phtml" as mf %}
+{% block meta_title %}VPS.net settings{% endblock %}
+{% set active_menu = 'extensions' %}
+
+{% block content %}
+
+<div class="widget first">
+    <div class="head">
+        <h5 class="iCog">{% trans 'VPS.net settings' %}</h5>
+    </div>
+
+{% set params = admin.extension_config_get({"ext":"mod_servicevpsnet"}) %}
+
+<form method="post" action="admin/extension/config_save" class="mainForm api-form" data-api-msg="{% trans 'Configuration updated' %}">
+    
+    <fieldset>
+        <div class="rowElem noborder">
+            <label>{% trans 'VPS.net email' %}</label>
+            <div class="formRight">
+                <input type="text" name="api_username" value="{{ params.api_username }}" />
+            </div>
+            <div class="fix"></div>
+        </div>
+        
+        <div class="rowElem">
+            <label>{% trans 'API key. Generate key in VPS.net profile' %}</label>
+            <div class="formRight">
+                <input type="text" name="api_password" value="{{ params.api_password }}" />
+            </div>
+            <div class="fix"></div>
+        </div>
+
+        <input type="submit" value="{% trans 'Update' %}" class="greyishBtn submitForm" />
+        <input type="button" value="{% trans 'Test Connection' %}" class="greyishBtn" onclick="bb.post('admin/servicevpsnet/test_connection', null, function(){bb.msg('Connected')});"/>
+        <input type="hidden" name="ext" value="mod_servicevpsnet" />
+    </fieldset>
+</form>
+
+    <div class="body">
+        <a href="{{ 'extension'|alink }}"  title="" class="btnIconLeft mr10"><img src="images/icons/dark/arrowLeft.png" alt="" class="icon"><span>{% trans 'Back to extensions' %}</span></a>
+        <a href="{{'product'|alink}}?type=vpsnet&title=VPS 1#tab-new" target="_blank" class="btnIconLeft mr10"><img src="images/icons/dark/play.png" alt="" class="icon"><span>{% trans 'Create VPS.net product' %}</span></a>
+    </div>
+</div>
+{% endblock %}

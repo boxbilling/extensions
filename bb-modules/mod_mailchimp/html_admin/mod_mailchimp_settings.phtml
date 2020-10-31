@@ -1,0 +1,94 @@
+{% extends request.ajax ? "layout_blank.phtml" : "layout_default.phtml" %}
+{% import "macro_functions.phtml" as mf %}
+{% block meta_title %}MailChimp settings{% endblock %}
+{% set active_menu = 'extensions' %}
+
+{% block content %}
+
+<div class="widget simpleTabs nomargin">
+
+    <ul class="tabs">
+        <li><a href="#tab-index">{% trans 'MailChimp' %}</a></li>
+    </ul>
+
+    {% set params = admin.extension_config_get({"ext":"mod_mailchimp"}) %}
+        
+    <div class="tabs_container">
+        <div class="fix"></div>
+        
+        <div class="tab_content nopadding" id="tab-index">
+            
+            <div class="help">
+                <h3>{% trans 'Settings' %}</h3>
+                <p>This extension subscribes clients to MailChimp list after signup</p>
+                <p>Get a valid API Key for your user account <a href="http://admin.mailchimp.com/account/api" target="_blank"> by visiting your API dashboard</a></p>
+            </div>
+            
+            <form method="post" action="admin/extension/config_save" class="mainForm api-form" data-api-msg="{% trans 'Configuration updated' %}">
+            <fieldset>
+                <div class="rowElem">
+                    <label>{% trans 'API Key' %}</label>
+                    <div class="formRight">
+                        <input type="text" name="api_key" value="{{params.api_key}}" placeholder="MailChimp API key"/>
+                    </div>
+                    <div class="fix"></div>
+                </div>
+                
+                <div class="rowElem">
+                    <label>{% trans 'Mailchimp list id' %}</label>
+                    <div class="formRight" id="list_id">
+                        <input type="text" name="list_id" value="{{params.list_id}}" placeholder="MailChimp List ID" style="width: 200px;"/>
+                        <input type="button" value="{% trans 'Load Mailchimp lists' %}" class="greenBtn" id="tc"/>
+                    </div>
+                    <div class="fix"></div>
+                </div>
+
+                
+                
+                <input type="submit" value="{% trans 'Update' %}" class="greyishBtn submitForm" />
+                <input type="button" value="{% trans 'Synchronize all clients' %}" class="blackBtn submitForm" id="pc" style="float: left;"/>
+                <input type="hidden" name="ext" value="mod_mailchimp" />    
+            </fieldset>
+            </form>
+            
+            <pre class="body" id="sync-result" style="overflow: auto;"></pre>
+            
+            <div class="body">
+                <a href="{{ 'extension'|alink }}"  title="" class="btnIconLeft mr10"><img src="images/icons/dark/arrowLeft.png" alt="" class="icon"><span>{% trans 'Back to extensions' %}</span></a>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block js %}
+<script type="text/javascript">
+$(function() {
+    $('#pc').click(function() {
+        bb.post('admin/mailchimp/ping', {}, function(){
+            bb.post('admin/mailchimp/sync', {}, function(result){
+                $('#sync-result').text(result);
+            });
+        });
+        return false;
+    });
+    
+    $('#tc').click(function() {
+        bb.post('admin/mailchimp/ping', {}, function(){
+            bb.post('admin/mailchimp/lists', {}, function(result){
+                var vSelect = '<select name="list_id">';
+                $.each(result,function (i, v) {
+                    vSelect += "<option value='" + i + "'>"+v+"</option>";
+                });
+                vSelect += "</select>";
+                $('#list_id').html( vSelect );
+            });
+        });
+        return false;
+    });
+});
+</script>
+{% endblock %}
