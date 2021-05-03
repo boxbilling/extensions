@@ -16,9 +16,6 @@
  * @license   http://www.boxbilling.com/LICENSE.txt
  * @version   $Id$
  */
-/**
- * @see http://doxfer.com/Webmin/TheWebminAPI
- */
 class Server_Manager_Virtualmin extends Server_Manager
 {
 	public function init()
