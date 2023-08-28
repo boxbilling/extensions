@@ -90,7 +90,7 @@ throw new Payment_Exception('The Zip/Postcode that you have entered does not exi
 
 else {
 
-        $url='https://minfraud2.maxmind.com/app/ccv2r?'.http_build_query($rp);
+        $url='https://minfraud.maxmind.com/app/ccv2r?'.http_build_query($rp);
         $content = file_get_contents($url);
 
         // enable this to debug response to the screen when clicking checkout button
